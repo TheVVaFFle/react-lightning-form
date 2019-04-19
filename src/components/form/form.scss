@@ -1,0 +1,110 @@
+.form{
+  margin: 100px auto;
+  width: 800px;
+
+  &.loading{
+    .form-contents{
+      opacity: 0;
+      transform: scale(0.5);
+    }
+    
+    .loading-indicator{ 
+      opacity: 1;
+      pointer-events: all;
+      transform: translateX(-50%) translateY(-50%) scale(1);
+    }
+  }
+
+  .form-contents{
+    transition: all 0.25s;
+    .title{
+      h1{      
+        color: $blue;
+        font-size: 2.5em;
+        font-weight: 300;
+      }
+    }
+
+    .input{
+      display: inline-block;
+      vertical-align: top;
+
+      .label, .error-message{
+        font-size: 0.8em;
+        font-weight: 400;
+        margin: 0px;      
+        margin-left: 20px;
+      }
+
+      .label{
+        color: gray(60);
+        margin-bottom: 5px;
+      }
+
+      .error-message{
+        color: $red;
+        margin-top: 5px;
+      }
+    }
+
+    > input {
+      margin-top: 20px;
+    }
+
+    input{
+      background-color: gray(240);
+      border: 1px solid transparent;
+      border-radius: 100px;
+      color: gray(60);
+      display: inline-block;
+      font-weight: 400;
+      outline: none;
+      padding: 15px 20px;
+      vertical-align: top;
+      width: calc(100% - 40px);
+      
+      &:focus{
+        border: 1px solid $blue;
+      }
+
+      &.error{
+        border: 1px solid $red;
+      }
+    }
+
+    .submit-button{
+      margin: auto;
+      width: 500px;
+      button{
+        background-color: $lightBlue;
+        border: none;
+        border-radius: 100px;
+        color: white;
+        cursor: pointer;
+        display: block;
+        margin-top: 40px;
+        outline: none;
+        padding: 15px 20px;
+
+        &:hover, &:focus{
+          box-shadow: $shadow2;
+        }
+      }
+
+      .error-message{
+        color: $red;
+        font-weight: 400;
+        margin: 0px;
+        margin-top: 10px;
+        text-align: center;
+      }
+    }
+  }
+
+  .loading-indicator{
+    opacity: 0;
+    pointer-events: none;
+    transform: translateX(-50%) scale(0.5);
+    transition: all 0.25s;    
+  }
+}

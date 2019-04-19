@@ -1,0 +1,22 @@
+.section{
+  border-radius: 10px;
+  box-shadow: $shadow1;
+  padding: 20px;
+
+  &:nth-child(n + 2){
+    margin-top: 20px;
+  }
+
+  .title{    
+    h1{
+      color: gray(60);
+      font-size: 2em;
+      font-weight: 300;
+      margin: 0px;
+    }
+  }
+
+  .fields{
+    margin-top: 20px;
+  }
+}

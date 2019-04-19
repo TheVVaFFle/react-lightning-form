@@ -1,0 +1,25 @@
+@function gray($color){
+  @return rgb($color, $color, $color);
+}
+
+$backgroundColor: rgb(24, 28, 40);
+$accentColor: rgb(41, 45, 57);
+
+$purple: rgb(171,71,188);
+$darkPurple: rgb(74,20,140);
+$lightBlue: rgb(3, 169, 244);
+$blue: rgb(68, 117, 254);
+$darkBlue: rgb(26,35,126);
+$lightGreen: rgb(205,220,57);
+$green: rgb(76,175,80);
+$darkGreen: rgb(46,125,50);
+$red: rgb(211,47,47);
+$darkRed: rgb(183,28,28);
+$orange: rgb(255,111,0);
+$darkOrange: rgb(216,67,21);
+$yellow: rgb(251,192,45);
+$darkYellow: rgb(249,168,37);
+
+$shadow1: rgba(0, 0, 0, 0.12) 0px 1px 6px, rgba(0, 0, 0, 0.12) 0px 1px 4px;
+$shadow2: rgba(0, 0, 0, 0.16) 0px 3px 10px, rgba(0, 0, 0, 0.23) 0px 3px 10px;
+$shadow3: rgba(0, 0, 0, 0.12) 0px 10px 30px, rgba(0, 0, 0, 0.16) 0px 6px 10px;
