@@ -4,7 +4,8 @@ import classNames from "classnames";
 
 import {Loading} from "../loading/loading";
 
-import {Validate} from "../../utility/validation";
+import * as GeneralUtility from "../../utility"
+import {Validate, ValidationType} from "../../utility/validation";
 import {FormUtility} from "../../utility/form";
 
 export enum FormComponentType {
@@ -29,35 +30,53 @@ export const Form: React.SFC<FormProps> = (props: FormProps) => {
 
   useEffect(() => {    
     createFormState(props.children);
-  }, [])
-
-  const createFormState = (children: JSX.Element[]): any => {
-    let updatedFormState: any = formState;
-
-    React.Children.forEach(children, (child: JSX.Element) => {    
-      const type: string = FormUtility.getChildType(child);
+  }, [props.children])
   
-      if(type === FormComponentType.Input){
-        if(child.props.id !== undefined && child.props.id !== null){
-          updatedFormState[child.props.id] = {
-            value: child.props.defaultValue || "",
-            validate: child.props.validate || null,
-            error: false
+  const createFormState = (children: JSX.Element[] | any): any => {
+    let updatedFormState: any = formState;
+    
+    if(FormUtility.checkIfValidChildren(children)){
+      React.Children.forEach(children, (child: JSX.Element) => {    
+        const type: string = FormUtility.getChildType(child);
+        
+        if(type === FormComponentType.Input){
+          if(child.props.id !== undefined && child.props.id !== null){
+            updatedFormState[child.props.id] = {
+              value: child.props.defaultValue || "",
+              validate: child.props.validate || null,
+              error: false
+            }
+          }
+          else{
+            throw Error("All form fields must have an id.");
+          }
+        }
+        else if(type === FormComponentType.Section){
+          if(child.props.children){
+            const section: JSX.Element = child.type(child.props),
+                  fields: JSX.Element = section.props.children.find((c: JSX.Element) => c.props.className === "fields")      
+            createFormState(fields.props.children);
+          }
+          else{
+            createFormState(child.props.data);
           }
         }
         else{
-          throw Error("All form fields must have an id.");
+          return;
         }
-      }
-      else if(type === FormComponentType.Section){
-        const section: JSX.Element = child.type(child.props),
-              fields: JSX.Element = section.props.children.find((c: JSX.Element) => c.props.className === "fields")      
-        createFormState(fields.props.children)
-      }
-      else{
-        return;
-      }
-    })
+      })
+    }
+    else{
+      return Object.entries(children).map((entry: any) => {
+        const key: string = entry[0],
+              value: string | number = entry[1];
+        updatedFormState[GeneralUtility.camelCaseToKebab(key)] = {
+          value,
+          validate: null,
+          error: false
+        };
+      })
+    }
     
     setFormState(updatedFormState)
   }
@@ -86,6 +105,7 @@ export const Form: React.SFC<FormProps> = (props: FormProps) => {
             onKeyUp: Function = (e: any) => {
               if(e.key === "Enter") handleOnSubmit();
             }
+            
       return (
         <div className="input" style={style}>
           {label}
@@ -95,6 +115,28 @@ export const Form: React.SFC<FormProps> = (props: FormProps) => {
       );
     }
 
+    const mapChildrenFromData = (data: any) => {
+      return Object.entries(data).map((entry: any) => {
+        const key: string = entry[0],
+              value: string | number = entry[1];
+  
+        const formattedKey: string = GeneralUtility.camelCaseToNormal(key);
+        
+        return(
+          <input
+            id={GeneralUtility.camelCaseToKebab(key)}
+            key={key}
+            type="text"
+            className="text-input"
+            defaultValue={value.toString()}
+            placeholder={`Enter ${formattedKey.toLowerCase()}`}
+            label={formattedKey}
+            validate={ValidationType.Required}
+          />
+        )
+      })
+    }
+    
     let altIndex: number = 0;
     
     return React.Children.map(children, (child: JSX.Element) => {
@@ -106,10 +148,19 @@ export const Form: React.SFC<FormProps> = (props: FormProps) => {
               fields: JSX.Element = section.props.children.find((c: JSX.Element) => c.props.className === "fields"),
               columns: number = child.props.columns || props.columns;
         
-        const updatedFields: JSX.Element[] = React.Children
-          .map(fields.props.children, (c: JSX.Element, index: number) => handleFormInput(c, columns, index));
-
-        return React.cloneElement(child, {...child.props, children: updatedFields});
+        let mappedChildren: JSX.Element[] = [];
+        
+        if(child.props.data){
+          mappedChildren = mapChildrenFromData(child.props.data);          
+        }
+        else{
+          mappedChildren = fields.props.children;
+        }
+        
+        mappedChildren = React.Children
+          .map(mappedChildren, (c: JSX.Element, index: number) => handleFormInput(c, columns, index));
+        
+        return React.cloneElement(child, {...child.props, children: mappedChildren});
       }
       else{
         return handleFormInput(child, props.columns, altIndex++, true)

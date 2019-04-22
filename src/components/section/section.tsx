@@ -2,11 +2,13 @@ import React from "react"
 import {useState, useEffect} from "react"
 import classNames from "classnames"
 
-import {Validate} from "../../utility/validation";
+import * as GeneralUtility from "../../utility"
+import {Validate, ValidationType} from "../../utility/validation";
 
 export interface SectionProps{
   title?: string;
-  children: any;
+  children?: any;
+  data?: any;
   columns?: number;
 }
 
@@ -22,12 +24,40 @@ export const Section: React.SFC<SectionProps> = (props: SectionProps) => {
 
     return null;
   }
+  const mapChildrenFromData = (data: any) => {
+    return Object.entries(data).map((entry: any) => {
+      const key: string = entry[0],
+            value: string | number = entry[1];
+
+      const formattedKey: string = GeneralUtility.camelCaseToNormal(key)
+
+      return(
+        <input
+          id={GeneralUtility.camelCaseToKebab(key)}
+          key={key}
+          type="text"
+          className="text-input"
+          defaultValue={value.toString()}
+          placeholder={`Enter ${formattedKey.toLowerCase()}`}
+          label={formattedKey}
+          validate={ValidationType.Required}
+        />
+      )
+    })
+  }
+  const getChildren = (): JSX.Element[] | null => {
+    if(props.children){
+      return props.children;
+    }
+
+    return null;
+  }
   
   return(
     <div className="section">
       {getTitle()}
       <div className="fields">
-        {props.children}
+        {getChildren()}
       </div>
     </div>
   )

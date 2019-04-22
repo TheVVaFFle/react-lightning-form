@@ -20,6 +20,20 @@ export const FormUtility = {
     ? child.type
     : child.type(child.props).props.className
   },  
+  checkIfValidChildren: (children: any): boolean => {
+    if(Array.isArray(children)){
+      let invalidCount: number = 0;
+      children.forEach((child: any) => {
+        if(!React.isValidElement(child)){
+          invalidCount++;
+        }
+      })
+      return invalidCount === 0;
+    }
+    else{
+      return React.isValidElement(children);
+    }
+  },
   formatState: (formState: any) => {
     let formattedFormState: any = {...formState};
 

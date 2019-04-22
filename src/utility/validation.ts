@@ -18,7 +18,7 @@ export const Validate: any = {
   },
   determineIfError: (value: any, validate: Function) => {
     if(validate !== undefined && validate !== null){
-      return !validate(value)
+      return !validate(value);
     }
 
     return false;

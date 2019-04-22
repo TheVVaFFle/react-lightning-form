@@ -17,7 +17,7 @@ export const App: React.SFC<AppProps> = (props: AppProps) => {
 
   const simulateLoading = () => {
     setLoading(true);
-    setTimeout(() => setLoading(false), 2000);
+    setTimeout(() => setLoading(false), 1000);
   }
 
   useEffect(() => {
@@ -29,6 +29,12 @@ export const App: React.SFC<AppProps> = (props: AppProps) => {
     simulateLoading();
   }
 
+  const nameData = {
+    firstName: "Billy",
+    middleName: "Bob",
+    lastName: "Smithy"
+  }
+
   return(
     <div id="app">
       <Form 
@@ -38,34 +44,7 @@ export const App: React.SFC<AppProps> = (props: AppProps) => {
         loading={loading}
         onSubmit={handleOnSubmit}
       >
-        <Section title="Name" columns={3}>
-          <input 
-            id="first-name"
-            type="text"
-            className="text-input"
-            defaultValue="Billy"
-            placeholder="Enter first name"
-            label="First Name"
-            validate={ValidationType.Required}
-          />
-          <input 
-            id="middle-name"
-            type="text"
-            className="text-input"
-            placeholder="Enter middle name"
-            label="Middle Name"
-            defaultValue="Bob"
-          />
-          <input 
-            id="last-name"
-            type="text"
-            className="text-input"
-            defaultValue="Smith"
-            placeholder="Enter last name"
-            label="Last Name"
-            validate={ValidationType.Required}
-          />
-        </Section>
+        <Section title="Name" columns={3} data={nameData}/>          
         <Section title="Contact" columns={2}>
           <input 
             id="phone-number"
@@ -86,20 +65,6 @@ export const App: React.SFC<AppProps> = (props: AppProps) => {
             validate={ValidationType.Email}
           />
         </Section>
-        <input 
-          id="comments"
-          type="text"
-          className="text-input"          
-          placeholder="Enter comments"
-          label="Comments"
-        />
-        <input 
-          id="addtl-comments"
-          type="text"
-          className="text-input"          
-          placeholder="Enter addt'l comments"
-          label="Addt'l Comments"
-        />
       </Form>
     </div>
   )
