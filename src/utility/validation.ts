@@ -6,6 +6,11 @@ export enum ValidationType {
   Required = "required"
 }
 
+export enum InputType {
+  Checkbox = "checkbox",
+  Dropdown = "dropdown"
+}
+
 export const Validate: any = {
   phone: (input: string): boolean => {
     return Validator.isMobilePhone(input, "en-US");

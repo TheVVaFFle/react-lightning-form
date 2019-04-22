@@ -9,6 +9,7 @@ declare module 'react' {
   interface HTMLAttributes<T> extends DOMAttributes<T> {
     validate?: ValidationType;
     label?: string;
+    type?: string;
     errorMessage?: string;
   }
 }
