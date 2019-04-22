@@ -279,7 +279,7 @@ export const FormUtility = {
           }
           
           let updatedFormState: any = formState;
-          console.log(getValue())
+          
           updatedFormState[child.props.id] = {
             ...formState[child.props.id],
             value: getValue()

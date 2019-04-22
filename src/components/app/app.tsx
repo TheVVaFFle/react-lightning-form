@@ -37,7 +37,7 @@ export const App: React.SFC<AppProps> = (props: AppProps) => {
         loading={loading}
         onSubmit={handleOnSubmit}
       >
-        <Section title="Name" columns={3} data={Test.data.name}/>          
+        <Section title="Name" columns={4} data={Test.data.name}/>          
         <Section title="Contact" columns={2} data={Test.data.contact}/>
       </Form>
     </div>
