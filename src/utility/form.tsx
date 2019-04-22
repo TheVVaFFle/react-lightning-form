@@ -176,7 +176,8 @@ export const FormUtility = {
             )
           }
           else if(v.type === InputType.Dropdown){
-            const options: JSX.Element[] = v.options.map((option: string) => <option key={option}>{option}</option>)
+            let options: JSX.Element[] = v.options.map((option: string) => <option key={option} value={option}>{option}</option>)
+            options.unshift(<option key={-1} value="">Select an option</option>)
             return(
               <select 
                 id={GeneralUtility.camelCaseToKebab(key)}                 

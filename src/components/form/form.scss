@@ -113,9 +113,15 @@
           outline: none;
           width: 100%;
 
-          &:focus{
+          &:focus, &.error{
             ~ .border{
               display: block;
+            }
+          }
+
+          &.error{
+            ~ .border{         
+              border-color: $red;
             }
           }
         }
