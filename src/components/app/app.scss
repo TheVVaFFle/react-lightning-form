@@ -49,7 +49,7 @@ body, html {
   }
 
   &::-webkit-scrollbar-thumb {
-    background-color: rgba($blue, 0.4);
+    background-color: gray(220);
     border-radius: 100px;
   }
 }

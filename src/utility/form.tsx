@@ -308,10 +308,11 @@ export const FormUtility = {
     
         return onChange;
       },  
-      classes: (child: JSX.Element, formState: any): string => {    
+      classes: (child: JSX.Element, formState: any): string => {            
         const classes: string = classNames(
           child.props.className, 
-          {"error": formState[child.props.id] && formState[child.props.id].error}
+          {"error": formState[child.props.id] && formState[child.props.id].error},
+          {"scroll-bar": child.type === InputType.TextArea}
         )
         
         return classes;
