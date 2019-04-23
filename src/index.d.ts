@@ -1,4 +1,4 @@
-declare module "create-react-form" {
+declare module "react-lightning-form" {
   import * as React from "react";
 
   export interface FormProps {
