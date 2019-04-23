@@ -4,6 +4,8 @@ import {useState, useEffect} from "react";
 import {Form} from "../form/form";
 import {Section} from "../section/section";
 
+import { ValidationType } from "../../utility/validation";
+
 import {Test} from "../../data";
 
 require('./app.scss');
@@ -37,8 +39,22 @@ export const App: React.SFC<AppProps> = (props: AppProps) => {
         loading={loading}
         onSubmit={handleOnSubmit}
       >
-        <Section title="Name" columns={4} data={Test.data.name}/>          
-        <Section title="Contact" columns={2} data={Test.data.contact}/>
+        <Section 
+          title="Name" 
+          columns={4} 
+          data={Test.data.name}
+        />          
+        <Section 
+          title="Contact" 
+          columns={2} 
+          data={Test.data.contact}
+        />
+        <textarea 
+          id="comments" 
+          placeholder="Enter comments here" 
+          label="Comments"
+          validate={ValidationType.Required}
+        />
       </Form>
     </div>
   )

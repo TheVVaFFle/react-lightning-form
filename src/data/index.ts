@@ -19,7 +19,7 @@ export const Test = {
     contact: {
       phoneNumber: { value: "(314) 780-5555", validate: ValidationType.Phone },
       emailAddress: { value: "my-email@gmail.com", validate: ValidationType.Email },
-      primaryContact: {value: false, type: InputType.Checkbox}
+      primaryContact: { value: false, type: InputType.Checkbox }
     }
   }
 }

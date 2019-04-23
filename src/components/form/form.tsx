@@ -8,6 +8,7 @@ import {FormUtility} from "../../utility/form";
 
 export enum FormComponentType {
   Input = "input",
+  TextArea = "textarea",
   Section = "section"
 }
 

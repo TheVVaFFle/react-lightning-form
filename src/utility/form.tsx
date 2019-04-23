@@ -15,7 +15,7 @@ export const FormUtility = {
         React.Children.forEach(children, (child: JSX.Element) => {    
           const type: string = FormUtility.get.childType(child);
           
-          if(type === FormComponentType.Input){
+          if(type === FormComponentType.Input || type === FormComponentType.TextArea){
             if(child.props.id !== undefined && child.props.id !== null){
               updatedFormState[child.props.id] = {
                 value: child.props.defaultValue || "",
@@ -225,10 +225,16 @@ export const FormUtility = {
             onChange: Function = FormUtility.input.get.onChange(child, formState, updateCount, setUpdateCount, setFormState),            
             style: React.CSSProperties = FormUtility.input.get.styles(index, columns, alone),
             label: JSX.Element | null = FormUtility.input.get.label(child),
-            errorMessage: JSX.Element | null = FormUtility.input.get.errorMessage(child, formState),
-            onKeyUp: Function = (e: any) => {
-              if(e.key === "Enter") handleOnSubmit();
-            }
+            errorMessage: JSX.Element | null = FormUtility.input.get.errorMessage(child, formState)
+
+      let onKeyUp: Function | null = null;
+
+      if(child.type !== "textarea" && child.props.type !== "textarea"){
+        console.log("hiya")
+        onKeyUp = (e: any) => {          
+          if(e.key === "Enter") handleOnSubmit();
+        }
+      }
             
       if(child.props.type === "checkbox"){
         return(

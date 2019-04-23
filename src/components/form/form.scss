@@ -155,7 +155,7 @@
       margin-top: 20px;
     }
 
-    input, .select-wrapper{
+    input, .select-wrapper, textarea{
       background-color: gray(240);
       border: 1px solid transparent;
       border-radius: 100px;
@@ -182,6 +182,13 @@
       &.error{
         border: 1px solid $red;
       }
+    }
+
+    textarea{
+      border-radius: 10px;
+      max-width: calc(100% - 40px);
+      min-height: 100px;
+      min-width: calc(100% - 40px);
     }
 
     .submit-button{

@@ -8,7 +8,8 @@ export enum ValidationType {
 
 export enum InputType {
   Checkbox = "checkbox",
-  Dropdown = "dropdown"
+  Dropdown = "dropdown",
+  TextArea = "textarea"
 }
 
 export const Validate: any = {
