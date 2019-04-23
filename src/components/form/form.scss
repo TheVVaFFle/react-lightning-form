@@ -44,7 +44,17 @@
 
       .error-message{
         color: $red;
-        margin-top: 5px;
+        height: 0px;
+        margin-top: 0px;
+        opacity: 0;
+        pointer-events: none;
+        transition: 0.25s;
+
+        &.show{
+          height: 15px;
+          opacity: 1;
+          margin-top: 5px;
+        }
       }
     }
 
@@ -110,6 +120,7 @@
         select{
           background-color: transparent;
           border: none;
+          height: 20px;
           outline: none;
           width: 100%;
 
@@ -130,12 +141,12 @@
           border: 1px solid $blue;
           border-radius: 100px;      
           display: none;
-          height: 100%;
+          height: calc(100% - 2px);
           left: 0px;
           pointer-events: none;
           position: absolute;
           top: 0px;
-          width: 100%;
+          width: calc(100% - 2px);
         }
       }
     }
@@ -195,9 +206,18 @@
       .error-message{
         color: $red;
         font-weight: 400;
+        height: 0px;
         margin: 0px;
         margin-top: 10px;
+        opacity: 0;
+        pointer-events: none;
         text-align: center;
+        transition: all 0.25s;
+
+        &.show{
+          opacity: 1;
+          height: 20px;
+        }
       }
     }
   }

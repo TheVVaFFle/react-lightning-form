@@ -138,15 +138,12 @@ export const FormUtility = {
       : child.type(child.props).props.className
     },
     errorMessage: (errorCount: number): JSX.Element | null => {
-      if(errorCount > 0){
-        const errorVerb: String = errorCount > 1 ? "are" : "is",
-              errorText: string = errorCount > 1 ? "errors" : "error";
-        return(
-          <h1 className="error-message">There {errorVerb} currently {errorCount} {errorText}. Please correct before submitting.</h1>
-        )
-      }
-  
-      return null;
+      const classes: string = classNames("error-message", {"show": errorCount > 0})      
+      const errorVerb: String = errorCount > 1 ? "are" : "is",
+            errorText: string = errorCount > 1 ? "errors" : "error";
+      return(
+        <h1 className={classes}>There {errorVerb} currently {errorCount} {errorText}. Please correct before submitting.</h1>
+      )  
     }
   },  
   input: {
@@ -323,13 +320,11 @@ export const FormUtility = {
               input: string = formState[child.props.id] ? formState[child.props.id].value : "",
               type: string = formState[child.props.id] ? formState[child.props.id].validate : "";
         
-        if(error){
-          return(
-            <h1 className="error-message">{Validate.getErrorMessage(type, input)}</h1>
-          )
-        }
-    
-        return null;
+        const classes: string = classNames("error-message", {"show": error})
+
+        return(
+          <h1 className={classes}>{Validate.getErrorMessage(type, input)}</h1>
+        )
       }
     }
   }
