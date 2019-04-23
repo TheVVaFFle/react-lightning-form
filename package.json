@@ -4,7 +4,6 @@
   "main": "index.js",
   "license": "MIT",
   "dependencies": {
-    "@types/node": "^11.13.7",
     "classnames": "^2.2.6",
     "lodash": "^4.17.11",
     "moment": "^2.24.0",
@@ -21,6 +20,7 @@
     "@babel/preset-react": "^7.0.0",
     "@types/classnames": "^2.2.7",
     "@types/lodash": "^4.14.123",
+    "@types/node": "^11.13.7",
     "@types/react": "^16.8.8",
     "@types/react-dom": "^16.8.3",
     "@types/validator": "^10.11.0",
