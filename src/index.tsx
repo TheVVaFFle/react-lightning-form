@@ -7,10 +7,10 @@ import { ValidationType } from "./utility/validation";
 
 declare module 'react' {
   interface HTMLAttributes<T> extends DOMAttributes<T> {
-    validate?: ValidationType;
+    validate?: ValidationType | Function;
     label?: string;
     type?: string;
-    errorMessage?: string;
+    errormessage?: string;
   }
 }
 

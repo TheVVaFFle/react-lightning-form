@@ -14,7 +14,7 @@ export const Test = {
       firstName: { value: "Billy", validate: ValidationType.Required },
       middleName: { value: "Bob" },
       lastName: { value: "Smith", validate: ValidationType.Required },
-      suffix: { value: "", type: InputType.Dropdown, options: suffixOptions, validate: ValidationType.Required } 
+      suffix: { value: "Sr.", type: InputType.Dropdown, options: suffixOptions, validate: ValidationType.Required } 
     },
     contact: {
       phoneNumber: { value: "(314) 780-5555", validate: ValidationType.Phone },

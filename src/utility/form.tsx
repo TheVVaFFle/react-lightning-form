@@ -90,10 +90,23 @@ export const FormUtility = {
       Object.entries(formState).map((entry: any) => {
         const key= entry[0],
               prop = entry[1];
-        if(Validate.determineIfError(prop.value, Validate[prop.validate])){
+        
+        let validationFn: Function | null = null;
+
+        if(prop.validate !== undefined){
+          if(!Object.values(ValidationType).includes(prop.validate)){
+            validationFn = eval(prop.validate)             
+          }
+          else{
+            validationFn = Validate[prop.validate]
+          }
+  
+        }
+        
+        if(Validate.determineIfError(prop.value, validationFn)){      
           updatedFormState[key].error = true;
           nErrors++;
-        }
+        }       
         else{
           updatedFormState[key].error = false;
         }
@@ -225,12 +238,12 @@ export const FormUtility = {
             onChange: Function = FormUtility.input.get.onChange(child, formState, updateCount, setUpdateCount, setFormState),            
             style: React.CSSProperties = FormUtility.input.get.styles(index, columns, alone),
             label: JSX.Element | null = FormUtility.input.get.label(child),
+            validate: string | null = FormUtility.input.get.validationFn(child.props.validate),
             errorMessage: JSX.Element | null = FormUtility.input.get.errorMessage(child, formState)
 
       let onKeyUp: Function | null = null;
 
       if(child.type !== "textarea" && child.props.type !== "textarea"){
-        console.log("hiya")
         onKeyUp = (e: any) => {          
           if(e.key === "Enter") handleOnSubmit();
         }
@@ -240,7 +253,7 @@ export const FormUtility = {
         return(
           <div className="input checkbox" style={style}>
             {label}
-            {React.cloneElement(child, {...child.props, className, onChange, onKeyUp})}
+            {React.cloneElement(child, {...child.props, className, validate, onChange, onKeyUp})}
             <div className="checkbox-toggle-track">
               <div className="checkbox-toggle"/>
             </div>
@@ -253,7 +266,7 @@ export const FormUtility = {
           <div className="input dropdown" style={style}>
             {label}
             <div className="select-wrapper">
-              {React.cloneElement(child, {...child.props, className, onChange, onKeyUp})}
+              {React.cloneElement(child, {...child.props, className, validate, onChange, onKeyUp})}
               <div className="border"/>
             </div>
             {errorMessage}
@@ -264,7 +277,7 @@ export const FormUtility = {
         return (
           <div className="input" style={style}>
             {label}
-            {React.cloneElement(child, {...child.props, className, onChange, onKeyUp})}
+            {React.cloneElement(child, {...child.props, className, validate, onChange, onKeyUp})}
             {errorMessage}
           </div>
         );
@@ -321,6 +334,17 @@ export const FormUtility = {
     
         return null;
       },  
+      validationFn: (validate: ValidationType | Function): string | null => {
+        if(typeof validate === "function"){
+          return validate.toString();
+        }
+        else if(!Object.values(ValidationType).includes(validate)){
+          return validate;
+        }
+        else{
+          return null;
+        }
+      },
       errorMessage: (child: JSX.Element, formState: any): JSX.Element | null => {    
         const error: boolean = formState[child.props.id] && formState[child.props.id].error,
               input: string = formState[child.props.id] ? formState[child.props.id].value : "",
@@ -329,7 +353,7 @@ export const FormUtility = {
         const classes: string = classNames("error-message", {"show": error})
 
         return(
-          <h1 className={classes}>{Validate.getErrorMessage(type, input)}</h1>
+          <h1 className={classes}>{Validate.getErrorMessage(type, input, child)}</h1>
         )
       }
     }

@@ -1,6 +1,5 @@
 import React from "react";
 import {useState, useEffect} from "react";
-import classNames from "classnames";
 
 import {Loading} from "../loading/loading";
 
@@ -60,7 +59,7 @@ export const Form: React.SFC<FormProps> = (props: FormProps) => {
         return React.cloneElement(child, {...child.props, children: mappedChildren});
       }
       else{
-        return FormUtility.input.enhance(child, formState, props.columns, altIndex++, updateCount, setUpdateCount, setFormState, handleOnSubmit, true)
+        return FormUtility.input.enhance(child, formState, props.columns, altIndex++, updateCount, setUpdateCount, setFormState, handleOnSubmit, true);
       }
     })
   }

@@ -31,6 +31,10 @@ export const App: React.SFC<AppProps> = (props: AppProps) => {
     simulateLoading();
   }
 
+  const validateComments = (value: string): boolean => {
+    return value.length >= 20 && value.length <= 50;
+  }
+
   return(
     <div id="app">
       <Form 
@@ -51,9 +55,10 @@ export const App: React.SFC<AppProps> = (props: AppProps) => {
         />
         <textarea 
           id="comments" 
-          placeholder="Enter comments here" 
+          placeholder="Enter comments here"
           label="Comments"
-          validate={ValidationType.Required}
+          validate={validateComments}
+          errormessage="Must be between 20 and 50 characters."
         />
       </Form>
     </div>

@@ -29,7 +29,7 @@ export const Validate: any = {
 
     return false;
   },
-  getErrorMessage: (type: ValidationType, input: string): string => {    
+  getErrorMessage: (type: ValidationType, input: string, child: JSX.Element): string => {
     switch(type){
       case ValidationType.Phone:
         return "Please enter a valid phone number.";
@@ -38,7 +38,7 @@ export const Validate: any = {
       case ValidationType.Required:
         return "Field is required.";
       default:
-        return "";
+        return child.props.errormessage|| "";
     }
   }
 }
