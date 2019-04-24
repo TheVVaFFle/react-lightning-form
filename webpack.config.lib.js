@@ -1,5 +1,6 @@
 const webpack = require("webpack"),
-  path = require("path");
+  path = require("path"),
+  MiniCssExtractPlugin = require("mini-css-extract-plugin");
 
 const config = {
   entry: {
@@ -22,15 +23,18 @@ const config = {
         exclude: [/node_modules/]
       },
       {
-        test: /\.scss$/, 
-        use: [
-          {loader: 'style-loader'}, 
-          {loader: 'css-loader'}, 
-          {loader: 'sass-loader'}
-        ]
-      }
+        test: /\.(sa|sc|c)ss$/,
+        use: [MiniCssExtractPlugin.loader, "css-loader", "sass-loader"]
+      },
+
     ]
   },
+  plugins: [    
+    new MiniCssExtractPlugin({
+      filename: "index.css",
+      chunkFilename: "[id].css"
+    })
+  ],
   resolve: {
     extensions: ['.js', '.jsx', '.ts', '.tsx']
   }
