@@ -1,48 +1,49 @@
-.form{
+.form {
   margin: 100px auto;
   width: 800px;
 
-  &.loading{
-    .form-contents{
+  &.loading {
+    .form-contents {
       opacity: 0;
       transform: scale(0.5);
     }
-    
-    .loading-indicator{ 
+
+    > .loading-indicator {
       opacity: 1;
       pointer-events: all;
-      transform: translateX(-50%) translateY(-50%) scale(1);
+      transform: translate(-50%, -50%) scale(1);
     }
   }
 
-  .form-contents{
+  .form-contents {
     transition: all 0.25s;
-    .title{
-      h1{      
+    .title {
+      h1 {
         color: $blue;
         font-size: 2.5em;
         font-weight: 300;
       }
     }
 
-    .input{
+    .input {
       display: inline-block;
       position: relative;
       vertical-align: top;
 
-      .label, .error-message{
+      .label,
+      .error-message {
         font-size: 0.8em;
         font-weight: 400;
-        margin: 0px;      
+        margin: 0px;
         margin-left: 20px;
       }
 
-      .label{
+      .label {
         color: gray(60);
         margin-bottom: 5px;
       }
 
-      .error-message{
+      .error-message {
         color: $red;
         height: 0px;
         margin-top: 0px;
@@ -50,7 +51,7 @@
         pointer-events: none;
         transition: 0.25s;
 
-        &.show{
+        &.show {
           height: 15px;
           opacity: 1;
           margin-top: 5px;
@@ -58,32 +59,33 @@
       }
     }
 
-    .checkbox{
-      input{
+    .checkbox {
+      input {
         cursor: pointer;
         height: 50px;
         margin: 0px;
         opacity: 0;
         width: 80px;
 
-        &:hover, &:focus{
-          ~ .checkbox-toggle-track{
-            .checkbox-toggle{
+        &:hover,
+        &:focus {
+          ~ .checkbox-toggle-track {
+            .checkbox-toggle {
               box-shadow: $shadow2;
             }
           }
         }
 
-        &:focus{
-          ~ .checkbox-toggle-track{
+        &:focus {
+          ~ .checkbox-toggle-track {
             border-color: $blue;
           }
         }
 
-        &:checked{
-          ~ .checkbox-toggle-track{
+        &:checked {
+          ~ .checkbox-toggle-track {
             background-color: rgba($blue, 0.25);
-            .checkbox-toggle{
+            .checkbox-toggle {
               left: 100%;
               transform: translateX(-100%);
             }
@@ -91,7 +93,7 @@
         }
       }
 
-      .checkbox-toggle-track{
+      .checkbox-toggle-track {
         border: 1px solid gray(200);
         border-radius: 100px;
         display: inline-block;
@@ -101,7 +103,7 @@
         position: absolute;
         width: 80px;
 
-        .checkbox-toggle{
+        .checkbox-toggle {
           background-color: $blue;
           border-radius: 100px;
           height: 50px;
@@ -114,32 +116,33 @@
       }
     }
 
-    .dropdown{
-      .select-wrapper{    
-        position: relative;  
-        select{
+    .dropdown {
+      .select-wrapper {
+        position: relative;
+        select {
           background-color: transparent;
           border: none;
           height: 20px;
           outline: none;
           width: 100%;
 
-          &:focus, &.error{
-            ~ .border{
+          &:focus,
+          &.error {
+            ~ .border {
               display: block;
             }
           }
 
-          &.error{
-            ~ .border{         
+          &.error {
+            ~ .border {
               border-color: $red;
             }
           }
         }
 
-        .border{      
+        .border {
           border: 1px solid $blue;
-          border-radius: 100px;      
+          border-radius: 100px;
           display: none;
           height: calc(100% - 2px);
           left: 0px;
@@ -155,7 +158,9 @@
       margin-top: 20px;
     }
 
-    input, .select-wrapper, textarea{
+    input,
+    .select-wrapper,
+    textarea {
       background-color: gray(240);
       border: 1px solid transparent;
       border-radius: 100px;
@@ -166,35 +171,35 @@
       padding: 15px 20px;
       vertical-align: top;
       width: calc(100% - 40px);
-      
-      &:focus{
+
+      &:focus {
         border: 1px solid $blue;
 
-        ~ .label{
+        ~ .label {
           color: $blue;
         }
       }
 
-      &[type="text"]{
+      &[type="text"] {
         height: 20px;
       }
 
-      &.error{
+      &.error {
         border: 1px solid $red;
       }
     }
 
-    textarea{
+    textarea {
       border-radius: 10px;
       max-width: calc(100% - 40px);
       min-height: 100px;
       min-width: calc(100% - 40px);
     }
 
-    .submit-button{
+    .submit-button {
       margin: auto;
       width: 500px;
-      button{
+      button {
         background-color: $lightBlue;
         border: none;
         border-radius: 100px;
@@ -205,12 +210,13 @@
         outline: none;
         padding: 15px 20px;
 
-        &:hover, &:focus{
+        &:hover,
+        &:focus {
           box-shadow: $shadow2;
         }
       }
 
-      .error-message{
+      .error-message {
         color: $red;
         font-weight: 400;
         height: 0px;
@@ -221,7 +227,7 @@
         text-align: center;
         transition: all 0.25s;
 
-        &.show{
+        &.show {
           opacity: 1;
           height: 20px;
         }
@@ -229,10 +235,10 @@
     }
   }
 
-  .loading-indicator{
+  .loading-indicator {
     opacity: 0;
     pointer-events: none;
-    transform: translateX(-50%) scale(0.5);
-    transition: all 0.25s;    
+    transform: translate(-50%, -50%) scale(0.5);
+    transition: all 0.25s;
   }
 }

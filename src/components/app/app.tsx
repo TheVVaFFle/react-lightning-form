@@ -20,11 +20,17 @@ declare module "react" {
 export interface AppProps {}
 
 export const App: React.SFC<AppProps> = (props: AppProps) => {
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(true),
+    [loadingName, setLoadingName] = useState(false);
 
   const simulateLoading = () => {
     setLoading(true);
     setTimeout(() => setLoading(false), 1000);
+  };
+
+  const simulateLoadingName = () => {
+    setLoadingName(true);
+    setTimeout(() => setLoadingName(false), 1000);
   };
 
   useEffect(() => {
@@ -36,6 +42,11 @@ export const App: React.SFC<AppProps> = (props: AppProps) => {
     simulateLoading();
   };
 
+  const handleSubmitName = (formState: any) => {
+    console.log(formState);
+    simulateLoadingName();
+  };
+
   return (
     <div id="app">
       <Form
@@ -44,7 +55,13 @@ export const App: React.SFC<AppProps> = (props: AppProps) => {
         loading={loading}
         onSubmit={handleOnSubmit}
       >
-        <Section title="Name" columns={4} data={Test.data.name} />
+        <Section
+          title="Name"
+          columns={4}
+          data={Test.data.name}
+          loading={loadingName}
+          onSubmit={handleSubmitName}
+        />
         <Section title="Contact" columns={2}>
           <Section columns={3} data={Test.data.contact.section1} />
           <Section columns={1} data={Test.data.contact.section2} />

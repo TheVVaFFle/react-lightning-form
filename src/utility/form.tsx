@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Children } from "react";
 import classNames from "classnames";
 
 import { FormComponentType } from "../components/form/form";
@@ -38,7 +38,7 @@ export const FormUtility = {
               FormUtility.state.create(formState, child.props.data);
             }
           } else {
-            return;
+            return child;
           }
         });
       } else {
