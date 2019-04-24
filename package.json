@@ -2,7 +2,15 @@
   "name": "react-lightning-form",
   "version": "1.0.3",
   "main": "index.js",
+  "files": ["lib/**/*"],
+  "types": "lib/index.d.ts",
   "license": "MIT",
+  "scripts": {
+    "start": "webpack-dev-server --mode development --open --hot",
+    "share": "webpack-dev-server --mode development --open --hot --host 10.8.20.29",
+    "build": "cross-env NODE_ENV=production webpack --mode production",
+    "kill": "taskkill /f /im node*"
+  },
   "dependencies": {
     "classnames": "^2.2.6",
     "lodash": "^4.17.11",
@@ -37,11 +45,5 @@
     "webpack": "^4.29.6",
     "webpack-cli": "^3.3.0",
     "webpack-dev-server": "^3.2.1"
-  },
-  "scripts": {
-    "start": "webpack-dev-server --mode development --open --hot",
-    "share": "webpack-dev-server --mode development --open --hot --host 10.8.20.29",
-    "build": "cross-env NODE_ENV=production webpack --mode production",
-    "kill": "taskkill /f /im node*"
   }
 }
