@@ -1,174 +1,268 @@
 .form {
   margin: 100px auto;
-  width: 800px; }
-  .form.loading .form-contents {
-    opacity: 0;
-    transform: scale(0.5); }
-  .form.loading .loading-indicator {
-    opacity: 1;
-    pointer-events: all;
-    transform: translateX(-50%) translateY(-50%) scale(1); }
-  .form .form-contents {
-    transition: all 0.25s; }
-    .form .form-contents .title h1 {
-      color: #4475fe;
-      font-size: 2.5em;
-      font-weight: 300; }
-    .form .form-contents .input {
-      display: inline-block;
-      position: relative;
-      vertical-align: top; }
-      .form .form-contents .input .label, .form .form-contents .input .error-message {
-        font-size: 0.8em;
-        font-weight: 400;
-        margin: 0px;
-        margin-left: 20px; }
-      .form .form-contents .input .label {
-        color: #3c3c3c;
-        margin-bottom: 5px; }
-      .form .form-contents .input .error-message {
-        color: #d32f2f;
-        height: 0px;
-        margin-top: 0px;
-        opacity: 0;
-        pointer-events: none;
-        transition: 0.25s; }
-        .form .form-contents .input .error-message.show {
-          height: 15px;
-          opacity: 1;
-          margin-top: 5px; }
-    .form .form-contents .checkbox input {
-      cursor: pointer;
-      height: 50px;
-      margin: 0px;
-      opacity: 0;
-      width: 80px; }
-      .form .form-contents .checkbox input:hover ~ .checkbox-toggle-track .checkbox-toggle, .form .form-contents .checkbox input:focus ~ .checkbox-toggle-track .checkbox-toggle {
-        box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 10px, rgba(0, 0, 0, 0.23) 0px 3px 10px; }
-      .form .form-contents .checkbox input:focus ~ .checkbox-toggle-track {
-        border-color: #4475fe; }
-      .form .form-contents .checkbox input:checked ~ .checkbox-toggle-track {
-        background-color: rgba(68, 117, 254, 0.25); }
-        .form .form-contents .checkbox input:checked ~ .checkbox-toggle-track .checkbox-toggle {
-          left: 100%;
-          transform: translateX(-100%); }
-    .form .form-contents .checkbox .checkbox-toggle-track {
-      border: 1px solid #c8c8c8;
-      border-radius: 100px;
-      display: inline-block;
-      height: 50px;
-      left: 0px;
-      pointer-events: none;
-      position: absolute;
-      width: 80px; }
-      .form .form-contents .checkbox .checkbox-toggle-track .checkbox-toggle {
-        background-color: #4475fe;
-        border-radius: 100px;
-        height: 50px;
-        left: 0px;
-        position: absolute;
-        top: 0px;
-        transition: all 0.25s;
-        width: 50px; }
-    .form .form-contents .dropdown .select-wrapper {
-      position: relative; }
-      .form .form-contents .dropdown .select-wrapper select {
-        background-color: transparent;
-        border: none;
-        height: 20px;
-        outline: none;
-        width: 100%; }
-        .form .form-contents .dropdown .select-wrapper select:focus ~ .border, .form .form-contents .dropdown .select-wrapper select.error ~ .border {
-          display: block; }
-        .form .form-contents .dropdown .select-wrapper select.error ~ .border {
-          border-color: #d32f2f; }
-      .form .form-contents .dropdown .select-wrapper .border {
-        border: 1px solid #4475fe;
-        border-radius: 100px;
-        display: none;
-        height: calc(100% - 2px);
-        left: 0px;
-        pointer-events: none;
-        position: absolute;
-        top: 0px;
-        width: calc(100% - 2px); }
-    .form .form-contents > input {
-      margin-top: 20px; }
-    .form .form-contents input, .form .form-contents .select-wrapper, .form .form-contents textarea {
-      background-color: #f0f0f0;
-      border: 1px solid transparent;
-      border-radius: 100px;
-      color: #3c3c3c;
-      display: inline-block;
-      font-weight: 400;
-      outline: none;
-      padding: 15px 20px;
-      vertical-align: top;
-      width: calc(100% - 40px); }
-      .form .form-contents input:focus, .form .form-contents .select-wrapper:focus, .form .form-contents textarea:focus {
-        border: 1px solid #4475fe; }
-        .form .form-contents input:focus ~ .label, .form .form-contents .select-wrapper:focus ~ .label, .form .form-contents textarea:focus ~ .label {
-          color: #4475fe; }
-      .form .form-contents input[type="text"], .form .form-contents .select-wrapper[type="text"], .form .form-contents textarea[type="text"] {
-        height: 20px; }
-      .form .form-contents input.error, .form .form-contents .select-wrapper.error, .form .form-contents textarea.error {
-        border: 1px solid #d32f2f; }
-    .form .form-contents textarea {
-      border-radius: 10px;
-      max-width: calc(100% - 40px);
-      min-height: 100px;
-      min-width: calc(100% - 40px); }
-    .form .form-contents .submit-button {
-      margin: auto;
-      width: 500px; }
-      .form .form-contents .submit-button button {
-        background-color: #03a9f4;
-        border: none;
-        border-radius: 100px;
-        color: white;
-        cursor: pointer;
-        display: block;
-        margin-top: 40px;
-        outline: none;
-        padding: 15px 20px; }
-        .form .form-contents .submit-button button:hover, .form .form-contents .submit-button button:focus {
-          box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 10px, rgba(0, 0, 0, 0.23) 0px 3px 10px; }
-      .form .form-contents .submit-button .error-message {
-        color: #d32f2f;
-        font-weight: 400;
-        height: 0px;
-        margin: 0px;
-        margin-top: 10px;
-        opacity: 0;
-        pointer-events: none;
-        text-align: center;
-        transition: all 0.25s; }
-        .form .form-contents .submit-button .error-message.show {
-          opacity: 1;
-          height: 20px; }
-  .form .loading-indicator {
-    opacity: 0;
-    pointer-events: none;
-    transform: translateX(-50%) scale(0.5);
-    transition: all 0.25s; }
+  width: 800px;
+}
+.form.loading .form-contents {
+  opacity: 0;
+  transform: scale(0.5);
+}
+.form.loading > .loading-indicator {
+  opacity: 1;
+  pointer-events: all;
+  transform: translate(-50%, -50%) scale(1);
+}
+.form .form-contents {
+  transition: all 0.25s;
+}
+.form .form-contents .title h1 {
+  color: #4475fe;
+  font-size: 2.5em;
+  font-weight: 300;
+}
+.form .form-contents .input {
+  display: inline-block;
+  position: relative;
+  vertical-align: top;
+}
+.form .form-contents .input .label,
+.form .form-contents .input .error-message {
+  font-size: 0.8em;
+  font-weight: 400;
+  margin: 0px;
+  margin-left: 20px;
+}
+.form .form-contents .input .label {
+  color: #3c3c3c;
+  margin-bottom: 5px;
+}
+.form .form-contents .input .error-message {
+  color: #d32f2f;
+  height: 0px;
+  margin-top: 0px;
+  opacity: 0;
+  pointer-events: none;
+  transition: 0.25s;
+}
+.form .form-contents .input .error-message.show {
+  height: 15px;
+  opacity: 1;
+  margin-top: 5px;
+}
+.form .form-contents .checkbox input {
+  cursor: pointer;
+  height: 50px;
+  margin: 0px;
+  opacity: 0;
+  width: 80px;
+}
+.form
+  .form-contents
+  .checkbox
+  input:hover
+  ~ .checkbox-toggle-track
+  .checkbox-toggle,
+.form
+  .form-contents
+  .checkbox
+  input:focus
+  ~ .checkbox-toggle-track
+  .checkbox-toggle {
+  box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 10px, rgba(0, 0, 0, 0.23) 0px 3px 10px;
+}
+.form .form-contents .checkbox input:focus ~ .checkbox-toggle-track {
+  border-color: #4475fe;
+}
+.form .form-contents .checkbox input:checked ~ .checkbox-toggle-track {
+  background-color: rgba(68, 117, 254, 0.25);
+}
+.form
+  .form-contents
+  .checkbox
+  input:checked
+  ~ .checkbox-toggle-track
+  .checkbox-toggle {
+  left: 100%;
+  transform: translateX(-100%);
+}
+.form .form-contents .checkbox .checkbox-toggle-track {
+  border: 1px solid #c8c8c8;
+  border-radius: 100px;
+  display: inline-block;
+  height: 50px;
+  left: 0px;
+  pointer-events: none;
+  position: absolute;
+  width: 80px;
+}
+.form .form-contents .checkbox .checkbox-toggle-track .checkbox-toggle {
+  background-color: #4475fe;
+  border-radius: 100px;
+  height: 50px;
+  left: 0px;
+  position: absolute;
+  top: 0px;
+  transition: all 0.25s;
+  width: 50px;
+}
+.form .form-contents .dropdown .select-wrapper {
+  position: relative;
+}
+.form .form-contents .dropdown .select-wrapper select {
+  background-color: transparent;
+  border: none;
+  height: 20px;
+  outline: none;
+  width: 100%;
+}
+.form .form-contents .dropdown .select-wrapper select:focus ~ .border,
+.form .form-contents .dropdown .select-wrapper select.error ~ .border {
+  display: block;
+}
+.form .form-contents .dropdown .select-wrapper select.error ~ .border {
+  border-color: #d32f2f;
+}
+.form .form-contents .dropdown .select-wrapper .border {
+  border: 1px solid #4475fe;
+  border-radius: 100px;
+  display: none;
+  height: calc(100% - 2px);
+  left: 0px;
+  pointer-events: none;
+  position: absolute;
+  top: 0px;
+  width: calc(100% - 2px);
+}
+.form .form-contents > input {
+  margin-top: 20px;
+}
+.form .form-contents input,
+.form .form-contents .select-wrapper,
+.form .form-contents textarea {
+  background-color: #f0f0f0;
+  border: 1px solid transparent;
+  border-radius: 100px;
+  color: #3c3c3c;
+  display: inline-block;
+  font-weight: 400;
+  outline: none;
+  padding: 15px 20px;
+  vertical-align: top;
+  width: calc(100% - 40px);
+}
+.form .form-contents input:focus,
+.form .form-contents .select-wrapper:focus,
+.form .form-contents textarea:focus {
+  border: 1px solid #4475fe;
+}
+.form .form-contents input:focus ~ .label,
+.form .form-contents .select-wrapper:focus ~ .label,
+.form .form-contents textarea:focus ~ .label {
+  color: #4475fe;
+}
+.form .form-contents input[type="text"],
+.form .form-contents .select-wrapper[type="text"],
+.form .form-contents textarea[type="text"] {
+  height: 20px;
+}
+.form .form-contents input.error,
+.form .form-contents .select-wrapper.error,
+.form .form-contents textarea.error {
+  border: 1px solid #d32f2f;
+}
+.form .form-contents textarea {
+  border-radius: 10px;
+  max-width: calc(100% - 40px);
+  min-height: 100px;
+  min-width: calc(100% - 40px);
+}
+.form .form-contents .submit-button {
+  margin: auto;
+  width: 500px;
+}
+.form .form-contents .submit-button button {
+  background-color: #03a9f4;
+  border: none;
+  border-radius: 100px;
+  color: white;
+  cursor: pointer;
+  display: block;
+  margin-top: 40px;
+  outline: none;
+  padding: 15px 20px;
+}
+.form .form-contents .submit-button button:hover,
+.form .form-contents .submit-button button:focus {
+  box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 10px, rgba(0, 0, 0, 0.23) 0px 3px 10px;
+}
+.form .form-contents .submit-button .error-message {
+  color: #d32f2f;
+  font-weight: 400;
+  height: 0px;
+  margin: 0px;
+  margin-top: 10px;
+  opacity: 0;
+  pointer-events: none;
+  text-align: center;
+  transition: all 0.25s;
+}
+.form .form-contents .submit-button .error-message.show {
+  opacity: 1;
+  height: 20px;
+}
+.form .loading-indicator {
+  opacity: 0;
+  pointer-events: none;
+  transform: translate(-50%, -50%) scale(0.5);
+  transition: all 0.25s;
+}
 
 .section {
   border-radius: 10px;
   box-shadow: rgba(0, 0, 0, 0.12) 0px 1px 6px, rgba(0, 0, 0, 0.12) 0px 1px 4px;
-  padding: 20px; }
-  .section:nth-child(n + 2) {
-    margin-top: 20px; }
-  .section .title h1 {
-    color: #3c3c3c;
-    font-size: 2em;
-    font-weight: 300;
-    margin: 0px; }
-  .section .fields {
-    margin-top: 20px; }
+  padding: 20px;
+  position: relative;
+}
+.section.loading .title,
+.section.loading .fields,
+.section.loading .submit-button {
+  opacity: 0;
+  transform: scale(0.5);
+}
+.section.loading .loading-indicator {
+  opacity: 1;
+  pointer-events: all;
+  transform: translateX(-50%) translateY(-50%) scale(1);
+}
+.section:nth-child(n + 2) {
+  margin-top: 20px;
+}
+.section.sub-section {
+  border-radius: 0px;
+  box-shadow: none;
+  padding: 0px;
+}
+.section .title,
+.section .fields,
+.section .submit-button {
+  transition: all 0.25s;
+}
+.section .title h1 {
+  color: #3c3c3c;
+  font-size: 2em;
+  font-weight: 300;
+  margin: 0px;
+}
+.section .fields {
+  margin-top: 20px;
+}
 
 .loading-indicator {
   left: 50%;
+  position: absolute;
+  top: 50%;
+  transform: translate(-50%, -50%);
+}
+.loading-indicator.full-screen {
   position: fixed;
   top: 50vh;
-  transform: translateX(-50%); }
-
+}
