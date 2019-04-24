@@ -7,7 +7,7 @@ const config = {
     bundle: path.resolve(__dirname, "src/index.tsx")
   },
   output: {
-    filename: "[name].js",
+    filename: "index.js",
     path: path.resolve(__dirname, 'build'),
     publicPath: "/"
   },
