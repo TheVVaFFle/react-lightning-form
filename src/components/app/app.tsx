@@ -36,10 +36,6 @@ export const App: React.SFC<AppProps> = (props: AppProps) => {
     simulateLoading();
   };
 
-  const validateComments = (value: string): boolean => {
-    return value.length >= 20 && value.length <= 50;
-  };
-
   return (
     <div id="app">
       <Form
@@ -49,14 +45,10 @@ export const App: React.SFC<AppProps> = (props: AppProps) => {
         onSubmit={handleOnSubmit}
       >
         <Section title="Name" columns={4} data={Test.data.name} />
-        <Section title="Contact" columns={2} data={Test.data.contact} />
-        <textarea
-          id="comments"
-          placeholder="Enter comments here"
-          label="Comments"
-          validate={validateComments}
-          errormessage="Must be between 20 and 50 characters."
-        />
+        <Section title="Contact" columns={2}>
+          <Section columns={3} data={Test.data.contact.section1} />
+          <Section columns={1} data={Test.data.contact.section2} />
+        </Section>
       </Form>
     </div>
   );

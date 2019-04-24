@@ -1,14 +1,20 @@
-.section{
+.section {
   border-radius: 10px;
   box-shadow: $shadow1;
   padding: 20px;
 
-  &:nth-child(n + 2){
+  &:nth-child(n + 2) {
     margin-top: 20px;
   }
 
-  .title{    
-    h1{
+  &.sub-section {
+    border-radius: 0px;
+    box-shadow: none;
+    padding: 0px;
+  }
+
+  .title {
+    h1 {
       color: gray(60);
       font-size: 2em;
       font-weight: 300;
@@ -16,7 +22,7 @@
     }
   }
 
-  .fields{
+  .fields {
     margin-top: 20px;
   }
 }

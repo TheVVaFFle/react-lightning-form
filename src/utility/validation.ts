@@ -1,15 +1,9 @@
-import Validator from "validator"
+import Validator from "validator";
 
 export enum ValidationType {
   Phone = "phone",
   Email = "email",
   Required = "required"
-}
-
-export enum InputType {
-  Checkbox = "checkbox",
-  Dropdown = "dropdown",
-  TextArea = "textarea"
 }
 
 export const Validate: any = {
@@ -23,14 +17,18 @@ export const Validate: any = {
     return input !== undefined && input !== null && input.trim() !== "";
   },
   determineIfError: (value: any, validate: Function) => {
-    if(validate !== undefined && validate !== null){
+    if (validate !== undefined && validate !== null) {
       return !validate(value);
     }
 
     return false;
   },
-  getErrorMessage: (type: ValidationType, input: string, child: JSX.Element): string => {
-    switch(type){
+  getErrorMessage: (
+    type: ValidationType,
+    input: string,
+    child: JSX.Element
+  ): string => {
+    switch (type) {
       case ValidationType.Phone:
         return "Please enter a valid phone number.";
       case ValidationType.Email:
@@ -38,7 +36,7 @@ export const Validate: any = {
       case ValidationType.Required:
         return "Field is required.";
       default:
-        return child.props.errormessage|| "";
+        return child.props.errormessage || "";
     }
   }
-}
+};

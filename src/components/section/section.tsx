@@ -1,6 +1,7 @@
-import React from "react"
+import React from "react";
+import classNames from "classnames";
 
-export interface SectionProps{
+export interface SectionProps {
   title?: string;
   children?: any;
   data?: any;
@@ -9,27 +10,33 @@ export interface SectionProps{
 
 export const Section: React.SFC<SectionProps> = (props: SectionProps) => {
   const getTitle = (): JSX.Element | null => {
-    if(props.title !== undefined && props.title !== null){
-      return(
+    if (props.title !== undefined && props.title !== null) {
+      return (
         <div className="title">
           <h1>{props.title}</h1>
         </div>
-      )
+      );
     }
 
     return null;
-  }
-  
+  };
+
   const getChildren = (): JSX.Element[] | null => {
     return props.children || null;
-  }
-  
-  return(
-    <div className="section">
+  };
+
+  const getClasses = (): string => {
+    const classes: string = classNames("section", {
+      "sub-section": props.title === undefined || props.title === null
+    });
+
+    return classes;
+  };
+
+  return (
+    <div className={getClasses()}>
       {getTitle()}
-      <div className="fields">
-        {getChildren()}
-      </div>
+      <div className="fields">{getChildren()}</div>
     </div>
-  )
-}
+  );
+};

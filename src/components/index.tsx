@@ -1,7 +1,7 @@
 import { Form, FormComponentType } from "./form/form";
 import { Section } from "./section/section";
 
-import { ValidationType, InputType } from "../utility/validation";
+import { ValidationType } from "../utility/validation";
 
 declare module "react" {
   interface HTMLAttributes<T> {
@@ -12,4 +12,4 @@ declare module "react" {
   }
 }
 
-export { Form, FormComponentType, Section, ValidationType, InputType };
+export { Form, FormComponentType, Section, ValidationType };
