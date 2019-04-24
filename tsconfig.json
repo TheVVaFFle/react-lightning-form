@@ -67,10 +67,10 @@
     "resolveJsonModule": true /* Include modules imported with '.json' extension */
   },
   "include": [
-    "./src/**/*.tsx",
-    "./src/**/*.ts"
+    "src/components/**/*"
   ],
   "exclude": [
-    "node_modules"
+    "node_modules",
+    "src/components/app"
   ]
 }
