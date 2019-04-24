@@ -1,13 +1,13 @@
 {
   "name": "react-lightning-form",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "main": "lib/components/index.js",
   "types": "lib/components/index.d.ts",
   "license": "MIT",
   "scripts": {
     "start": "webpack-dev-server --mode development --open --hot",
     "share": "webpack-dev-server --mode development --open --hot --host 10.8.20.29",
-    "build": "cross-env NODE_ENV=production webpack --mode production",    
+    "build": "cross-env NODE_ENV=production webpack --mode production",
     "clean:lib": "rm -rf lib",
     "webpack:lib": "cross-env NODE_ENV=production webpack --config webpack.config.lib.js --mode production",
     "build:lib": "yarn clean:lib && tsc && yarn webpack:lib",
