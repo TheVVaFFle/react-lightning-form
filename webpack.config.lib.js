@@ -4,7 +4,7 @@ const webpack = require("webpack"),
 
 const config = {
   entry: {
-    styles: path.resolve(__dirname, "src/components/app/app.scss")
+    styles: path.resolve(__dirname, "src/components/index.scss")
   },
   output: {
     path: path.resolve(__dirname, 'lib'),
