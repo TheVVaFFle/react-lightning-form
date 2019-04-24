@@ -171,7 +171,7 @@ export const FormUtility = {
         }
       };
 
-      const getInput = (key: string, v: any) => {
+      const getInputForDataProperty = (key: string, v: any) => {
         const id: string = GeneralUtility.camelCaseToKebab(key),
           label: string = v.label || GeneralUtility.camelCaseToNormal(key);
 
@@ -204,7 +204,8 @@ export const FormUtility = {
                 type="dropdown"
                 defaultValue={getValue(v)}
                 label={label}
-                validate={v.validate}
+                validate={v.validate.toString()}
+                errormessage={v.errormessage || "Error, invalid selection."}
               >
                 {options}
               </select>
@@ -217,7 +218,8 @@ export const FormUtility = {
                 defaultValue={getValue(v)}
                 label={label}
                 placeholder={`Enter ${label.toLowerCase()}`}
-                validate={v.validate}
+                validate={v.validate.toString()}
+                errormessage={v.errormessage || "Error, invalid input."}
               />
             );
           }
@@ -240,7 +242,7 @@ export const FormUtility = {
       return Object.entries(data).map((entry: any) => {
         const key: string = entry[0],
           value: string | number = entry[1];
-        return getInput(key, value);
+        return getInputForDataProperty(key, value);
       });
     },
     enhance: (
