@@ -1,8 +1,10 @@
 {
   "name": "react-lightning-form",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "main": "index.js",
-  "files": ["lib/**/*"],
+  "files": [
+    "lib/**/*"
+  ],
   "types": "lib/index.d.ts",
   "license": "MIT",
   "scripts": {
