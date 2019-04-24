@@ -1,12 +1,21 @@
 import * as React from "react";
 import { useState, useEffect } from "react";
 
-import { Form } from "../";
+import { Form, ValidationType } from "../";
 import { Section } from "../";
 
 import { Test } from "../../data";
 
 require("./app.scss");
+
+declare module "react" {
+  interface HTMLAttributes<T> {
+    validate?: ValidationType | Function;
+    label?: string;
+    type?: string;
+    errormessage?: string;
+  }
+}
 
 export interface AppProps {}
 

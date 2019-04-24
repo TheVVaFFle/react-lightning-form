@@ -1,10 +1,10 @@
-import {Form, FormComponentType} from "./form/form";
-import {Section} from "./section/section";
+import { Form, FormComponentType } from "./form/form";
+import { Section } from "./section/section";
 
 import { ValidationType, InputType } from "../utility/validation";
 
-declare module 'react' {
-  interface HTMLAttributes<T> extends DOMAttributes<T> {
+declare module "react" {
+  interface HTMLAttributes<T> {
     validate?: ValidationType | Function;
     label?: string;
     type?: string;
@@ -12,10 +12,4 @@ declare module 'react' {
   }
 }
 
-export {
-  Form,
-  FormComponentType,
-  Section,
-  ValidationType,
-  InputType
-}
+export { Form, FormComponentType, Section, ValidationType, InputType };
