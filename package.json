@@ -6,6 +6,7 @@
   "license": "MIT",
   "scripts": {
     "commit": "git add . && git commit",
+    "push": "git pull && git push",
     "start": "webpack-dev-server --mode development --open --hot",
     "share": "webpack-dev-server --mode development --open --hot --host 10.8.20.29",
     "build": "cross-env NODE_ENV=production webpack --mode production",
