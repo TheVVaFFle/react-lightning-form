@@ -53,7 +53,7 @@ export const Section: React.SFC<SectionProps> = (props: SectionProps) => {
   const getSubmitButton = () => {
     if (props.onSubmit) {
       return (
-        <div className="submit-button">
+        <div className="submit-button-wrapper">
           <button
             type="button"
             className="submit-button"

@@ -196,26 +196,9 @@
       min-width: calc(100% - 40px);
     }
 
-    .submit-button {
+    .submit-button-wrapper {
       margin: auto;
       width: 500px;
-      button {
-        background-color: $lightBlue;
-        border: none;
-        border-radius: 100px;
-        color: white;
-        cursor: pointer;
-        display: block;
-        margin-top: 40px;
-        outline: none;
-        padding: 15px 20px;
-
-        &:hover,
-        &:focus {
-          box-shadow: $shadow2;
-        }
-      }
-
       .error-message {
         color: $red;
         font-weight: 400;
@@ -231,6 +214,25 @@
           opacity: 1;
           height: 20px;
         }
+      }
+    }
+
+    .submit-button {
+      background-color: $lightBlue;
+      border: none;
+      border-radius: 100px;
+      color: white;
+      cursor: pointer;
+      display: block;
+      margin: auto;
+      margin-top: 40px;
+      outline: none;
+      padding: 15px 20px;
+      width: 500px;
+
+      &:hover,
+      &:focus {
+        box-shadow: $shadow2;
       }
     }
   }

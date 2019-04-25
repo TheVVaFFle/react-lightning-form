@@ -114,7 +114,7 @@ export const Form: React.SFC<FormProps> = (props: FormProps) => {
       <div className="form-contents">
         {FormUtility.get.title(props.title)}
         {handleFormChildren(props.children)}
-        <div className="submit-button">
+        <div className="submit-button-wrapper">
           <button
             type="button"
             className="submit-button"

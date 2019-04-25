@@ -65,6 +65,9 @@ export const App: React.SFC<AppProps> = (props: AppProps) => {
         <Section title="Contact" columns={2}>
           <Section columns={3} data={Test.data.contact.section1} />
           <Section columns={1} data={Test.data.contact.section2} />
+          <button type="button" className="submit-button">
+            Hello
+          </button>
         </Section>
       </Form>
     </div>
