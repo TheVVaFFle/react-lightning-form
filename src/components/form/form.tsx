@@ -78,7 +78,8 @@ export const Form: React.SFC<FormProps> = (props: FormProps) => {
 
         return React.cloneElement(child, {
           ...child.props,
-          children: mappedChildren
+          children: mappedChildren,
+          formState
         });
       } else {
         return FormUtility.input.enhance(

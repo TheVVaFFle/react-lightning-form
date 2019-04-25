@@ -375,10 +375,11 @@ export const FormUtility = {
             }
           };
 
-          let updatedFormState: any = formState;
+          let updatedFormState: any = formState,
+            key: string = GeneralUtility.kebabToCamelCase(child.props.id);
 
-          updatedFormState[child.props.id] = {
-            ...formState[child.props.id],
+          updatedFormState[key] = {
+            ...formState[key],
             value: getValue()
           };
 

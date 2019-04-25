@@ -12,6 +12,7 @@ export interface SectionProps {
   data?: any;
   columns?: number;
   loading?: boolean;
+  formState?: any;
   onSubmit?: (formState: any) => void;
 }
 
@@ -45,7 +46,7 @@ export const Section: React.SFC<SectionProps> = (props: SectionProps) => {
 
   const handleOnSubmit = () => {
     if (props.onSubmit && !props.loading) {
-      props.onSubmit("");
+      props.onSubmit(props.formState);
     }
   };
 
