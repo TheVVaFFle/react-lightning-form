@@ -19,7 +19,10 @@ export const FormUtility = {
             type === FormComponentType.TextArea
           ) {
             if (child.props.id !== undefined && child.props.id !== null) {
-              updatedFormState[child.props.id] = {
+              const key: string = GeneralUtility.kebabToCamelCase(
+                child.props.id
+              );
+              updatedFormState[key] = {
                 value: child.props.defaultValue || "",
                 validate: child.props.validate || null,
                 error: false
@@ -80,6 +83,44 @@ export const FormUtility = {
     }
   },
   validate: {
+    section: {
+      submission: (
+        formState: any,
+        sectionState: any,
+        setFormState: Function,
+        setErrorCount: Function
+      ): boolean => {
+        let nErrors: number = 0,
+          updatedFormState: any = formState;
+
+        Object.entries(sectionState).map((entry: any) => {
+          const key = entry[0],
+            prop = entry[1];
+
+          let validationFn: Function | null = null;
+
+          if (prop.validate !== undefined) {
+            if (!Object.values(ValidationType).includes(prop.validate)) {
+              validationFn = eval(prop.validate);
+            } else {
+              validationFn = Validate[prop.validate];
+            }
+          }
+
+          if (Validate.determineIfError(prop.value, validationFn)) {
+            updatedFormState[key].error = true;
+            nErrors++;
+          } else {
+            updatedFormState[key].error = false;
+          }
+        });
+
+        setFormState(updatedFormState);
+        setErrorCount(nErrors);
+
+        return nErrors === 0;
+      }
+    },
     submission: (
       formState: any,
       setFormState: Function,
@@ -390,10 +431,12 @@ export const FormUtility = {
         return onChange;
       },
       classes: (child: JSX.Element, formState: any): string => {
+        const key: string = GeneralUtility.kebabToCamelCase(child.props.id);
+
         const classes: string = classNames(
           child.props.className,
           {
-            error: formState[child.props.id] && formState[child.props.id].error
+            error: formState[key] && formState[key].error
           },
           { "scroll-bar": child.type === FormComponentType.TextArea }
         );
@@ -434,14 +477,10 @@ export const FormUtility = {
         child: JSX.Element,
         formState: any
       ): JSX.Element | null => {
-        const error: boolean =
-            formState[child.props.id] && formState[child.props.id].error,
-          input: string = formState[child.props.id]
-            ? formState[child.props.id].value
-            : "",
-          type: string = formState[child.props.id]
-            ? formState[child.props.id].validate
-            : "";
+        const key: string = GeneralUtility.kebabToCamelCase(child.props.id),
+          error: boolean = formState[key] && formState[key].error,
+          input: string = formState[key] ? formState[key].value : "",
+          type: string = formState[key] ? formState[key].validate : "";
 
         const classes: string = classNames("error-message", { show: error });
 

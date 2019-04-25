@@ -13,11 +13,16 @@ export interface SectionProps {
   columns?: number;
   loading?: boolean;
   formState?: any;
+  errorCount?: number;
+  setFormState?: (formState: any) => void;
+  setErrorCount?: (errorCount: boolean) => void;
   onSubmit?: (formState: any) => void;
 }
 
 export const Section: React.SFC<SectionProps> = (props: SectionProps) => {
-  const errorCount: number = 0;
+  const errorCount: number = props.errorCount || 0,
+    setFormState: Function = props.setFormState || new Function(),
+    setErrorCount: Function = props.setErrorCount || new Function();
 
   const getTitle = (): JSX.Element | null => {
     if (props.title !== undefined && props.title !== null) {
@@ -44,13 +49,58 @@ export const Section: React.SFC<SectionProps> = (props: SectionProps) => {
     return classes;
   };
 
-  const handleOnSubmit = () => {
+  const getSectionData = (props: any, sectionData: any) => {
+    if (props.data) {
+      return props.data;
+    }
+
+    if (props.children) {
+      props.children.forEach((child: any) => {
+        if (child.props.data) {
+          sectionData = {
+            ...sectionData,
+            ...child.props.data
+          };
+        } else {
+          getSectionData(child.prop, sectionData);
+        }
+      });
+    }
+
+    return sectionData;
+  };
+
+  const getSectionState = (): any => {
+    let sectionState: any = {},
+      sectionData: any = getSectionData(props, {});
+    if (props.formState && sectionData) {
+      Object.entries(sectionData).forEach((entry: any) => {
+        const key = entry[0];
+        sectionState[key] = props.formState[key];
+      });
+    }
+
+    return sectionState;
+  };
+
+  const handleOnSubmit = (): void => {
     if (props.onSubmit && !props.loading) {
-      props.onSubmit(props.formState);
+      const sectionState: any = getSectionState();
+
+      if (
+        FormUtility.validate.section.submission(
+          props.formState,
+          sectionState,
+          setFormState,
+          setErrorCount
+        )
+      ) {
+        props.onSubmit(sectionState);
+      }
     }
   };
 
-  const getSubmitButton = () => {
+  const getSubmitButton = (): JSX.Element | null => {
     if (props.onSubmit) {
       return (
         <div className="submit-button-wrapper">
@@ -69,12 +119,20 @@ export const Section: React.SFC<SectionProps> = (props: SectionProps) => {
     return null;
   };
 
+  const getLoadingIndicator = (): JSX.Element | null => {
+    if (props.onSubmit) {
+      return <Loading />;
+    }
+
+    return null;
+  };
+
   return (
     <div className={getClasses()}>
       {getTitle()}
       <div className="fields">{getChildren()}</div>
       {getSubmitButton()}
-      <Loading />
+      {getLoadingIndicator()}
     </div>
   );
 };

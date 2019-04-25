@@ -21,7 +21,8 @@ export interface AppProps {}
 
 export const App: React.SFC<AppProps> = (props: AppProps) => {
   const [loading, setLoading] = useState(true),
-    [loadingName, setLoadingName] = useState(false);
+    [loadingName, setLoadingName] = useState(false),
+    [loadingContact, setLoadingContact] = useState(false);
 
   const simulateLoading = () => {
     setLoading(true);
@@ -31,6 +32,11 @@ export const App: React.SFC<AppProps> = (props: AppProps) => {
   const simulateLoadingName = () => {
     setLoadingName(true);
     setTimeout(() => setLoadingName(false), 1000);
+  };
+
+  const simulateLoadingContact = () => {
+    setLoadingContact(true);
+    setTimeout(() => setLoadingContact(false), 1000);
   };
 
   useEffect(() => {
@@ -45,6 +51,11 @@ export const App: React.SFC<AppProps> = (props: AppProps) => {
   const handleSubmitName = (formState: any) => {
     console.log(formState);
     simulateLoadingName();
+  };
+
+  const handleSubmitContact = (formState: any) => {
+    console.log(formState);
+    simulateLoadingContact();
   };
 
   return (
@@ -62,12 +73,14 @@ export const App: React.SFC<AppProps> = (props: AppProps) => {
           loading={loadingName}
           onSubmit={handleSubmitName}
         />
-        <Section title="Contact" columns={2}>
+        <Section
+          title="Contact"
+          columns={2}
+          loading={loadingContact}
+          onSubmit={handleSubmitContact}
+        >
           <Section columns={3} data={Test.data.contact.section1} />
           <Section columns={1} data={Test.data.contact.section2} />
-          <button type="button" className="submit-button">
-            Hello
-          </button>
         </Section>
       </Form>
     </div>
