@@ -62,7 +62,7 @@ export const App: React.SFC<AppProps> = (props: AppProps) => {
         loading={loadingName}
         onSubmit={handleSubmitName}
       >
-        <Section title="Name" lg={4} data={Test.data.name} />
+        <Section title="Name" sm={1} md={2} lg={4} data={Test.data.name} />
       </Form>
       <Form
         id="contact-form"

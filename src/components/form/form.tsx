@@ -1,5 +1,6 @@
 import React from "react";
 import { useState, useEffect } from "react";
+import { throttle } from "lodash";
 
 import { Loading } from "../loading/loading";
 
@@ -15,7 +16,7 @@ export enum FormComponentType {
 }
 
 export interface FormProps {
-  id?: string;
+  id: string;
   title?: string;
   children: any;
   sm?: number;
@@ -30,11 +31,21 @@ export const Form: React.SFC<FormProps> = (props: FormProps) => {
   const defaultFormState: any = {},
     [formState, setFormState] = useState(defaultFormState),
     [updateCount, setUpdateCount] = useState(0),
-    [errorCount, setErrorCount] = useState(0);
+    [errorCount, setErrorCount] = useState(0),
+    [windowWidth, setWindowWidth] = useState(0);
 
   useEffect(() => {
     setFormState(FormUtility.state.create(formState, props.children));
   }, []);
+
+  useEffect(() => {
+    const handleResize = () => setWindowWidth(window.innerWidth),
+      forms: HTMLCollection = document.getElementsByClassName("form");
+
+    if (forms[0].id === props.id) {
+      window.addEventListener("resize", throttle(handleResize, 100));
+    }
+  }, [windowWidth]);
 
   const handleFormChildren = (children: JSX.Element[]): any => {
     let altIndex: number = 0;
@@ -121,8 +132,8 @@ export const Form: React.SFC<FormProps> = (props: FormProps) => {
       id={props.id || undefined}
       className={FormUtility.get.classes(props.loading)}
     >
+      {FormUtility.get.title(props.title)}
       <div className="form-contents">
-        {FormUtility.get.title(props.title)}
         {handleFormChildren(props.children)}
         <div className="submit-button-wrapper">
           <button
