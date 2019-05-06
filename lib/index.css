@@ -1,5 +1,6 @@
 .form {
-  margin: 100px auto;
+  margin: 50px auto;
+  position: relative;
   width: 800px;
 }
 .form.loading .form-contents {
@@ -11,13 +12,16 @@
   pointer-events: all;
   transform: translate(-50%, -50%) scale(1);
 }
-.form .form-contents {
-  transition: all 0.25s;
+.form > .title {
+  margin-bottom: 50px;
 }
-.form .form-contents .title h1 {
+.form > .title h1 {
   color: #4475fe;
   font-size: 2.5em;
   font-weight: 300;
+}
+.form .form-contents {
+  transition: all 0.25s;
 }
 .form .form-contents .input {
   display: inline-block;
@@ -175,26 +179,12 @@
   min-height: 100px;
   min-width: calc(100% - 40px);
 }
-.form .form-contents .submit-button {
+.form .form-contents .submit-button-wrapper {
   margin: auto;
-  width: 500px;
+  max-width: 500px;
+  width: 100%;
 }
-.form .form-contents .submit-button button {
-  background-color: #03a9f4;
-  border: none;
-  border-radius: 100px;
-  color: white;
-  cursor: pointer;
-  display: block;
-  margin-top: 40px;
-  outline: none;
-  padding: 15px 20px;
-}
-.form .form-contents .submit-button button:hover,
-.form .form-contents .submit-button button:focus {
-  box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 10px, rgba(0, 0, 0, 0.23) 0px 3px 10px;
-}
-.form .form-contents .submit-button .error-message {
+.form .form-contents .submit-button-wrapper .error-message {
   color: #d32f2f;
   font-weight: 400;
   height: 0px;
@@ -205,9 +195,26 @@
   text-align: center;
   transition: all 0.25s;
 }
-.form .form-contents .submit-button .error-message.show {
+.form .form-contents .submit-button-wrapper .error-message.show {
   opacity: 1;
   height: 20px;
+}
+.form .form-contents .submit-button {
+  background-color: #03a9f4;
+  border: none;
+  border-radius: 100px;
+  color: white;
+  cursor: pointer;
+  display: block;
+  margin: auto;
+  margin-top: 40px;
+  outline: none;
+  padding: 15px 20px;
+  width: 100%;
+}
+.form .form-contents .submit-button:hover,
+.form .form-contents .submit-button:focus {
+  box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 10px, rgba(0, 0, 0, 0.23) 0px 3px 10px;
 }
 .form .loading-indicator {
   opacity: 0;
@@ -222,17 +229,6 @@
   padding: 20px;
   position: relative;
 }
-.section.loading .title,
-.section.loading .fields,
-.section.loading .submit-button {
-  opacity: 0;
-  transform: scale(0.5);
-}
-.section.loading .loading-indicator {
-  opacity: 1;
-  pointer-events: all;
-  transform: translateX(-50%) translateY(-50%) scale(1);
-}
 .section:nth-child(n + 2) {
   margin-top: 20px;
 }
@@ -242,8 +238,7 @@
   padding: 0px;
 }
 .section .title,
-.section .fields,
-.section .submit-button {
+.section .fields {
   transition: all 0.25s;
 }
 .section .title h1 {

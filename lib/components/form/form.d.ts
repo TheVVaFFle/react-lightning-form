@@ -8,10 +8,13 @@ export declare enum FormComponentType {
   Dropdown = "dropdown"
 }
 export interface FormProps {
-  id?: string;
+  id: string;
   title?: string;
   children: any;
-  columns?: number;
+  sm?: number;
+  md?: number;
+  lg?: number;
+  submitLabel?: string;
   loading: boolean;
   onSubmit: (formState: any) => void;
 }

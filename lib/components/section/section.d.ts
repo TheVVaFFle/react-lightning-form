@@ -3,8 +3,10 @@ export interface SectionProps {
   title?: string;
   children?: any;
   data?: any;
-  columns?: number;
+  sm?: number;
+  md?: number;
+  lg?: number;
   loading?: boolean;
-  onSubmit?: (formState: any) => void;
+  formState?: any;
 }
 export declare const Section: React.SFC<SectionProps>;
