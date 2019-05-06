@@ -71,7 +71,7 @@ export const App: React.SFC<AppProps> = (props: AppProps) => {
         onSubmit={handleSubmitContact}
       >
         <Section title="Contact">
-          <Section lg={3} data={Test.data.contact.section1} />
+          <Section lg={3} data={Test.data.contact} />
         </Section>
         <textarea
           id="comments"

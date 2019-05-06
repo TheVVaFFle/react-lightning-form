@@ -25,17 +25,15 @@ export const Test = {
       }
     },
     contact: {
-      section1: {
-        phoneNumber: {
-          value: "(314) 780-5555",
-          validate: ValidationType.Phone
-        },
-        emailAddress: {
-          value: "my-email@gmail.com",
-          validate: ValidationType.Email
-        },
-        primaryContact: { value: false, type: FormComponentType.Checkbox }
-      }
+      phoneNumber: {
+        value: "(314) 780-5555",
+        validate: ValidationType.Phone
+      },
+      emailAddress: {
+        value: "my-email@gmail.com",
+        validate: ValidationType.Email
+      },
+      primaryContact: { value: false, type: FormComponentType.Checkbox }
     },
     comments: {
       value: "",
