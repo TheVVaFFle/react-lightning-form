@@ -43,11 +43,6 @@ export const App: React.SFC<AppProps> = (props: AppProps) => {
     simulateLoading();
   }, []);
 
-  const handleOnSubmit = (formState: any) => {
-    console.log(formState);
-    simulateLoading();
-  };
-
   const handleSubmitName = (formState: any) => {
     console.log(formState);
     simulateLoadingName();
@@ -61,27 +56,30 @@ export const App: React.SFC<AppProps> = (props: AppProps) => {
   return (
     <div id="app">
       <Form
-        id="app-form"
+        id="name-form"
         title="My Form"
-        loading={loading}
-        onSubmit={handleOnSubmit}
+        submitLabel="Update Name"
+        loading={loadingName}
+        onSubmit={handleSubmitName}
       >
-        <Section
-          title="Name"
-          columns={4}
-          data={Test.data.name}
-          loading={loadingName}
-          onSubmit={handleSubmitName}
-        />
-        <Section
-          title="Contact"
-          columns={2}
-          loading={loadingContact}
-          onSubmit={handleSubmitContact}
-        >
-          <Section columns={3} data={Test.data.contact.section1} />
-          <Section columns={1} data={Test.data.contact.section2} />
+        <Section title="Name" lg={4} data={Test.data.name} />
+      </Form>
+      <Form
+        id="contact-form"
+        submitLabel="Submit Contact Info"
+        loading={loadingContact}
+        onSubmit={handleSubmitContact}
+      >
+        <Section title="Contact">
+          <Section lg={3} data={Test.data.contact.section1} />
         </Section>
+        <textarea
+          id="comments"
+          label="Comments"
+          placeholder="Enter comments"
+          validate={Test.data.comments.validate}
+          errormessage={Test.data.comments.errormessage}
+        />
       </Form>
     </div>
   );

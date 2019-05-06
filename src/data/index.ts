@@ -3,8 +3,8 @@ import { ValidationType } from "../utility/validation";
 
 const suffixOptions: string[] = ["Sr.", "Jr.", "I", "II", "III"];
 
-const validateComments = (value: string) => {
-  return value && value.length >= 20 && value.length <= 50;
+export const validateComments = (value: string) => {
+  return value && value.length >= 10 && value.length <= 30;
 };
 
 export const Test = {
@@ -35,15 +35,13 @@ export const Test = {
           validate: ValidationType.Email
         },
         primaryContact: { value: false, type: FormComponentType.Checkbox }
-      },
-      section2: {
-        comments: {
-          value: "",
-          type: FormComponentType.TextArea,
-          validate: validateComments,
-          errormessage: "Must be between 20 and 50 characters."
-        }
       }
+    },
+    comments: {
+      value: "",
+      type: FormComponentType.TextArea,
+      validate: validateComments,
+      errormessage: "Must be between 20 and 50 characters."
     }
   }
 };

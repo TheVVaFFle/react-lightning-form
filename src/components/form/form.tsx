@@ -18,7 +18,10 @@ export interface FormProps {
   id?: string;
   title?: string;
   children: any;
-  columns?: number;
+  sm?: number;
+  md?: number;
+  lg?: number;
+  submitLabel?: string;
   loading: boolean;
   onSubmit: (formState: any) => void;
 }
@@ -45,7 +48,11 @@ export const Form: React.SFC<FormProps> = (props: FormProps) => {
           fields: JSX.Element = section.props.children.find(
             (c: JSX.Element) => c && c.props.className === "fields"
           ),
-          columns: number = child.props.columns || props.columns;
+          columns: number = FormUtility.get.number.of.columns(
+            child.props.sm || props.sm,
+            child.props.md || props.md,
+            child.props.lg || props.lg
+          );
 
         let mappedChildren: JSX.Element[] = [];
 
@@ -88,7 +95,7 @@ export const Form: React.SFC<FormProps> = (props: FormProps) => {
         return FormUtility.input.enhance(
           child,
           formState,
-          props.columns,
+          props.lg,
           altIndex++,
           updateCount,
           setUpdateCount,
@@ -123,7 +130,7 @@ export const Form: React.SFC<FormProps> = (props: FormProps) => {
             className="submit-button"
             onClick={handleOnSubmit}
           >
-            Submit
+            {props.submitLabel || "Submit"}
           </button>
           {FormUtility.get.errorMessage(errorCount)}
         </div>

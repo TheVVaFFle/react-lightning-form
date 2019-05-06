@@ -200,6 +200,19 @@ export const FormUtility = {
           before submitting.
         </h1>
       );
+    },
+    number: {
+      of: {
+        columns: (sm: number = 1, md: number = 1, lg: number = 1) => {
+          if (window.innerWidth <= 800) {
+            return sm;
+          } else if (window.innerWidth <= 1400) {
+            return md;
+          } else {
+            return lg;
+          }
+        }
+      }
     }
   },
   input: {
