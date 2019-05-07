@@ -39,7 +39,7 @@ export const Test = {
       value: "",
       type: FormComponentType.TextArea,
       validate: validateComments,
-      errormessage: "Must be between 20 and 50 characters."
+      errormessage: "Must be between 10 and 30 characters."
     }
   }
 };
