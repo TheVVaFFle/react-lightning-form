@@ -34,6 +34,7 @@ export declare const FormUtility: {
   };
   input: {
     mapAllFromData: (data: any) => JSX.Element[];
+    handleChildren: (fields: JSX.Element) => any;
     enhance: (
       child: JSX.Element,
       formState: any,
@@ -45,6 +46,14 @@ export declare const FormUtility: {
       handleOnSubmit: Function,
       alone?: boolean | undefined
     ) => JSX.Element;
+    is: {
+      radioGroup: (children: JSX.Element[]) => boolean;
+    };
+    convert: {
+      to: {
+        radioGroup: (children: JSX.Element[]) => JSX.Element;
+      };
+    };
     get: {
       onChange: (
         child: JSX.Element,
