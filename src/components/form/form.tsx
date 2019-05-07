@@ -12,6 +12,8 @@ export enum FormComponentType {
   Section = "section",
   Text = "text",
   Checkbox = "checkbox",
+  Radio = "radio",
+  RadioGroup = "radio-group",
   Dropdown = "dropdown"
 }
 
@@ -53,6 +55,7 @@ export const Form: React.SFC<FormProps> = (props: FormProps) => {
 
     return React.Children.map(children, (child: JSX.Element) => {
       const type: string = FormUtility.get.childType(child);
+
       if (type === FormComponentType.Section) {
         altIndex = 0;
 
@@ -71,7 +74,7 @@ export const Form: React.SFC<FormProps> = (props: FormProps) => {
         if (child.props.data) {
           mappedChildren = FormUtility.input.mapAllFromData(child.props.data);
         } else {
-          mappedChildren = fields.props.children;
+          mappedChildren = FormUtility.input.handleChildren(fields);
         }
 
         mappedChildren = React.Children.map(

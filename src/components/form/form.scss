@@ -32,33 +32,33 @@
       display: inline-block;
       position: relative;
       vertical-align: top;
+    }
 
-      .label,
-      .error-message {
-        font-size: 0.8em;
-        font-weight: 400;
-        margin: 0px;
-        margin-left: 20px;
-      }
+    .label,
+    .error-message {
+      font-size: 0.8em;
+      font-weight: 400;
+      margin: 0px;
+      margin-left: 20px;
+    }
 
-      .label {
-        color: gray(60);
-        margin-bottom: 5px;
-      }
+    .label {
+      color: gray(60);
+      margin-bottom: 5px;
+    }
 
-      .error-message {
-        color: $red;
-        height: 0px;
-        margin-top: 0px;
-        opacity: 0;
-        pointer-events: none;
-        transition: 0.25s;
+    .error-message {
+      color: $red;
+      height: 0px;
+      margin-top: 0px;
+      opacity: 0;
+      pointer-events: none;
+      transition: 0.25s;
 
-        &.show {
-          height: 15px;
-          opacity: 1;
-          margin-top: 5px;
-        }
+      &.show {
+        height: 15px;
+        opacity: 1;
+        margin-top: 5px;
       }
     }
 
@@ -116,6 +116,112 @@
           transition: all 0.25s;
           width: 50px;
         }
+      }
+    }
+
+    .radio {
+      .label,
+      .radio-button-wrapper,
+      input {
+        display: inline-block;
+        height: 20px;
+        line-height: 20px;
+        margin: 0px;
+        vertical-align: top;
+      }
+
+      .label {
+        margin-left: 10px;
+      }
+
+      .radio-button-wrapper {
+        cursor: pointer;
+        height: 20px;
+        position: relative;
+        text-align: center;
+        width: 20px;
+
+        input {
+          cursor: pointer;
+          height: 20px;
+          opacity: 0;
+          width: 20px;
+
+          &:checked {
+            + .border {
+              border-color: $blue;
+
+              .center {
+                opacity: 1;
+                transform: translate(-50%, -50%) scale(1);
+              }
+            }
+
+            &:active {
+              ~ .ring {
+                background-color: rgba($blue, 0.3);
+              }
+            }
+          }
+
+          &:active,
+          &:focus {
+            ~ .ring {
+              opacity: 1;
+              transform: translate(-50%, -50%) scale(1);
+            }
+          }
+        }
+
+        .border {
+          border: 2px solid gray(200);
+          border-radius: 100px;
+          height: 16px;
+          left: 50%;
+          pointer-events: none;
+          position: absolute;
+          top: 50%;
+          transform: translate(-50%, -50%);
+          width: 16px;
+          z-index: 2;
+
+          .center {
+            background-color: $blue;
+            border-radius: 100px;
+            height: 10px;
+            left: 50%;
+            opacity: 0;
+            pointer-events: none;
+            position: absolute;
+            top: 50%;
+            transform: translate(-50%, -50%) scale(0.5);
+            transition: all 0.25s;
+            width: 10px;
+          }
+        }
+
+        .ring {
+          background-color: rgba(gray(200), 0.3);
+          content: "";
+          border-radius: 100px;
+          height: 30px;
+          left: 50%;
+          opacity: 0;
+          pointer-events: none;
+          position: absolute;
+          top: 50%;
+          transform: translate(-50%, -50%) scale(0.5);
+          transition: all 0.25s;
+          width: 30px;
+          z-index: 1;
+        }
+      }
+    }
+
+    .radio-group {
+      > .label {
+        margin-bottom: 10px;
+        margin-left: 0px;
       }
     }
 
@@ -203,21 +309,9 @@
       margin: auto;
       max-width: 500px;
       width: 100%;
-      .error-message {
-        color: $red;
-        font-weight: 400;
-        height: 0px;
-        margin: 0px;
-        margin-top: 10px;
-        opacity: 0;
-        pointer-events: none;
-        text-align: center;
-        transition: all 0.25s;
 
-        &.show {
-          opacity: 1;
-          height: 20px;
-        }
+      .error-message {
+        text-align: center;
       }
     }
 

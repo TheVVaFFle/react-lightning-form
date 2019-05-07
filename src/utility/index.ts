@@ -14,3 +14,6 @@ export const camelCaseToKebab = (value: string) =>
 
 export const kebabToCamelCase = (value: string) =>
   _.camelCase(value.replace(/-/g, " "));
+
+export const kebabToNormal = (value: string) =>
+  camelCaseToNormal(kebabToCamelCase(value));

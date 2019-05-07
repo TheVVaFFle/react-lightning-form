@@ -1,7 +1,7 @@
 import React, { Children } from "react";
 import classNames from "classnames";
 
-import { FormComponentType } from "../components/form/form";
+import { FormComponentType, Form } from "../components/form/form";
 import { Validate, ValidationType } from "./validation";
 import * as GeneralUtility from "./";
 
@@ -19,9 +19,14 @@ export const FormUtility = {
             type === FormComponentType.TextArea
           ) {
             if (child.props.id !== undefined && child.props.id !== null) {
-              const key: string = GeneralUtility.kebabToCamelCase(
-                child.props.id
-              );
+              let key: string = "";
+
+              if (child.props.type === FormComponentType.Radio) {
+                key = GeneralUtility.kebabToCamelCase(child.props.name);
+              } else {
+                key = GeneralUtility.kebabToCamelCase(child.props.id);
+              }
+
               updatedFormState[key] = {
                 value: child.props.defaultValue || "",
                 validate: child.props.validate || null,
@@ -34,7 +39,7 @@ export const FormUtility = {
             if (child.props.children) {
               const section: JSX.Element = child.type(child.props),
                 fields: JSX.Element = section.props.children.find(
-                  (c: JSX.Element) => c.props.className === "fields"
+                  (c: JSX.Element) => c && c.props.className === "fields"
                 );
               FormUtility.state.create(formState, fields.props.children);
             } else {
@@ -303,6 +308,16 @@ export const FormUtility = {
         return getInputForDataProperty(key, value);
       });
     },
+    handleChildren: (fields: JSX.Element) => {
+      const isRadioGroup: boolean = FormUtility.input.is.radioGroup(
+        fields.props.children
+      );
+      if (isRadioGroup) {
+        return [FormUtility.input.convert.to.radioGroup(fields.props.children)];
+      } else {
+        return fields.props.children;
+      }
+    },
     enhance: (
       child: JSX.Element,
       formState: any,
@@ -364,6 +379,52 @@ export const FormUtility = {
             {errorMessage}
           </div>
         );
+      } else if (child.props.type === FormComponentType.Radio) {
+        return (
+          <div
+            key={child.props.id}
+            id={child.props.id}
+            className="input radio"
+            style={style}
+          >
+            <div className="radio-button-wrapper">
+              {React.cloneElement(child, {
+                ...child.props,
+                className,
+                validate,
+                onChange,
+                onKeyUp
+              })}
+              <div className="border">
+                <div className="center" />
+              </div>
+              <div className="ring" />
+            </div>
+            {label}
+          </div>
+        );
+      } else if (child.props.type === FormComponentType.RadioGroup) {
+        const radios: JSX.Element[] = child.props.children.map(
+          (c: JSX.Element, i: number) => {
+            return FormUtility.input.enhance(
+              c,
+              formState,
+              columns,
+              i,
+              updateCount,
+              setUpdateCount,
+              setFormState,
+              handleOnSubmit
+            );
+          }
+        );
+
+        return (
+          <div id={child.props.id} className="radio-group" type="radio-group">
+            {label}
+            {radios}
+          </div>
+        );
       } else if (child.props.type === FormComponentType.Dropdown) {
         return (
           <div className="input dropdown" style={style}>
@@ -416,6 +477,29 @@ export const FormUtility = {
         return child;
       }
     },
+    is: {
+      radioGroup: (children: JSX.Element[]): boolean => {
+        const nRadios: number = children.filter(
+          (c: JSX.Element) => c.props.type === FormComponentType.Radio
+        ).length;
+        return nRadios === children.length;
+      }
+    },
+    convert: {
+      to: {
+        radioGroup: (children: JSX.Element[]) => {
+          return (
+            <div
+              id={children[0].props.name}
+              className="radio-group"
+              type="radio-group"
+            >
+              {children}
+            </div>
+          );
+        }
+      }
+    },
     get: {
       onChange: (
         child: JSX.Element,
@@ -434,7 +518,13 @@ export const FormUtility = {
           };
 
           let updatedFormState: any = formState,
-            key: string = GeneralUtility.kebabToCamelCase(child.props.id);
+            key: string = "";
+
+          if (child.props.type === FormComponentType.Radio) {
+            key = GeneralUtility.kebabToCamelCase(child.props.name);
+          } else {
+            key = GeneralUtility.kebabToCamelCase(child.props.id);
+          }
 
           updatedFormState[key] = {
             ...formState[key],
@@ -477,6 +567,17 @@ export const FormUtility = {
       label: (child: JSX.Element): JSX.Element | null => {
         if (child.props.label) {
           return <h1 className="label">{child.props.label}</h1>;
+        } else if (
+          child.props.type === FormComponentType.Radio &&
+          child.props.value
+        ) {
+          return <h1 className="label">{child.props.value}</h1>;
+        } else if (child.props.type === FormComponentType.RadioGroup) {
+          return (
+            <h1 className="label">
+              {GeneralUtility.kebabToNormal(child.props.id)}
+            </h1>
+          );
         }
 
         return null;
