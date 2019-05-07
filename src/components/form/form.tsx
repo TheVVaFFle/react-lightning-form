@@ -31,6 +31,7 @@ export const Form: React.SFC<FormProps> = (props: FormProps) => {
   const defaultFormState: any = {},
     [formState, setFormState] = useState(defaultFormState),
     [updateCount, setUpdateCount] = useState(0),
+    [submitCount, setSubmitCount] = useState(0),
     [errorCount, setErrorCount] = useState(0),
     [windowWidth, setWindowWidth] = useState(0);
 
@@ -119,6 +120,8 @@ export const Form: React.SFC<FormProps> = (props: FormProps) => {
   };
 
   const handleOnSubmit = () => {
+    setSubmitCount(submitCount + 1);
+
     if (
       !props.loading &&
       FormUtility.validate.submission(formState, setFormState, setErrorCount)
