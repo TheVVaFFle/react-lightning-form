@@ -6,7 +6,7 @@
   &.loading {
     .form-contents {
       opacity: 0;
-      transform: scale(0.5);
+      transform: scale(1.05);
     }
 
     > .loading-indicator {
