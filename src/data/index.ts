@@ -1,7 +1,8 @@
 import { FormComponentType } from "../components/form/form";
 import { ValidationType } from "../utility/validation";
 
-const suffixOptions: string[] = ["Sr.", "Jr.", "I", "II", "III"];
+const suffixOptions: string[] = ["Sr.", "Jr.", "I", "II", "III"],
+  colorOptions: string[] = ["Red", "Green", "Blue"];
 
 export const validateComments = (value: string) => {
   return value && value.length >= 10 && value.length <= 30;
@@ -40,6 +41,13 @@ export const Test = {
       type: FormComponentType.TextArea,
       validate: validateComments,
       errormessage: "Must be between 10 and 30 characters."
+    },
+    about: {
+      favoriteColor: {
+        type: FormComponentType.RadioGroup,
+        name: "favorite-color",
+        options: colorOptions
+      }
     }
   }
 };

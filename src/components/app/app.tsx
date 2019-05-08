@@ -70,29 +70,8 @@ export const App: React.SFC<AppProps> = (props: AppProps) => {
         loading={loadingContact}
         onSubmit={handleSubmitContact}
       >
-        <Section title="Contact">
-          <Section lg={3} data={Test.data.contact} />
-          <Section>
-            <input
-              id="favorite-color-red"
-              type="radio"
-              name="favorite-color"
-              value="Red"
-            />
-            <input
-              id="favorite-color-green"
-              type="radio"
-              name="favorite-color"
-              value="Green"
-            />
-            <input
-              id="favorite-color-blue"
-              type="radio"
-              name="favorite-color"
-              value="Blue"
-            />
-          </Section>
-        </Section>
+        <Section title="Contact" lg={3} data={Test.data.contact} />
+        <Section title="About" data={Test.data.about} />
         <textarea
           id="comments"
           label="Comments"

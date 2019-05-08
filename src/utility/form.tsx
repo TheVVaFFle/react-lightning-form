@@ -285,6 +285,25 @@ export const FormUtility = {
                 errormessage={v.errormessage || "Error, invalid input."}
               />
             );
+          } else if (v.type === FormComponentType.RadioGroup) {
+            const options: JSX.Element[] = v.options.map((option: any) => {
+              return (
+                <input
+                  key={option}
+                  id={`favorite-color-${option.toLowerCase()}`}
+                  type="radio"
+                  name={v.name}
+                  label={option}
+                  value={option}
+                />
+              );
+            });
+
+            return (
+              <div id={v.name} className="radio-group" type="radio-group">
+                {options}
+              </div>
+            );
           }
         }
 
@@ -422,7 +441,7 @@ export const FormUtility = {
         return (
           <div id={child.props.id} className="radio-group" type="radio-group">
             {label}
-            {radios}
+            <div className="radios">{radios}</div>
           </div>
         );
       } else if (child.props.type === FormComponentType.Dropdown) {

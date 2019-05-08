@@ -220,8 +220,14 @@
 
     .radio-group {
       > .label {
-        margin-bottom: 10px;
-        margin-left: 0px;
+        margin-bottom: 5px;
+      }
+
+      .radios {
+        border: 1px solid gray(200);
+        border-radius: 10px;
+        display: inline-block;
+        padding: 10px;
       }
     }
 
