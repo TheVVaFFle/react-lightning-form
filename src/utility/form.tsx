@@ -88,44 +88,6 @@ export const FormUtility = {
     }
   },
   validate: {
-    section: {
-      submission: (
-        formState: any,
-        sectionState: any,
-        setFormState: Function,
-        setErrorCount: Function
-      ): boolean => {
-        let nErrors: number = 0,
-          updatedFormState: any = formState;
-
-        Object.entries(sectionState).map((entry: any) => {
-          const key = entry[0],
-            prop = entry[1];
-
-          let validationFn: Function | null = null;
-
-          if (prop.validate !== undefined) {
-            if (!Object.values(ValidationType).includes(prop.validate)) {
-              validationFn = eval(prop.validate);
-            } else {
-              validationFn = Validate[prop.validate];
-            }
-          }
-
-          if (Validate.determineIfError(prop.value, validationFn)) {
-            updatedFormState[key].error = true;
-            nErrors++;
-          } else {
-            updatedFormState[key].error = false;
-          }
-        });
-
-        setFormState(updatedFormState);
-        setErrorCount(nErrors);
-
-        return nErrors === 0;
-      }
-    },
     submission: (
       formState: any,
       setFormState: Function,
@@ -300,7 +262,12 @@ export const FormUtility = {
             });
 
             return (
-              <div id={v.name} className="radio-group" type="radio-group">
+              <div
+                id={v.name}
+                className="radio-group"
+                type="radio-group"
+                validate={v.validate.toString()}
+              >
                 {options}
               </div>
             );
@@ -439,9 +406,10 @@ export const FormUtility = {
         );
 
         return (
-          <div id={child.props.id} className="radio-group" type="radio-group">
+          <div id={child.props.id} className={className} type="radio-group">
             {label}
             <div className="radios">{radios}</div>
+            {errorMessage}
           </div>
         );
       } else if (child.props.type === FormComponentType.Dropdown) {

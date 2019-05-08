@@ -219,6 +219,12 @@
     }
 
     .radio-group {
+      &.error {
+        .radios {
+          border-color: $red;
+        }
+      }
+
       > .label {
         margin-bottom: 5px;
       }

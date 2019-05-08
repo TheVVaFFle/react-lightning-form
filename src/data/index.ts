@@ -46,6 +46,7 @@ export const Test = {
       favoriteColor: {
         type: FormComponentType.RadioGroup,
         name: "favorite-color",
+        validate: ValidationType.Required,
         options: colorOptions
       }
     }
