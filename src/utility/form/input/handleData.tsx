@@ -61,7 +61,7 @@ export const handleData = (data: any): JSX.Element[] => {
             defaultValue={getValue(v)}
             label={label}
             placeholder={`Enter ${label.toLowerCase()}`}
-            validate={v.validate.toString()}
+            validate={v.validate ? v.validate.toString() : null}
             errormessage={v.errormessage || "Error, invalid input."}
           />
         );
@@ -84,7 +84,7 @@ export const handleData = (data: any): JSX.Element[] => {
             id={v.name}
             className="radio-group"
             type="radio-group"
-            validate={v.validate.toString()}
+            validate={v.validate ? v.validate.toString() : null}
           >
             {options}
           </div>
