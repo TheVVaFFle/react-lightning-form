@@ -38,7 +38,7 @@ export const Form: React.SFC<FormProps> = (props: FormProps) => {
     [windowWidth, setWindowWidth] = useState(0);
 
   useEffect(() => {
-    setFormState(FormUtility.state.create(formState, props.children));
+    setFormState(FormUtility.stateManager.create(formState, props.children));
   }, []);
 
   useEffect(() => {
@@ -72,9 +72,9 @@ export const Form: React.SFC<FormProps> = (props: FormProps) => {
         let mappedChildren: JSX.Element[] = [];
 
         if (child.props.data) {
-          mappedChildren = FormUtility.input.mapAllFromData(child.props.data);
+          mappedChildren = FormUtility.map.from.data(child.props.data);
         } else {
-          mappedChildren = FormUtility.input.handleChildren(fields);
+          mappedChildren = FormUtility.handle.children(fields);
         }
 
         mappedChildren = React.Children.map(
@@ -129,7 +129,7 @@ export const Form: React.SFC<FormProps> = (props: FormProps) => {
       !props.loading &&
       FormUtility.validate.submission(formState, setFormState, setErrorCount)
     ) {
-      props.onSubmit(FormUtility.state.format(formState));
+      props.onSubmit(FormUtility.stateManager.format(formState));
     }
   };
 

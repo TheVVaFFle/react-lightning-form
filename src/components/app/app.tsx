@@ -20,65 +20,33 @@ declare module "react" {
 export interface AppProps {}
 
 export const App: React.SFC<AppProps> = (props: AppProps) => {
-  const [loading, setLoading] = useState(true),
-    [loadingName, setLoadingName] = useState(false),
-    [loadingContact, setLoadingContact] = useState(false);
+  const [loading, setLoading] = useState(true);
 
   const simulateLoading = () => {
     setLoading(true);
     setTimeout(() => setLoading(false), 1000);
   };
 
-  const simulateLoadingName = () => {
-    setLoadingName(true);
-    setTimeout(() => setLoadingName(false), 1000);
-  };
-
-  const simulateLoadingContact = () => {
-    setLoadingContact(true);
-    setTimeout(() => setLoadingContact(false), 1000);
+  const handleOnSubmit = (result: any) => {
+    simulateLoading();
+    console.log(result);
   };
 
   useEffect(() => {
     simulateLoading();
   }, []);
 
-  const handleSubmitName = (formState: any) => {
-    console.log(formState);
-    simulateLoadingName();
-  };
-
-  const handleSubmitContact = (formState: any) => {
-    console.log(formState);
-    simulateLoadingContact();
-  };
-
   return (
     <div id="app">
       <Form
         id="name-form"
         title="My Form"
-        submitLabel="Update Name"
-        loading={loadingName}
-        onSubmit={handleSubmitName}
+        loading={loading}
+        onSubmit={handleOnSubmit}
       >
         <Section title="Name" sm={1} md={2} lg={4} data={Test.data.name} />
-      </Form>
-      <Form
-        id="contact-form"
-        submitLabel="Submit Contact Info"
-        loading={loadingContact}
-        onSubmit={handleSubmitContact}
-      >
         <Section title="Contact" lg={3} data={Test.data.contact} />
         <Section title="About" data={Test.data.about} />
-        <textarea
-          id="comments"
-          label="Comments"
-          placeholder="Enter comments"
-          validate={Test.data.comments.validate}
-          errormessage={Test.data.comments.errormessage}
-        />
       </Form>
     </div>
   );
