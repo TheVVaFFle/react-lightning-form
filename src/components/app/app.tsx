@@ -52,8 +52,10 @@ export const App: React.SFC<AppProps> = (props: AppProps) => {
           data={Test.data.name}
           outline={false}
         />
-        <Section title="Contact" lg={3} data={Test.data.contact} />
-        <Section title="About" data={Test.data.about} />
+        <Section lg={3}>
+          <Section title="Contact" data={Test.data.contact} />
+          <Section title="About" data={Test.data.about} />
+        </Section>
       </Form>
     </div>
   );

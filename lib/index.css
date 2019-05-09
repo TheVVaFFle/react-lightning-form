@@ -311,7 +311,10 @@
 }
 
 .section {
+  display: inline-block;
   position: relative;
+  vertical-align: top;
+  width: 100%;
 }
 .section:nth-child(n + 2) {
   margin-top: 20px;

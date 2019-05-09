@@ -53,7 +53,7 @@ export const Form: React.SFC<FormProps> = (props: FormProps) => {
   const handleFormChildren = (children: JSX.Element[]): any => {
     let altIndex: number = 0;
 
-    return React.Children.map(children, (child: JSX.Element) => {
+    return React.Children.map(children, (child: JSX.Element, index: number) => {
       const type: string = FormUtility.get.childType(child);
 
       if (type === FormComponentType.Section) {
@@ -98,9 +98,18 @@ export const Form: React.SFC<FormProps> = (props: FormProps) => {
           }
         );
 
+        const styleChildren = (children: JSX.Element[]): JSX.Element[] => {
+          return children.map((c: JSX.Element, index: number) => {
+            return React.cloneElement(c, {
+              ...c.props,
+              styles: FormUtility.input.get.styles(index, columns)
+            });
+          });
+        };
+
         return React.cloneElement(child, {
           ...child.props,
-          children: mappedChildren,
+          children: styleChildren(mappedChildren),
           formState,
           errorCount,
           setFormState,

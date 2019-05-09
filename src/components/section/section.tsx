@@ -10,6 +10,7 @@ export interface SectionProps {
   lg?: number;
   loading?: boolean;
   outline?: boolean;
+  styles?: React.CSSProperties;
   formState?: any;
 }
 
@@ -40,7 +41,7 @@ export const Section: React.SFC<SectionProps> = (props: SectionProps) => {
   };
 
   return (
-    <div className={getClasses()}>
+    <div className={getClasses()} style={props.styles}>
       {getTitle()}
       <div className="fields">{getChildren()}</div>
     </div>
