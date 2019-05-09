@@ -32,7 +32,7 @@ export const Section: React.SFC<SectionProps> = (props: SectionProps) => {
 
   const getClasses = (): string => {
     const classes: string = classNames("section", {
-      outline: props.outline !== undefined ? props.outline : true,
+      outline: props.outline || false,
       loading: props.loading
     });
 
