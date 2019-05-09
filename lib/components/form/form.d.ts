@@ -17,7 +17,7 @@ export interface FormProps {
   md?: number;
   lg?: number;
   submitLabel?: string;
-  loading: boolean;
-  onSubmit: (formState: any) => void;
+  loading?: boolean;
+  onSubmit?: (formState: any) => void;
 }
 export declare const Form: React.SFC<FormProps>;

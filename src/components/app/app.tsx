@@ -38,12 +38,7 @@ export const App: React.SFC<AppProps> = (props: AppProps) => {
 
   return (
     <div id="app">
-      <Form
-        id="name-form"
-        title="My Form"
-        loading={loading}
-        onSubmit={handleOnSubmit}
-      >
+      <Form id="name-form" title="My Form">
         <Section
           title="Name"
           sm={1}
@@ -52,6 +47,8 @@ export const App: React.SFC<AppProps> = (props: AppProps) => {
           data={Test.data.name}
           outline={false}
         />
+      </Form>
+      <Form id="contact-form" loading={loading} onSubmit={handleOnSubmit}>
         <Section lg={3}>
           <Section title="Contact" data={Test.data.contact} />
           <Section title="About" data={Test.data.about} />

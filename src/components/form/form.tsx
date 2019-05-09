@@ -25,8 +25,8 @@ export interface FormProps {
   md?: number;
   lg?: number;
   submitLabel?: string;
-  loading: boolean;
-  onSubmit: (formState: any) => void;
+  loading?: boolean;
+  onSubmit?: (formState: any) => void;
 }
 
 export const Form: React.SFC<FormProps> = (props: FormProps) => {
@@ -131,6 +131,25 @@ export const Form: React.SFC<FormProps> = (props: FormProps) => {
     });
   };
 
+  const getSubmitButton = (): JSX.Element | null => {
+    if (props.onSubmit) {
+      return (
+        <div className="submit-button-wrapper">
+          <button
+            type="button"
+            className="submit-button"
+            onClick={handleOnSubmit}
+          >
+            {props.submitLabel || "Submit"}
+          </button>
+          {FormUtility.get.errorMessage(errorCount)}
+        </div>
+      );
+    }
+
+    return null;
+  };
+
   const handleOnSubmit = () => {
     setSubmitCount(submitCount + 1);
 
@@ -138,7 +157,9 @@ export const Form: React.SFC<FormProps> = (props: FormProps) => {
       !props.loading &&
       FormUtility.validate.submission(formState, setFormState, setErrorCount)
     ) {
-      props.onSubmit(FormUtility.stateManager.format(formState));
+      if (props.onSubmit) {
+        props.onSubmit(FormUtility.stateManager.format(formState));
+      }
     }
   };
 
@@ -150,16 +171,7 @@ export const Form: React.SFC<FormProps> = (props: FormProps) => {
       {FormUtility.get.title(props.title)}
       <div className="form-contents">
         {handleFormChildren(props.children)}
-        <div className="submit-button-wrapper">
-          <button
-            type="button"
-            className="submit-button"
-            onClick={handleOnSubmit}
-          >
-            {props.submitLabel || "Submit"}
-          </button>
-          {FormUtility.get.errorMessage(errorCount)}
-        </div>
+        {getSubmitButton()}
       </div>
       <Loading />
     </div>

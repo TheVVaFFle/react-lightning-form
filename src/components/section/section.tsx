@@ -11,6 +11,7 @@ export interface SectionProps {
   loading?: boolean;
   outline?: boolean;
   styles?: React.CSSProperties;
+  className?: string;
   formState?: any;
 }
 
@@ -32,7 +33,7 @@ export const Section: React.SFC<SectionProps> = (props: SectionProps) => {
   };
 
   const getClasses = (): string => {
-    const classes: string = classNames("section", {
+    const classes: string = classNames("section", props.className, {
       outline: props.outline || false,
       loading: props.loading
     });
