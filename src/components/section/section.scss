@@ -1,17 +1,14 @@
 .section {
-  border-radius: 10px;
-  box-shadow: $shadow1;
-  padding: 20px;
   position: relative;
 
   &:nth-child(n + 2) {
     margin-top: 20px;
   }
 
-  &.sub-section {
-    border-radius: 0px;
-    box-shadow: none;
-    padding: 0px;
+  &.outline {
+    border-radius: 10px;
+    box-shadow: $shadow1;
+    padding: 20px;
   }
 
   .title,

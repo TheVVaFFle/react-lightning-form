@@ -9,6 +9,7 @@ export interface SectionProps {
   md?: number;
   lg?: number;
   loading?: boolean;
+  outline?: boolean;
   formState?: any;
 }
 
@@ -31,7 +32,7 @@ export const Section: React.SFC<SectionProps> = (props: SectionProps) => {
 
   const getClasses = (): string => {
     const classes: string = classNames("section", {
-      "sub-section": props.title === undefined || props.title === null,
+      outline: props.outline !== undefined ? props.outline : true,
       loading: props.loading
     });
 

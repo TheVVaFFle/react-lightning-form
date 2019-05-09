@@ -311,18 +311,15 @@
 }
 
 .section {
-  border-radius: 10px;
-  box-shadow: rgba(0, 0, 0, 0.12) 0px 1px 6px, rgba(0, 0, 0, 0.12) 0px 1px 4px;
-  padding: 20px;
   position: relative;
 }
 .section:nth-child(n + 2) {
   margin-top: 20px;
 }
-.section.sub-section {
-  border-radius: 0px;
-  box-shadow: none;
-  padding: 0px;
+.section.outline {
+  border-radius: 10px;
+  box-shadow: rgba(0, 0, 0, 0.12) 0px 1px 6px, rgba(0, 0, 0, 0.12) 0px 1px 4px;
+  padding: 20px;
 }
 .section .title,
 .section .fields {

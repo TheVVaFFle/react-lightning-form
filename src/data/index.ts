@@ -12,8 +12,6 @@ export const Test = {
   data: {
     name: {
       firstName: {
-        value: "Billy",
-        validate: ValidationType.Required,
         label: "Custom First Name"
       },
       middleName: { value: "Bob" },
@@ -21,8 +19,7 @@ export const Test = {
       suffix: {
         value: "",
         type: FormComponentType.Dropdown,
-        options: suffixOptions,
-        validate: ValidationType.Required
+        options: suffixOptions
       }
     },
     contact: {

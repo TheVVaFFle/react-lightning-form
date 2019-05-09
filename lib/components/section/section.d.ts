@@ -7,6 +7,7 @@ export interface SectionProps {
   md?: number;
   lg?: number;
   loading?: boolean;
+  outline?: boolean;
   formState?: any;
 }
 export declare const Section: React.SFC<SectionProps>;

@@ -47,7 +47,7 @@ export const handleData = (data: any): JSX.Element[] => {
             type="dropdown"
             defaultValue={getValue(v)}
             label={label}
-            validate={v.validate.toString()}
+            validate={v.validate ? v.validate.toString() : null}
             errormessage={v.errormessage || "Error, invalid selection."}
           >
             {options}
