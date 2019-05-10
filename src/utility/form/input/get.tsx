@@ -44,6 +44,8 @@ export const get: any = {
     return onChange;
   },
   classes: (child: JSX.Element, formState: any): string => {
+    if (!child.props.id) return child.props.className;
+
     const key: string = GeneralUtility.kebabToCamelCase(child.props.id);
 
     const classes: string = classNames(
@@ -98,6 +100,8 @@ export const get: any = {
     }
   },
   errorMessage: (child: JSX.Element, formState: any): JSX.Element | null => {
+    if (!child.props.id) return null;
+
     const key: string = GeneralUtility.kebabToCamelCase(child.props.id),
       error: boolean = formState[key] && formState[key].error,
       input: string = formState[key] ? formState[key].value : "",

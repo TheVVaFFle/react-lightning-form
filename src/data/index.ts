@@ -46,6 +46,13 @@ export const Test = {
         validate: ValidationType.Required,
         options: colorOptions
       }
-    }
+    },
+    searchResults: [
+      { id: 1, make: "Ford", model: "Fusion", year: "2012" },
+      { id: 2, make: "Dodge", model: "Charger", year: "2015" },
+      { id: 3, make: "Chevy", model: "Corvette", year: "2017" },
+      { id: 4, make: "Dodge", model: "Viper", year: "2018" },
+      { id: 5, make: "Ford", model: "Mustang", year: "2014" }
+    ]
   }
 };

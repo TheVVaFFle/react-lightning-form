@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 
 import { Form, ValidationType } from "../";
 import { Section } from "../";
+import { Table } from "../";
 
 import { Test } from "../../data";
 
@@ -40,20 +41,16 @@ export const App: React.SFC<AppProps> = (props: AppProps) => {
     <div id="app">
       <Form id="name-form" title="My Form">
         <Section outline>
-          <Section
-            title="Name"
-            sm={1}
-            md={2}
-            lg={4}
-            data={Test.data.name}
-            outline={false}
-          />
+          <Section title="Name" sm={1} md={2} lg={4} data={Test.data.name} />
         </Section>
       </Form>
       <Form id="contact-form" loading={loading} onSubmit={handleOnSubmit}>
-        <Section lg={3}>
+        <Section lg={3} outline>
           <Section title="Contact" data={Test.data.contact} />
           <Section title="About" data={Test.data.about} />
+        </Section>
+        <Section title="Vehicle" outline>
+          <Table data={Test.data.searchResults} selectable />
         </Section>
       </Form>
     </div>

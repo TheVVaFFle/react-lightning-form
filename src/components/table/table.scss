@@ -1,0 +1,43 @@
+.table {
+  .headers {
+    .header {
+      display: inline-block;
+      vertical-align: top;
+      h1 {
+        color: $blue;
+        font-size: 0.8em;
+        margin: 0px;
+        padding: 20px 10px;
+        text-align: left;
+        text-transform: uppercase;
+      }
+    }
+  }
+
+  .rows {
+    .row {
+      &:nth-of-type(even) {
+        background-color: rgba(gray(200), 0.25);
+      }
+
+      .cell {
+        display: inline-block;
+        vertical-align: top;
+
+        .value {
+          h1 {
+            color: gray(60);
+            font-weight: 400;
+            margin: 0px;
+            padding: 20px 10px;
+            text-align: left;
+
+            input {
+              width: auto;
+            }
+          }
+        }
+      }
+    }
+  }
+}
