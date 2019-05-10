@@ -39,14 +39,16 @@ export const App: React.SFC<AppProps> = (props: AppProps) => {
   return (
     <div id="app">
       <Form id="name-form" title="My Form">
-        <Section
-          title="Name"
-          sm={1}
-          md={2}
-          lg={4}
-          data={Test.data.name}
-          outline={false}
-        />
+        <Section outline>
+          <Section
+            title="Name"
+            sm={1}
+            md={2}
+            lg={4}
+            data={Test.data.name}
+            outline={false}
+          />
+        </Section>
       </Form>
       <Form id="contact-form" loading={loading} onSubmit={handleOnSubmit}>
         <Section lg={3}>

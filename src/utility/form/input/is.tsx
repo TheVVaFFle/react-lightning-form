@@ -2,6 +2,10 @@ import { FormComponentType } from "../../../components/form/form";
 
 export const is: any = {
   radioGroup: (children: JSX.Element[]): boolean => {
+    if (!Array.isArray(children)) {
+      return false;
+    }
+
     const nRadios: number = children.filter(
       (c: JSX.Element) => c.props.type === FormComponentType.Radio
     ).length;
