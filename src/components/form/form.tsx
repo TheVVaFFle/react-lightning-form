@@ -42,12 +42,8 @@ export const Form: React.SFC<FormProps> = (props: FormProps) => {
   }, []);
 
   useEffect(() => {
-    const handleResize = () => setWindowWidth(window.innerWidth),
-      forms: HTMLCollection = document.getElementsByClassName("form");
-
-    if (forms[0].id === props.id) {
-      window.addEventListener("resize", throttle(handleResize, 100));
-    }
+    const handleResize = () => setWindowWidth(window.innerWidth);
+    window.addEventListener("resize", throttle(handleResize, 500));
   }, [windowWidth]);
 
   const handleFormChildren = (children: JSX.Element[]): any => {
