@@ -5,7 +5,7 @@ import { ValidationType } from "../../validation";
 
 import * as GeneralUtility from "../..";
 
-export const handleData = (data: any): JSX.Element[] => {
+export const mapFromData = (data: any): JSX.Element[] => {
   const getValue = (v: any): string => {
     if (typeof v === "string") {
       return v;

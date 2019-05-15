@@ -3,7 +3,8 @@ import { validate } from "./validate";
 import { get } from "./get";
 
 import { input } from "./input";
-import { handleData } from "./input/handleData";
+import { table } from "./table";
+import { mapFromData } from "./input/mapFromData";
 import { mapFromChildren } from "./input/mapFromChildren";
 
 export const FormUtility = {
@@ -11,12 +12,11 @@ export const FormUtility = {
   validate,
   get,
   input,
+  table,
   map: {
     from: {
-      data: handleData
+      data: mapFromData,
+      children: mapFromChildren
     }
-  },
-  handle: {
-    children: mapFromChildren
   }
 };

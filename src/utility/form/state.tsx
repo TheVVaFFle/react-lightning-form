@@ -32,6 +32,26 @@ export const state: any = {
           } else {
             throw Error("All form fields must have an id.");
           }
+        } else if (type === FormComponentType.Table) {
+          const formatData = (data: any[]): any[] => {
+            if (!data) return [];
+
+            if (child.props.selectable) {
+              return data.map((entry: any) => ({ ...entry, selected: false }));
+            }
+
+            return data;
+          };
+
+          let id: string = child.props.id,
+            key: string = GeneralUtility.kebabToCamelCase(id),
+            data: any[] = formatData(child.props.data);
+
+          updatedFormState[key] = {
+            value: data,
+            validate: child.props.validate || null,
+            error: false
+          };
         } else if (type === FormComponentType.Section) {
           if (child.props.children) {
             const section: JSX.Element = child.type(child.props),

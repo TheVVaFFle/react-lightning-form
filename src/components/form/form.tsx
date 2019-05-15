@@ -14,7 +14,8 @@ export enum FormComponentType {
   Checkbox = "checkbox",
   Radio = "radio",
   RadioGroup = "radio-group",
-  Dropdown = "dropdown"
+  Dropdown = "dropdown",
+  Table = "table"
 }
 
 export interface FormProps {
@@ -70,7 +71,7 @@ export const Form: React.SFC<FormProps> = (props: FormProps) => {
         if (child.props.data) {
           mappedChildren = FormUtility.map.from.data(child.props.data);
         } else {
-          mappedChildren = FormUtility.handle.children(fields);
+          mappedChildren = FormUtility.map.from.children(fields);
         }
 
         mappedChildren = React.Children.map(
@@ -79,6 +80,17 @@ export const Form: React.SFC<FormProps> = (props: FormProps) => {
             const type: string = FormUtility.get.childType(mappedChild);
             if (type === FormComponentType.Section) {
               return handleFormChildren([mappedChild]);
+            } else if (type === FormComponentType.Table) {
+              return FormUtility.table.enhance(
+                mappedChild,
+                formState,
+                columns,
+                index,
+                updateCount,
+                setUpdateCount,
+                setFormState,
+                handleOnSubmit
+              );
             } else {
               return FormUtility.input.enhance(
                 mappedChild,

@@ -2,9 +2,10 @@ import * as React from "react";
 import { useState, useEffect } from "react";
 
 export interface TableProps {
-  id?: string;
+  id: string;
   data?: any;
   selectable?: boolean;
+  onSelect?: any;
 }
 
 export const Table: React.SFC<TableProps> = (props: TableProps) => {
@@ -61,9 +62,9 @@ export const Table: React.SFC<TableProps> = (props: TableProps) => {
     );
   };
 
-  const getCheckbox = (): JSX.Element | null => {
+  const getCheckbox = (id: string | number): JSX.Element | null => {
     if (props.selectable) {
-      return <input type="checkbox" />;
+      return <input type="checkbox" onChange={() => props.onSelect(id)} />;
     }
 
     return null;
@@ -85,7 +86,7 @@ export const Table: React.SFC<TableProps> = (props: TableProps) => {
     });
 
     if (props.selectable) {
-      cells.push(getCell(getCheckbox(), styles));
+      cells.push(getCell(getCheckbox(row.id), styles));
     }
 
     return cells;
@@ -106,7 +107,7 @@ export const Table: React.SFC<TableProps> = (props: TableProps) => {
   };
 
   return (
-    <div id={props.id} className="table">
+    <div id={props.id || ""} className="table">
       <div className="headers">{getHeaders()}</div>
       <div className="rows">{getRows()}</div>
     </div>
