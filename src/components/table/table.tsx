@@ -5,6 +5,8 @@ export interface TableProps {
   id: string;
   data?: any;
   selectable?: boolean;
+  errorMessage?: string;
+  emptyMessage?: string;
   onSelect?: any;
 }
 
@@ -106,14 +108,19 @@ export const Table: React.SFC<TableProps> = (props: TableProps) => {
     });
   };
 
-  console.log(props.data);
-  let tableContents: JSX.Element[] | JSX.Element | null = null;
+  const getTableErrorMessage = () => {
+    return props.errorMessage || "Error loading table data.";
+  };
+
+  const getTableEmptyMessage = () => {
+    return props.emptyMessage || "Table is empty.";
+  };
 
   if (props.data === null || props.data === undefined) {
     return (
       <div id={props.id || ""} className="table">
         <div className="table-message empty">
-          <h1>Error loading table data.</h1>
+          <h1>{getTableErrorMessage()}</h1>
         </div>
       </div>
     );
@@ -121,7 +128,7 @@ export const Table: React.SFC<TableProps> = (props: TableProps) => {
     return (
       <div id={props.id || ""} className="table">
         <div className="table-message empty">
-          <h1>Table is empty.</h1>
+          <h1>{getTableEmptyMessage()}</h1>
         </div>
       </div>
     );
