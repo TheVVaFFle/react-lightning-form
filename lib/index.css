@@ -339,6 +339,44 @@
   margin-top: 20px;
 }
 
+.table .headers .header {
+  display: inline-block;
+  vertical-align: top;
+}
+.table .headers .header h1 {
+  color: #4475fe;
+  font-size: 0.8em;
+  margin: 0px;
+  padding: 20px 10px;
+  text-align: left;
+  text-transform: uppercase;
+}
+
+.table .rows .row:nth-of-type(even) {
+  background-color: rgba(200, 200, 200, 0.25);
+}
+
+.table .rows .row .cell {
+  display: inline-block;
+  vertical-align: top;
+}
+.table .rows .row .cell .value h1 {
+  color: #3c3c3c;
+  font-weight: 400;
+  margin: 0px;
+  padding: 20px 10px;
+  text-align: left;
+}
+.table .rows .row .cell .value h1 input {
+  width: auto;
+}
+
+.table .table-message h1 {
+  color: #3c3c3c;
+  font-weight: 400;
+  margin: 0px;
+}
+
 .loading-indicator {
   left: 50%;
   position: absolute;
