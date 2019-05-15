@@ -106,10 +106,31 @@ export const Table: React.SFC<TableProps> = (props: TableProps) => {
     });
   };
 
-  return (
-    <div id={props.id || ""} className="table">
-      <div className="headers">{getHeaders()}</div>
-      <div className="rows">{getRows()}</div>
-    </div>
-  );
+  console.log(props.data);
+  let tableContents: JSX.Element[] | JSX.Element | null = null;
+
+  if (props.data === null || props.data === undefined) {
+    return (
+      <div id={props.id || ""} className="table">
+        <div className="table-message empty">
+          <h1>Error loading table data.</h1>
+        </div>
+      </div>
+    );
+  } else if (props.data.length === 0) {
+    return (
+      <div id={props.id || ""} className="table">
+        <div className="table-message empty">
+          <h1>Table is empty.</h1>
+        </div>
+      </div>
+    );
+  } else {
+    return (
+      <div id={props.id || ""} className="table">
+        <div className="headers">{getHeaders()}</div>
+        <div className="rows">{getRows()}</div>
+      </div>
+    );
+  }
 };
