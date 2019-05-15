@@ -1,5 +1,6 @@
 import { Form, FormComponentType } from "./form/form";
 import { Section } from "./section/section";
+import { Table } from "./table/table";
 import { ValidationType } from "../utility/validation";
 declare module "react" {
   interface HTMLAttributes<T> {
@@ -9,4 +10,4 @@ declare module "react" {
     errormessage?: string;
   }
 }
-export { Form, FormComponentType, Section, ValidationType };
+export { Form, FormComponentType, Section, Table, ValidationType };

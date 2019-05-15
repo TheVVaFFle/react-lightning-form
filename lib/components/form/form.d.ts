@@ -7,7 +7,8 @@ export declare enum FormComponentType {
   Checkbox = "checkbox",
   Radio = "radio",
   RadioGroup = "radio-group",
-  Dropdown = "dropdown"
+  Dropdown = "dropdown",
+  Table = "table"
 }
 export interface FormProps {
   id: string;
