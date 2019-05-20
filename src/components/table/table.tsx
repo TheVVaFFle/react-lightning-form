@@ -1,5 +1,6 @@
 import * as React from "react";
-import { useState, useEffect } from "react";
+
+import * as GeneralUtility from "../../utility";
 
 export interface TableProps {
   id: string;
@@ -14,7 +15,10 @@ export const Table: React.SFC<TableProps> = (props: TableProps) => {
   const determineHeaders = (): string[] => {
     return Object.entries(props.data[0]).map((entry: any) => {
       const key: string = entry[0];
-      return key;
+      if (key && key !== "") {
+        return GeneralUtility.camelCaseToNormal(key);
+      }
+      return "Empty Key";
     });
   };
 
@@ -58,7 +62,7 @@ export const Table: React.SFC<TableProps> = (props: TableProps) => {
     return (
       <div key={value} className="cell" style={styles}>
         <div className="value">
-          <h1>{value}</h1>
+          <h1>{value || "-"}</h1>
         </div>
       </div>
     );
