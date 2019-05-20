@@ -370,6 +370,26 @@
 .table .rows .row .cell .value h1 input {
   width: auto;
 }
+.table .rows .row .cell .value h1 .input.checkbox input {
+  height: 30px;
+  width: 48px;
+}
+.table .rows .row .cell .value h1 .input.checkbox .checkbox-toggle-track {
+  height: 30px;
+  width: 48px;
+}
+.table
+  .rows
+  .row
+  .cell
+  .value
+  h1
+  .input.checkbox
+  .checkbox-toggle-track
+  .checkbox-toggle {
+  height: 30px;
+  width: 30px;
+}
 
 .table .table-message h1 {
   color: #3c3c3c;
