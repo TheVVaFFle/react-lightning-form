@@ -98,7 +98,7 @@ export const state: any = {
     Object.entries(formState).map((entry: any) => {
       const key = entry[0],
         prop = entry[1];
-      formattedFormState[key] = prop.value;
+      formattedFormState[key] = prop.value || "";
     });
 
     return formattedFormState;
