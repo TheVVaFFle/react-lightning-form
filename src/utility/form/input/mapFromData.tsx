@@ -70,7 +70,7 @@ export const mapFromData = (data: any): JSX.Element[] => {
           return (
             <input
               key={option}
-              id={`favorite-color-${option.toLowerCase()}`}
+              id={`${v.name}-${option.toLowerCase()}`}
               type="radio"
               name={v.name}
               label={option}

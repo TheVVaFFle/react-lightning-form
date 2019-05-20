@@ -1,5 +1,7 @@
 import * as React from "react";
 
+import { Checkbox } from "../enhanced/checkbox";
+
 import * as GeneralUtility from "../../utility";
 
 export interface TableProps {
@@ -70,7 +72,7 @@ export const Table: React.SFC<TableProps> = (props: TableProps) => {
 
   const getCheckbox = (id: string | number): JSX.Element | null => {
     if (props.selectable) {
-      return <input type="checkbox" onChange={() => props.onSelect(id)} />;
+      return <Checkbox handleOnChange={() => props.onSelect(id)} />;
     }
 
     return null;

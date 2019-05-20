@@ -35,6 +35,23 @@
             input {
               width: auto;
             }
+
+            .input.checkbox {
+              input {
+                height: 30px;
+                width: 48px;
+              }
+
+              .checkbox-toggle-track {
+                height: 30px;
+                width: 48px;
+
+                .checkbox-toggle {
+                  height: 30px;
+                  width: 30px;
+                }
+              }
+            }
           }
         }
       }
