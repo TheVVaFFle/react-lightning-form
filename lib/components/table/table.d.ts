@@ -3,6 +3,7 @@ export interface TableProps {
   id: string;
   data?: any;
   selectable?: boolean;
+  defaultHeaders?: string[];
   errorMessage?: string;
   emptyMessage?: string;
   onSelect?: any;

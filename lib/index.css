@@ -280,8 +280,6 @@
 }
 .form .form-contents .submit-button-wrapper {
   margin: auto;
-  max-width: 500px;
-  width: 100%;
 }
 .form .form-contents .submit-button-wrapper .error-message {
   text-align: center;
@@ -295,6 +293,7 @@
   display: block;
   margin: auto;
   margin-top: 40px;
+  max-width: 500px;
   outline: none;
   padding: 15px 20px;
   width: 100%;
@@ -335,6 +334,9 @@
   pointer-events: all;
   transform: translate(-50%, -50%) scale(1);
 }
+.section.has-title .fields {
+  margin-top: 20px;
+}
 .section .title,
 .section .fields {
   transition: all 0.25s;
@@ -345,10 +347,14 @@
   font-weight: 300;
   margin: 0px;
 }
-.section .fields {
-  margin-top: 20px;
-}
 
+.table {
+  border: 1px solid gainsboro;
+  border-radius: 10px;
+}
+.table .headers {
+  padding: 0px 10px;
+}
 .table .headers .header {
   display: inline-block;
   vertical-align: top;
@@ -361,11 +367,12 @@
   text-align: left;
   text-transform: uppercase;
 }
-
+.table .rows .row {
+  padding: 0px 10px;
+}
 .table .rows .row:nth-of-type(even) {
   background-color: rgba(200, 200, 200, 0.25);
 }
-
 .table .rows .row .cell {
   display: inline-block;
   vertical-align: top;
@@ -385,7 +392,7 @@
   width: 48px;
 }
 .table .rows .row .cell .value h1 .input.checkbox .checkbox-toggle-track {
-  height: 30px;
+  height: 28px;
   width: 48px;
 }
 .table
@@ -397,14 +404,20 @@
   .input.checkbox
   .checkbox-toggle-track
   .checkbox-toggle {
-  height: 30px;
-  width: 30px;
+  height: 28px;
+  width: 28px;
 }
-
+.table .table-message {
+  text-align: center;
+}
+.table .table-message.error h1 {
+  color: #d32f2f;
+}
 .table .table-message h1 {
-  color: #3c3c3c;
+  color: #4475fe;
   font-weight: 400;
-  margin: 0px;
+  padding: 20px;
+  position: relative;
 }
 
 .loading-indicator {
