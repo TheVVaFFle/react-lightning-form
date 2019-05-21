@@ -324,7 +324,7 @@
   padding: 20px;
   width: calc(100% - 40px);
 }
-.section.loading .fields {
+.section.loading .section-contents {
   opacity: 0;
   pointer-events: none;
   transform: scale(0.95);
@@ -334,7 +334,7 @@
   pointer-events: all;
   transform: translate(-50%, -50%) scale(1);
 }
-.section.has-title .fields {
+.section.has-title .section-contents {
   margin-top: 20px;
 }
 .section .title,
@@ -346,6 +346,9 @@
   font-size: 2em;
   font-weight: 300;
   margin: 0px;
+}
+.section .section-contents {
+  transition: all 0.25s;
 }
 
 .table {
@@ -424,7 +427,7 @@
   left: 50%;
   position: absolute;
   top: 50%;
-  transform: translate(-50%, -50%);
+  transform: translate(-50%, 0%);
 }
 .loading-indicator.full-screen {
   position: fixed;
