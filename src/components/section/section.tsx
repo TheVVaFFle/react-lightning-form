@@ -16,6 +16,8 @@ export interface SectionProps {
   outline?: boolean;
   styles?: React.CSSProperties;
   formState?: any;
+  submitLabel?: string;
+  onSubmit?: (e: any) => void;
 }
 
 export const Section: React.SFC<SectionProps> = (props: SectionProps) => {
@@ -45,10 +47,29 @@ export const Section: React.SFC<SectionProps> = (props: SectionProps) => {
     return classes;
   };
 
+  const getSubmitButton = (): JSX.Element | null => {
+    if (props.onSubmit) {
+      return (
+        <div className="submit-button-wrapper">
+          <button
+            type="button"
+            className="submit-button"
+            onClick={props.onSubmit}
+          >
+            {props.submitLabel || "Submit"}
+          </button>
+        </div>
+      );
+    }
+
+    return null;
+  };
+
   return (
     <div id={props.id} className={getClasses()} style={props.styles}>
       {getTitle()}
       <div className="fields">{getChildren()}</div>
+      {getSubmitButton()}
       <Loading />
     </div>
   );

@@ -59,16 +59,19 @@ export const App: React.SFC<AppProps> = (props: AppProps) => {
           <Section title="Contact" data={Test.data.contact} />
           <Section title="About" data={Test.data.about} />
         </Section>
-        <Section title="Vehicle" outline loading={searching}>
+        <Section
+          title="Vehicle"
+          outline
+          loading={searching}
+          submitLabel="Search"
+          onSubmit={handleSearch}
+        >
           <Table
             id="vehicles"
             defaultHeaders={Test.data.search.headers}
             data={searchResults}
             selectable
           />
-          <button className="submit-button" onClick={handleSearch}>
-            Search
-          </button>
         </Section>
       </Form>
     </div>
