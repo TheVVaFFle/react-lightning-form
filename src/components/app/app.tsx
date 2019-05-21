@@ -50,7 +50,12 @@ export const App: React.SFC<AppProps> = (props: AppProps) => {
           <Section title="About" data={Test.data.about} />
         </Section>
         <Section title="Vehicle" outline>
-          <Table id="vehicles" data={Test.data.searchResults} selectable />
+          <Table
+            id="vehicles"
+            defaultHeaders={Test.data.searchResults.headers}
+            data={Test.data.searchResults.data}
+            selectable
+          />
         </Section>
       </Form>
     </div>

@@ -29,6 +29,12 @@
     }
   }
 
+  &.has-title {
+    .fields {
+      margin-top: 20px;
+    }
+  }
+
   .title,
   .fields {
     transition: all 0.25s;
@@ -41,9 +47,5 @@
       font-weight: 300;
       margin: 0px;
     }
-  }
-
-  .fields {
-    margin-top: 20px;
   }
 }

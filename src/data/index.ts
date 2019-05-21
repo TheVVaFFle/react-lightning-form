@@ -47,12 +47,15 @@ export const Test = {
         options: colorOptions
       }
     },
-    searchResults: [
-      { id: 1, make: "Ford", model: "Fusion", yearOfProduction: "2012" },
-      { id: 2, make: "Dodge", model: "Charger", yearOfProduction: "2015" },
-      { id: 3, make: "Chevy", model: "Corvette", yearOfProduction: "2017" },
-      { id: 4, make: "Dodge", model: "Viper", yearOfProduction: "2018" },
-      { id: 5, make: "Ford", model: "Mustang", yearOfProduction: "2014" }
-    ]
+    searchResults: {
+      headers: ["ID", "MAKE", "MODEL", "YEAR OF PRODUCTION"],
+      data: [
+        { id: 1, make: "Ford", model: "Fusion", yearOfProduction: "2012" },
+        { id: 2, make: "Dodge", model: "Charger", yearOfProduction: "2015" },
+        { id: 3, make: "Chevy", model: "Corvette", yearOfProduction: "2017" },
+        { id: 4, make: "Dodge", model: "Viper", yearOfProduction: "2018" },
+        { id: 5, make: "Ford", model: "Mustang", yearOfProduction: "2014" }
+      ]
+    }
   }
 };

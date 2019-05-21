@@ -1,5 +1,8 @@
 .table {
+  border: 1px solid gray(220);
+  border-radius: 10px;
   .headers {
+    padding: 0px 10px;
     .header {
       display: inline-block;
       vertical-align: top;
@@ -16,6 +19,7 @@
 
   .rows {
     .row {
+      padding: 0px 10px;
       &:nth-of-type(even) {
         background-color: rgba(gray(200), 0.25);
       }
@@ -43,12 +47,12 @@
               }
 
               .checkbox-toggle-track {
-                height: 30px;
+                height: 28px;
                 width: 48px;
 
                 .checkbox-toggle {
-                  height: 30px;
-                  width: 30px;
+                  height: 28px;
+                  width: 28px;
                 }
               }
             }
@@ -59,10 +63,19 @@
   }
 
   .table-message {
+    text-align: center;
+
+    &.error {
+      h1 {
+        color: $red;
+      }
+    }
+
     h1 {
-      color: gray(60);
+      color: $blue;
       font-weight: 400;
-      margin: 0px;
+      padding: 20px;
+      position: relative;
     }
   }
 }

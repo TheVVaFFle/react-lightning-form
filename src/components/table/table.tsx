@@ -8,6 +8,7 @@ export interface TableProps {
   id: string;
   data?: any;
   selectable?: boolean;
+  defaultHeaders?: string[];
   errorMessage?: string;
   emptyMessage?: string;
   onSelect?: any;
@@ -15,13 +16,19 @@ export interface TableProps {
 
 export const Table: React.SFC<TableProps> = (props: TableProps) => {
   const determineHeaders = (): string[] => {
-    return Object.entries(props.data[0]).map((entry: any) => {
-      const key: string = entry[0];
-      if (key && key !== "") {
-        return GeneralUtility.camelCaseToNormal(key);
-      }
-      return "Empty Key";
-    });
+    if (props.data && props.data.length > 0) {
+      return Object.entries(props.data[0]).map((entry: any) => {
+        const key: string = entry[0];
+        if (key && key !== "") {
+          return GeneralUtility.camelCaseToNormal(key);
+        }
+        return "Empty Key";
+      });
+    } else if (props.defaultHeaders && props.defaultHeaders.length > 0) {
+      return props.defaultHeaders;
+    } else {
+      return [];
+    }
   };
 
   const getStyles = (length: number): React.CSSProperties => {
@@ -41,7 +48,7 @@ export const Table: React.SFC<TableProps> = (props: TableProps) => {
 
   const getHeaders = (): JSX.Element[] | null => {
     let headers: string[] | JSX.Element[] = determineHeaders();
-
+    console.log(headers);
     if (!headers || headers.length === 0) {
       return null;
     }
@@ -115,35 +122,40 @@ export const Table: React.SFC<TableProps> = (props: TableProps) => {
   };
 
   const getTableErrorMessage = () => {
-    return props.errorMessage || "Error loading table data.";
+    const errorMessage: string =
+      props.errorMessage || "Error loading table data.";
+
+    if (props.data === null || props.data === undefined) {
+      return (
+        <div className="table-message error">
+          <h1>( {errorMessage} )</h1>
+        </div>
+      );
+    }
+
+    return null;
   };
 
   const getTableEmptyMessage = () => {
-    return props.emptyMessage || "Table is empty.";
+    const emptyMessage: string = props.emptyMessage || "Table is empty.";
+
+    if (props.data && props.data.length === 0) {
+      return (
+        <div className="table-message empty">
+          <h1>( {emptyMessage} )</h1>
+        </div>
+      );
+    }
+
+    return null;
   };
 
-  if (props.data === null || props.data === undefined) {
-    return (
-      <div id={props.id || ""} className="table">
-        <div className="table-message empty">
-          <h1>{getTableErrorMessage()}</h1>
-        </div>
-      </div>
-    );
-  } else if (props.data.length === 0) {
-    return (
-      <div id={props.id || ""} className="table">
-        <div className="table-message empty">
-          <h1>{getTableEmptyMessage()}</h1>
-        </div>
-      </div>
-    );
-  } else {
-    return (
-      <div id={props.id || ""} className="table">
-        <div className="headers">{getHeaders()}</div>
-        <div className="rows">{getRows()}</div>
-      </div>
-    );
-  }
+  return (
+    <div id={props.id || ""} className="table">
+      <div className="headers">{getHeaders()}</div>
+      <div className="rows">{getRows()}</div>
+      {getTableEmptyMessage()}
+      {getTableErrorMessage()}
+    </div>
+  );
 };

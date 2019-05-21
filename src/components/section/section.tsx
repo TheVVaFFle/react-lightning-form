@@ -4,6 +4,8 @@ import classNames from "classnames";
 import { Loading } from "../loading/loading";
 
 export interface SectionProps {
+  id?: string;
+  className?: string;
   title?: string;
   children?: any;
   data?: any;
@@ -13,7 +15,6 @@ export interface SectionProps {
   loading?: boolean;
   outline?: boolean;
   styles?: React.CSSProperties;
-  className?: string;
   formState?: any;
 }
 
@@ -37,14 +38,15 @@ export const Section: React.SFC<SectionProps> = (props: SectionProps) => {
   const getClasses = (): string => {
     const classes: string = classNames("section", props.className, {
       outline: props.outline || false,
-      loading: props.loading
+      loading: props.loading,
+      "has-title": props.title
     });
 
     return classes;
   };
 
   return (
-    <div className={getClasses()} style={props.styles}>
+    <div id={props.id} className={getClasses()} style={props.styles}>
       {getTitle()}
       <div className="fields">{getChildren()}</div>
       <Loading />

@@ -320,8 +320,6 @@
 
     .submit-button-wrapper {
       margin: auto;
-      max-width: 500px;
-      width: 100%;
 
       .error-message {
         text-align: center;
@@ -337,6 +335,7 @@
       display: block;
       margin: auto;
       margin-top: 40px;
+      max-width: 500px;
       outline: none;
       padding: 15px 20px;
       width: 100%;
