@@ -12,5 +12,7 @@ export interface SectionProps {
   outline?: boolean;
   styles?: React.CSSProperties;
   formState?: any;
+  submitLabel?: string;
+  onSubmit?: (e: any) => void;
 }
 export declare const Section: React.SFC<SectionProps>;
