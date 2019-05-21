@@ -13,6 +13,7 @@ export interface SectionProps {
   styles?: React.CSSProperties;
   formState?: any;
   submitLabel?: string;
+  customErrorCount?: number;
   onSubmit?: (e: any) => void;
 }
 export declare const Section: React.SFC<SectionProps>;

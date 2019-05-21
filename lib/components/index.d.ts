@@ -8,6 +8,7 @@ declare module "react" {
     label?: string;
     type?: string;
     errormessage?: string;
+    error?: string;
   }
 }
 export { Form, FormComponentType, Section, Table, ValidationType };
