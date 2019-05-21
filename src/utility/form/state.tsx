@@ -55,9 +55,14 @@ export const state: any = {
         } else if (type === FormComponentType.Section) {
           if (child.props.children) {
             const section: JSX.Element = child.type(child.props),
-              fields: JSX.Element = section.props.children.find(
-                (c: JSX.Element) => c && c.props.className === "fields"
-              );
+              fields: JSX.Element = section.props.children
+                .find(
+                  (c: JSX.Element) =>
+                    c && c.props.className === "section-contents"
+                )
+                .props.children.find(
+                  (c: JSX.Element) => c && c.props.className === "fields"
+                );
             state.create(formState, fields.props.children);
           } else {
             state.create(formState, child.props.data);

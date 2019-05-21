@@ -57,9 +57,13 @@ export const Form: React.SFC<FormProps> = (props: FormProps) => {
         altIndex = 0;
 
         const section: JSX.Element = child.type(child.props),
-          fields: JSX.Element = section.props.children.find(
-            (c: JSX.Element) => c && c.props.className === "fields"
-          ),
+          fields: JSX.Element = section.props.children
+            .find(
+              (c: JSX.Element) => c && c.props.className === "section-contents"
+            )
+            .props.children.find(
+              (c: JSX.Element) => c && c.props.className === "fields"
+            ),
           columns: number = FormUtility.get.number.of.columns(
             child.props.sm || props.sm,
             child.props.md || props.md,

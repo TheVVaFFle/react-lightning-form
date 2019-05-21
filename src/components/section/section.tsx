@@ -68,8 +68,10 @@ export const Section: React.SFC<SectionProps> = (props: SectionProps) => {
   return (
     <div id={props.id} className={getClasses()} style={props.styles}>
       {getTitle()}
-      <div className="fields">{getChildren()}</div>
-      {getSubmitButton()}
+      <div className="section-contents">
+        <div className="fields">{getChildren()}</div>
+        {getSubmitButton()}
+      </div>
       <Loading />
     </div>
   );

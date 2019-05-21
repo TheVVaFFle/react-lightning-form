@@ -66,12 +66,7 @@ export const App: React.SFC<AppProps> = (props: AppProps) => {
           submitLabel="Search"
           onSubmit={handleSearch}
         >
-          <Table
-            id="vehicles"
-            defaultHeaders={Test.data.search.headers}
-            data={searchResults}
-            selectable
-          />
+          <Table id="vehicles" data={searchResults} selectable />
         </Section>
       </Form>
     </div>

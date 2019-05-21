@@ -16,7 +16,7 @@
   }
 
   &.loading {
-    .fields {
+    .section-contents {
       opacity: 0;
       pointer-events: none;
       transform: scale(0.95);
@@ -30,7 +30,7 @@
   }
 
   &.has-title {
-    .fields {
+    .section-contents {
       margin-top: 20px;
     }
   }
@@ -47,5 +47,9 @@
       font-weight: 300;
       margin: 0px;
     }
+  }
+
+  .section-contents {
+    transition: all 0.25s;
   }
 }
