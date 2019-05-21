@@ -21,7 +21,9 @@ declare module "react" {
 export interface AppProps {}
 
 export const App: React.SFC<AppProps> = (props: AppProps) => {
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(true),
+    [searching, setSearching] = useState(false),
+    [searchResults, setSearchResults] = useState(new Array());
 
   const simulateLoading = () => {
     setLoading(true);
@@ -31,6 +33,14 @@ export const App: React.SFC<AppProps> = (props: AppProps) => {
   const handleOnSubmit = (result: any) => {
     simulateLoading();
     console.log(result);
+  };
+
+  const handleSearch = () => {
+    setSearching(true);
+    setTimeout(() => {
+      setSearching(false);
+      setSearchResults(Test.data.search.results);
+    }, 1000);
   };
 
   useEffect(() => {
@@ -49,13 +59,16 @@ export const App: React.SFC<AppProps> = (props: AppProps) => {
           <Section title="Contact" data={Test.data.contact} />
           <Section title="About" data={Test.data.about} />
         </Section>
-        <Section title="Vehicle" outline>
+        <Section title="Vehicle" outline loading={searching}>
           <Table
             id="vehicles"
-            defaultHeaders={Test.data.searchResults.headers}
-            data={Test.data.searchResults.data}
+            defaultHeaders={Test.data.search.headers}
+            data={searchResults}
             selectable
           />
+          <button className="submit-button" onClick={handleSearch}>
+            Search
+          </button>
         </Section>
       </Form>
     </div>

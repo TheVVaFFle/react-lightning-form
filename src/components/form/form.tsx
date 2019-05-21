@@ -40,7 +40,7 @@ export const Form: React.SFC<FormProps> = (props: FormProps) => {
 
   useEffect(() => {
     setFormState(FormUtility.stateManager.create(formState, props.children));
-  }, []);
+  }, [props]);
 
   useEffect(() => {
     const handleResize = () => setWindowWidth(window.innerWidth);
