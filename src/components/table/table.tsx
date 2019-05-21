@@ -48,7 +48,7 @@ export const Table: React.SFC<TableProps> = (props: TableProps) => {
 
   const getHeaders = (): JSX.Element[] | null => {
     let headers: string[] | JSX.Element[] = determineHeaders();
-    console.log(headers);
+
     if (!headers || headers.length === 0) {
       return null;
     }
