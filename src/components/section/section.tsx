@@ -2,6 +2,7 @@ import React from "react";
 import classNames from "classnames";
 
 import { Loading } from "../loading/loading";
+import { FormUtility } from "../../utility/form";
 
 export interface SectionProps {
   id?: string;
@@ -17,6 +18,7 @@ export interface SectionProps {
   styles?: React.CSSProperties;
   formState?: any;
   submitLabel?: string;
+  customErrorCount?: number;
   onSubmit?: (e: any) => void;
 }
 
@@ -49,6 +51,7 @@ export const Section: React.SFC<SectionProps> = (props: SectionProps) => {
 
   const getSubmitButton = (): JSX.Element | null => {
     if (props.onSubmit) {
+      const errorCount: number = props.customErrorCount || 0;
       return (
         <div className="submit-button-wrapper">
           <button
@@ -58,6 +61,7 @@ export const Section: React.SFC<SectionProps> = (props: SectionProps) => {
           >
             {props.submitLabel || "Submit"}
           </button>
+          {FormUtility.get.errorMessage(errorCount)}
         </div>
       );
     }

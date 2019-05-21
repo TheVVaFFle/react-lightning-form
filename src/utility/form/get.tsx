@@ -23,6 +23,7 @@ export const get: any = {
     const classes: string = classNames("error-message", {
       show: errorCount > 0
     });
+
     const errorVerb: String = errorCount > 1 ? "are" : "is",
       errorText: string = errorCount > 1 ? "errors" : "error";
     return (
