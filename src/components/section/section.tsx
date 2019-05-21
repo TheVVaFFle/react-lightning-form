@@ -1,6 +1,8 @@
 import React from "react";
 import classNames from "classnames";
 
+import { Loading } from "../loading/loading";
+
 export interface SectionProps {
   title?: string;
   children?: any;
@@ -45,6 +47,7 @@ export const Section: React.SFC<SectionProps> = (props: SectionProps) => {
     <div className={getClasses()} style={props.styles}>
       {getTitle()}
       <div className="fields">{getChildren()}</div>
+      <Loading />
     </div>
   );
 };
