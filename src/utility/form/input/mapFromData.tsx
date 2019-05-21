@@ -16,7 +16,8 @@ export const mapFromData = (data: any): JSX.Element[] => {
 
   const getInputForDataProperty = (key: string, v: any) => {
     const id: string = GeneralUtility.camelCaseToKebab(key),
-      label: string = v.label || GeneralUtility.camelCaseToNormal(key);
+      label: string = v.label || GeneralUtility.camelCaseToNormal(key),
+      error: string = v.error ? v.error.toString() : "false";
 
     if (v.type !== undefined) {
       if (v.type === FormComponentType.Checkbox) {
@@ -49,6 +50,7 @@ export const mapFromData = (data: any): JSX.Element[] => {
             label={label}
             validate={v.validate ? v.validate.toString() : null}
             errormessage={v.errormessage || "Error, invalid selection."}
+            error={error}
           >
             {options}
           </select>
@@ -63,6 +65,7 @@ export const mapFromData = (data: any): JSX.Element[] => {
             placeholder={`Enter ${label.toLowerCase()}`}
             validate={v.validate ? v.validate.toString() : null}
             errormessage={v.errormessage || "Error, invalid input."}
+            error={error}
           />
         );
       } else if (v.type === FormComponentType.RadioGroup) {
@@ -102,6 +105,7 @@ export const mapFromData = (data: any): JSX.Element[] => {
         placeholder={`Enter ${label.toLowerCase()}`}
         label={label}
         validate={ValidationType.Required}
+        error={error}
       />
     );
   };

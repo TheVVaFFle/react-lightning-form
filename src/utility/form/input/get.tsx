@@ -51,7 +51,9 @@ export const get: any = {
     const classes: string = classNames(
       child.props.className,
       {
-        error: formState[key] && formState[key].error
+        error:
+          child.props.error === "true" ||
+          (formState[key] && formState[key].error)
       },
       { "scroll-bar": child.type === FormComponentType.TextArea }
     );
@@ -103,7 +105,9 @@ export const get: any = {
     if (!child.props.id) return null;
 
     const key: string = GeneralUtility.kebabToCamelCase(child.props.id),
-      error: boolean = formState[key] && formState[key].error,
+      error: boolean =
+        child.props.error === "true" ||
+        (formState[key] && formState[key].error),
       input: string = formState[key] ? formState[key].value : "",
       type: string = formState[key] ? formState[key].validate : "";
 
