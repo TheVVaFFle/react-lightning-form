@@ -14,10 +14,10 @@
   }
 
   input,
-  select {
+  select,
+  textarea {
     border: 1px solid gray(200);
     border-radius: 100px;
-    margin-right: 10px;
     outline: none;
     padding: 10px 15px;
 
@@ -28,7 +28,8 @@
 
   .text,
   .select,
-  .checkbox {
+  .checkbox,
+  .textarea {
     display: inline-block;
     vertical-align: top;
 
@@ -49,14 +50,21 @@
 
     input {
       height: 20px;
-      width: 168px;
+      width: calc(100% - 30px);
     }
 
     select {
       height: 42px;
       padding-left: 10px;
-      width: 200px;
+      width: 100%;
     }
+  }
+
+  .text,
+  .select,
+  .checkbox {
+    margin: 10px;
+    width: calc(33.33% - 20px);
   }
 
   .button {
@@ -86,6 +94,7 @@
   .checkbox {
     height: 59px;
     position: relative;
+
     input {
       cursor: pointer;
       height: 42px;
@@ -142,6 +151,17 @@
         transition: all 0.25s;
         width: 40px;
       }
+    }
+  }
+
+  .textarea {
+    display: block;
+    margin: 10px 0px;
+    textarea {
+      border-radius: 10px;
+      max-width: calc(100% - 30px);
+      min-height: 100px;
+      min-width: calc(100% - 30px);
     }
   }
 }

@@ -1,3 +1,5 @@
+import { RLFComponentType } from "../components/form/form";
+
 const suffixOptions: string[] = ["Sr.", "Jr.", "I", "II", "III"],
   relationOptions: string[] = [
     "Father",
@@ -35,6 +37,10 @@ export const Test = {
       state: "Mo",
       zip: "65201",
       permanent: true
+    },
+    comments: {
+      rlfComponentType: RLFComponentType.Textarea,
+      value: "This is a comment!"
     }
   },
   options: {

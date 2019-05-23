@@ -7,6 +7,14 @@ import { Loading } from "../loading/loading";
 import { FormUtility } from "../../utility";
 import { MappedDataItem } from "../../utility/form";
 
+export enum RLFComponentType {
+  Button = "button",
+  Checkbox = "checkbox",
+  Textarea = "textarea",
+  Dropdown = "dropdown",
+  Text = "text"
+}
+
 export interface FormProps {
   id?: string;
   data?: any;

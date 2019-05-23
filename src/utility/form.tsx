@@ -5,8 +5,11 @@ import { Section } from "../components/section/section";
 import { Text } from "../components/enhanced/text";
 import { Select } from "../components/enhanced/select";
 import { Checkbox } from "../components/enhanced/checkbox";
+import { TextArea } from "../components/enhanced/textarea";
 
 import { StringUtility } from ".";
+
+import { RLFComponentType } from "../components/form/form";
 
 export enum ObjectType {
   Null = "null",
@@ -23,6 +26,7 @@ export interface MappedDataItem {
   flatKey?: string;
   type: ObjectType;
   arrayType: ObjectType;
+  rlfComponentType: RLFComponentType;
   value: any;
   children?: MappedDataItem[];
 }
@@ -54,26 +58,36 @@ export const FormUtility = {
             flatKey: entry[0]
           };
 
-          if (parent) {
-            entry = { ...entry, flatKey: `${parent}.${entry.flatKey}` };
-          }
-
-          if (entry.type === ObjectType.Object) {
+          if (entry.value.rlfComponentType !== undefined) {
+            const { value, rlfComponentType } = entry.value;
             entry = {
               ...entry,
-              children: FormUtility.map.raw.data(entry.value, entry.key)
+              rlfComponentType,
+              type: FormUtility.get.obj.type(value),
+              value
             };
-          } else if (entry.type === ObjectType.Array) {
-            const children: any = entry.value.map(
-              (v: MappedDataItem, i: number) =>
-                FormUtility.map.raw.data(v, `${entry.flatKey}.${i}`)
-            );
+          } else {
+            if (parent) {
+              entry = { ...entry, flatKey: `${parent}.${entry.flatKey}` };
+            }
 
-            entry = {
-              ...entry,
-              children,
-              arrayType: FormUtility.get.obj.type(entry.value[0])
-            };
+            if (entry.type === ObjectType.Object) {
+              entry = {
+                ...entry,
+                children: FormUtility.map.raw.data(entry.value, entry.key)
+              };
+            } else if (entry.type === ObjectType.Array) {
+              const children: any = entry.value.map(
+                (v: MappedDataItem, i: number) =>
+                  FormUtility.map.raw.data(v, `${entry.flatKey}.${i}`)
+              );
+
+              entry = {
+                ...entry,
+                children,
+                arrayType: FormUtility.get.obj.type(entry.value[0])
+              };
+            }
           }
 
           return entry;
@@ -98,100 +112,47 @@ export const FormUtility = {
                 .map((entry: any) => ({ key: entry[0], value: entry[1] }))
                 .find((o: any) => o.key === item.key);
 
-              if (item.type === ObjectType.Object) {
-                const title: string | undefined = isNaN(parseInt(item.key))
-                  ? StringUtility.camelCaseToNormal(item.key)
-                  : undefined;
-
-                return (
-                  <Section key={item.key} title={title}>
-                    {FormUtility.map.data.to.components(
-                      rawData,
-                      item.children,
-                      options,
-                      updateData
-                    )}
-                  </Section>
+              if (item.rlfComponentType) {
+                return FormUtility.handle.rlfComponent(
+                  item,
+                  rawData,
+                  updateData
+                );
+              } else if (item.type === ObjectType.Object) {
+                return FormUtility.handle.object(
+                  item,
+                  rawData,
+                  options,
+                  updateData
                 );
               } else if (
                 item.type === ObjectType.Array ||
                 itemOptions !== undefined
               ) {
-                if (
-                  item.arrayType === ObjectType.String ||
-                  item.arrayType === ObjectType.Number ||
-                  (item.type === ObjectType.String && itemOptions !== undefined)
-                ) {
-                  const flatKey: string =
-                    item.flatKey || Math.random().toString();
-                  return (
-                    <Select
-                      key={item.key}
-                      flatKey={flatKey}
-                      name={item.key}
-                      value={item.value}
-                      options={itemOptions.value || item.value}
-                      rawData={rawData}
-                      updateData={updateData}
-                    />
-                  );
-                } else {
-                  return (
-                    <Section
-                      key={item.key}
-                      title={StringUtility.camelCaseToNormal(item.key)}
-                    >
-                      {FormUtility.map.data.to.components(
-                        rawData,
-                        item.children,
-                        options,
-                        updateData
-                      )}
-                    </Section>
-                  );
-                }
+                return FormUtility.handle.array(
+                  item,
+                  rawData,
+                  options,
+                  itemOptions,
+                  updateData
+                );
               } else if (
                 item.type === ObjectType.String ||
                 item.type === ObjectType.Number
               ) {
-                const flatKey: string =
-                  item.flatKey || Math.random().toString();
-                return (
-                  <Text
-                    key={item.key}
-                    flatKey={flatKey}
-                    name={item.key}
-                    value={item.value}
-                    rawData={rawData}
-                    updateData={updateData}
-                  />
+                return FormUtility.handle.alphaNumeric(
+                  item,
+                  rawData,
+                  updateData
                 );
               } else if (item.type === ObjectType.Boolean) {
-                const flatKey: string =
-                  item.flatKey || Math.random().toString();
-                return (
-                  <Checkbox
-                    key={item.key}
-                    flatKey={flatKey}
-                    name={item.key}
-                    value={item.value}
-                    rawData={rawData}
-                    updateData={updateData}
-                  />
-                );
+                return FormUtility.handle.boolean(item, rawData, updateData);
               } else if (Array.isArray(item)) {
-                const arrayKey: number = parseInt(
-                  item[0].flatKey.replace(/^\D+/g, "")
-                );
-                return (
-                  <Section key={arrayKey}>
-                    {FormUtility.map.data.to.components(
-                      rawData,
-                      item,
-                      options,
-                      updateData
-                    )}
-                  </Section>
+                return FormUtility.handle.mappedArray(
+                  item,
+                  rawData,
+                  options,
+                  updateData
                 );
               } else {
                 return <div key={item.key} />;
@@ -200,6 +161,139 @@ export const FormUtility = {
           );
         }
       }
+    }
+  },
+  handle: {
+    object: (
+      item: MappedDataItem,
+      rawData: any,
+      options: any,
+      updateData: Function
+    ) => {
+      const title: string | undefined = isNaN(parseInt(item.key))
+        ? StringUtility.camelCaseToNormal(item.key)
+        : undefined;
+
+      return (
+        <Section key={item.key} title={title}>
+          {FormUtility.map.data.to.components(
+            rawData,
+            item.children,
+            options,
+            updateData
+          )}
+        </Section>
+      );
+    },
+    array: (
+      item: MappedDataItem,
+      rawData: any,
+      options: any,
+      itemOptions: any | undefined,
+      updateData: Function
+    ) => {
+      if (
+        item.arrayType === ObjectType.String ||
+        item.arrayType === ObjectType.Number ||
+        (item.type === ObjectType.String && itemOptions !== undefined)
+      ) {
+        const flatKey: string = item.flatKey || Math.random().toString();
+        return (
+          <Select
+            key={item.key}
+            flatKey={flatKey}
+            name={item.key}
+            value={item.value}
+            options={itemOptions.value || item.value}
+            rawData={rawData}
+            updateData={updateData}
+          />
+        );
+      } else {
+        return (
+          <Section
+            key={item.key}
+            title={StringUtility.camelCaseToNormal(item.key)}
+          >
+            {FormUtility.map.data.to.components(
+              rawData,
+              item.children,
+              options,
+              updateData
+            )}
+          </Section>
+        );
+      }
+    },
+    mappedArray: (
+      item: any[],
+      rawData: any,
+      options: any,
+      updateData: Function
+    ) => {
+      const arrayKey: number = parseInt(item[0].flatKey.replace(/^\D+/g, ""));
+      return (
+        <Section key={arrayKey}>
+          {FormUtility.map.data.to.components(
+            rawData,
+            item,
+            options,
+            updateData
+          )}
+        </Section>
+      );
+    },
+    alphaNumeric: (
+      item: MappedDataItem,
+      rawData: any,
+      updateData: Function
+    ) => {
+      const flatKey: string = item.flatKey || Math.random().toString();
+      return (
+        <Text
+          key={item.key}
+          flatKey={flatKey}
+          name={item.key}
+          value={item.value}
+          rawData={rawData}
+          updateData={updateData}
+        />
+      );
+    },
+    boolean: (item: MappedDataItem, rawData: any, updateData: Function) => {
+      const flatKey: string = item.flatKey || Math.random().toString();
+      return (
+        <Checkbox
+          key={item.key}
+          flatKey={flatKey}
+          name={item.key}
+          value={item.value}
+          rawData={rawData}
+          updateData={updateData}
+        />
+      );
+    },
+    rlfComponent: (
+      item: MappedDataItem,
+      rawData: any,
+      updateData: Function
+    ) => {
+      const flatKey: string = item.flatKey || Math.random().toString();
+
+      if (item.rlfComponentType === RLFComponentType.Textarea) {
+        return (
+          <TextArea
+            key={item.key}
+            flatKey={flatKey}
+            name={item.key}
+            value={item.value}
+            rawData={rawData}
+            updateData={updateData}
+          />
+        );
+      }
+
+      return null;
     }
   }
 };
