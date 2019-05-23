@@ -1,4 +1,4 @@
-import { RLFComponentType } from "../components/form/form";
+import { RLFComponentType, RLFValidationType } from "../components/form/form";
 
 const suffixOptions: string[] = ["Sr.", "Jr.", "I", "II", "III"],
   relationOptions: string[] = [
@@ -47,5 +47,8 @@ export const Test = {
     suffix: suffixOptions,
     relation: relationOptions,
     sex: sexOptions
+  },
+  validation: {
+    comments: RLFValidationType.Required
   }
 };

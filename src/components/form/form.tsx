@@ -15,12 +15,17 @@ export enum RLFComponentType {
   Text = "text"
 }
 
+export enum RLFValidationType {
+  Required = "required"
+}
+
 export interface FormProps {
   id?: string;
   title?: string;
   data?: any;
   children?: any;
   options?: any;
+  validation?: any;
   onSubmit: Function;
 }
 
@@ -31,19 +36,21 @@ export const Form: React.SFC<FormProps> = (props: FormProps) => {
 
   useEffect(() => {
     if (props.data) {
-      setRawData(props.data);
+      setRawData(FormUtility.map.rlf.to.raw(props.data));
       setMappedData(FormUtility.map.raw.data(props.data));
     } else if (props.children) {
       const section: any = FormUtility.map.section.data(props.children);
 
-      setRawData(section.data);
+      setRawData(FormUtility.map.rlf.to.raw(section.data));
       setSubmitHandlers(section.submit);
       setMappedData(FormUtility.map.raw.data(section.data));
     }
   }, [props.data]);
 
   const handleOnSubmit = (): any => {
-    props.onSubmit(rawData);
+    if (FormUtility.validate.data(rawData, mappedData, props.validation)) {
+      props.onSubmit(rawData);
+    }
   };
 
   const getTitle = (): JSX.Element | null => {
