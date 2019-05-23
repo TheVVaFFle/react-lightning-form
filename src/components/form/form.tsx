@@ -25,6 +25,7 @@ export interface FormProps {
   data?: any;
   children?: any;
   options?: any;
+  types?: any;
   validation?: any;
   onSubmit: Function;
 }
@@ -32,23 +33,31 @@ export interface FormProps {
 export const Form: React.SFC<FormProps> = (props: FormProps) => {
   const [rawData, setRawData] = useState<any>(null),
     [mappedData, setMappedData] = useState<MappedDataItem[]>(new Array()),
+    [errors, setErrors] = useState<any>(null),
     [submitHandlers, setSubmitHandlers] = useState<Function[]>(new Array());
 
   useEffect(() => {
     if (props.data) {
-      setRawData(FormUtility.map.rlf.to.raw(props.data));
+      setRawData(props.data);
       setMappedData(FormUtility.map.raw.data(props.data));
     } else if (props.children) {
       const section: any = FormUtility.map.section.data(props.children);
 
-      setRawData(FormUtility.map.rlf.to.raw(section.data));
+      setRawData(section.data);
       setSubmitHandlers(section.submit);
       setMappedData(FormUtility.map.raw.data(section.data));
     }
   }, [props.data]);
 
   const handleOnSubmit = (): any => {
-    if (FormUtility.validate.data(rawData, mappedData, props.validation)) {
+    if (
+      FormUtility.validate.data(
+        rawData,
+        mappedData,
+        props.validation,
+        setErrors
+      )
+    ) {
       props.onSubmit(rawData);
     }
   };
@@ -85,6 +94,7 @@ export const Form: React.SFC<FormProps> = (props: FormProps) => {
     rawData,
     mappedData,
     props.options,
+    props.types,
     submitHandlers,
     setRawData
   );

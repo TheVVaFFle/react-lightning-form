@@ -41,12 +41,14 @@ export const App: React.SFC<AppProps> = (props: AppProps) => {
         title="User Profile by Form"
         data={Test.data}
         options={Test.options}
+        types={Test.types}
         validation={Test.validation}
         onSubmit={handleSubmitForm}
       />
       <Form
         title="User Profile by Section"
         options={Test.options}
+        types={Test.types}
         validation={Test.validation}
         onSubmit={handleSubmitForm}
       >

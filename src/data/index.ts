@@ -38,10 +38,7 @@ export const Test = {
       zip: "65201",
       permanent: true
     },
-    comments: {
-      rlfComponentType: RLFComponentType.Textarea,
-      value: "This is a comment!"
-    }
+    comments: "This is a comment!"
   },
   options: {
     suffix: suffixOptions,
@@ -50,5 +47,8 @@ export const Test = {
   },
   validation: {
     comments: RLFValidationType.Required
+  },
+  types: {
+    comments: RLFComponentType.Textarea
   }
 };

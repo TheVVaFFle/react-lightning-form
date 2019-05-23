@@ -26,7 +26,6 @@ export interface MappedDataItem {
   flatKey?: string;
   type: ObjectType;
   arrayType: ObjectType;
-  rlfComponentType: RLFComponentType;
   value: any;
   children?: MappedDataItem[];
 }
@@ -45,6 +44,14 @@ export const FormUtility = {
           return typeof obj;
         }
       }
+    },
+    rlfComponentType: (
+      item: MappedDataItem,
+      types: any
+    ): RLFComponentType | null => {
+      const type: RLFComponentType = _.get(types, item.flatKey || "");
+
+      return type || null;
     }
   },
   map: {
@@ -62,36 +69,26 @@ export const FormUtility = {
             flatKey: entry[0]
           };
 
-          if (entry.value.rlfComponentType !== undefined) {
-            const { value, rlfComponentType } = entry.value;
+          if (parent) {
+            entry = { ...entry, flatKey: `${parent}.${entry.flatKey}` };
+          }
+
+          if (entry.type === ObjectType.Object) {
             entry = {
               ...entry,
-              rlfComponentType,
-              type: FormUtility.get.obj.type(value),
-              value
+              children: FormUtility.map.raw.data(entry.value, entry.key)
             };
-          } else {
-            if (parent) {
-              entry = { ...entry, flatKey: `${parent}.${entry.flatKey}` };
-            }
+          } else if (entry.type === ObjectType.Array) {
+            const children: any = entry.value.map(
+              (v: MappedDataItem, i: number) =>
+                FormUtility.map.raw.data(v, `${entry.flatKey}.${i}`)
+            );
 
-            if (entry.type === ObjectType.Object) {
-              entry = {
-                ...entry,
-                children: FormUtility.map.raw.data(entry.value, entry.key)
-              };
-            } else if (entry.type === ObjectType.Array) {
-              const children: any = entry.value.map(
-                (v: MappedDataItem, i: number) =>
-                  FormUtility.map.raw.data(v, `${entry.flatKey}.${i}`)
-              );
-
-              entry = {
-                ...entry,
-                children,
-                arrayType: FormUtility.get.obj.type(entry.value[0])
-              };
-            }
+            entry = {
+              ...entry,
+              children,
+              arrayType: FormUtility.get.obj.type(entry.value[0])
+            };
           }
 
           return entry;
@@ -116,40 +113,13 @@ export const FormUtility = {
         };
       }
     },
-    rlf: {
-      to: {
-        raw: (data: any): any => {
-          let mappedData: any = {};
-          Object.entries(data)
-            .map((entry: any) => ({ key: entry[0], value: entry[1] }))
-            .forEach((entry: any) => {
-              const type: ObjectType | string = FormUtility.get.obj.type(
-                entry.value
-              );
-
-              if (entry.value.rlfComponentType !== undefined) {
-                mappedData[entry.key] = entry.value.value;
-              } else if (type === ObjectType.Object) {
-                mappedData[entry.key] = FormUtility.map.rlf.to.raw(entry.value);
-              } else if (type === ObjectType.Array) {
-                mappedData[entry.key] = entry.value.map((item: any) => {
-                  return FormUtility.map.rlf.to.raw(item);
-                });
-              } else {
-                mappedData[entry.key] = entry.value;
-              }
-            });
-
-          return mappedData;
-        }
-      }
-    },
     data: {
       to: {
         components: (
           rawData: any,
           mappedData: MappedDataItem[] | undefined,
           options: any,
+          types: any,
           submitHandlers: Function[],
           updateData: Function
         ): (JSX.Element | null)[] | null => {
@@ -165,9 +135,15 @@ export const FormUtility = {
                     .find((o: any) => o.key === item.key)
                 : undefined;
 
-              if (item.rlfComponentType) {
+              const rlfComponentType: RLFComponentType | null = FormUtility.get.rlfComponentType(
+                item,
+                types
+              );
+
+              if (rlfComponentType) {
                 return FormUtility.handle.rlfComponent(
                   item,
+                  rlfComponentType,
                   rawData,
                   updateData
                 );
@@ -176,6 +152,7 @@ export const FormUtility = {
                   item,
                   rawData,
                   options,
+                  types,
                   submitHandlers,
                   updateData
                 );
@@ -187,6 +164,7 @@ export const FormUtility = {
                   item,
                   rawData,
                   options,
+                  types,
                   itemOptions,
                   submitHandlers,
                   updateData
@@ -207,6 +185,7 @@ export const FormUtility = {
                   item,
                   rawData,
                   options,
+                  types,
                   submitHandlers,
                   updateData
                 );
@@ -224,6 +203,7 @@ export const FormUtility = {
       item: MappedDataItem,
       rawData: any,
       options: any,
+      types: any,
       submitHandlers: Function[],
       updateData: Function
     ) => {
@@ -242,6 +222,7 @@ export const FormUtility = {
             rawData,
             item.children,
             options,
+            types,
             submitHandlers,
             updateData
           )}
@@ -252,6 +233,7 @@ export const FormUtility = {
       item: MappedDataItem,
       rawData: any,
       options: any,
+      types: any,
       itemOptions: any | undefined,
       submitHandlers: Function[],
       updateData: Function
@@ -285,6 +267,7 @@ export const FormUtility = {
               rawData,
               item.children,
               options,
+              types,
               submitHandlers,
               updateData
             )}
@@ -296,6 +279,7 @@ export const FormUtility = {
       item: any[],
       rawData: any,
       options: any,
+      types: any,
       submitHandlers: Function[],
       updateData: Function
     ) => {
@@ -306,6 +290,7 @@ export const FormUtility = {
             rawData,
             item,
             options,
+            types,
             submitHandlers,
             updateData
           )}
@@ -344,12 +329,13 @@ export const FormUtility = {
     },
     rlfComponent: (
       item: MappedDataItem,
+      rlfComponentType: RLFComponentType,
       rawData: any,
       updateData: Function
-    ) => {
+    ): JSX.Element | null => {
       const flatKey: string = item.flatKey || Math.random().toString();
 
-      if (item.rlfComponentType === RLFComponentType.Textarea) {
+      if (rlfComponentType === RLFComponentType.Textarea) {
         return (
           <TextArea
             key={item.key}
@@ -369,7 +355,8 @@ export const FormUtility = {
     data: (
       rawData: any,
       mappedData: MappedDataItem[],
-      validation: any
+      validation: any,
+      updateErrors: Function
     ): boolean => {
       if (validation === undefined || validation === null) {
         return true;
@@ -382,7 +369,8 @@ export const FormUtility = {
           const validated: boolean = FormUtility.validate.data(
             rawData,
             item.children,
-            validation
+            validation,
+            updateErrors
           );
           if (!validated) {
             invalidCount++;
@@ -395,6 +383,7 @@ export const FormUtility = {
               validationFn,
               _.get(rawData, item.flatKey || "")
             );
+            console.log(item.flatKey, validated);
             if (!validated) {
               invalidCount++;
             }
