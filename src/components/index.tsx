@@ -1,17 +1,5 @@
-import { Form, FormComponentType } from "./form/form";
-import { Section } from "./section/section";
-import { Table } from "./table/table";
-
-import { ValidationType } from "../utility/validation";
-
 declare module "react" {
-  interface HTMLAttributes<T> {
-    validate?: ValidationType | Function;
-    label?: string;
-    type?: string;
-    errormessage?: string;
-    error?: string;
-  }
+  interface HTMLAttributes<T> {}
 }
 
-export { Form, FormComponentType, Section, Table, ValidationType };
+export {};

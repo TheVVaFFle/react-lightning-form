@@ -6,7 +6,7 @@ export enum ValidationType {
   Required = "required"
 }
 
-export const Validate: any = {
+export const ValidationUtility: any = {
   phone: (input: string): boolean => {
     return Validator.isMobilePhone(input, "en-US");
   },
@@ -16,12 +16,16 @@ export const Validate: any = {
   required: (input: string): boolean => {
     return input !== undefined && input !== null && input.trim() !== "";
   },
-  determineIfError: (value: any, validate: Function) => {
-    if (validate !== undefined && validate !== null) {
-      return !validate(value);
-    }
+  determine: {
+    if: {
+      error: (value: any, validate: Function) => {
+        if (validate !== undefined && validate !== null) {
+          return !validate(value);
+        }
 
-    return false;
+        return false;
+      }
+    }
   },
   getErrorMessage: (
     type: ValidationType,

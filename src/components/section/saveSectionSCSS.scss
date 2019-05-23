@@ -1,0 +1,55 @@
+.section {
+  display: inline-block;
+  position: relative;
+  vertical-align: top;
+  width: 100%;
+
+  &:nth-child(n + 2) {
+    margin-top: 20px;
+  }
+
+  &.outline {
+    border-radius: 10px;
+    box-shadow: $shadow1;
+    padding: 20px;
+    width: calc(100% - 40px);
+  }
+
+  &.loading {
+    .section-contents {
+      opacity: 0;
+      pointer-events: none;
+      transform: scale(0.95);
+    }
+
+    > .loading-indicator {
+      opacity: 1;
+      pointer-events: all;
+      transform: translate(-50%, -50%) scale(1);
+    }
+  }
+
+  &.has-title {
+    .section-contents {
+      margin-top: 20px;
+    }
+  }
+
+  .title,
+  .fields {
+    transition: all 0.25s;
+  }
+
+  .title {
+    h1 {
+      color: gray(60);
+      font-size: 2em;
+      font-weight: 300;
+      margin: 0px;
+    }
+  }
+
+  .section-contents {
+    transition: all 0.25s;
+  }
+}
