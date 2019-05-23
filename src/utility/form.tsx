@@ -50,6 +50,10 @@ export const FormUtility = {
   map: {
     raw: {
       data: (data: any, parent: string = ""): any => {
+        if (data === undefined || data === null) {
+          return null;
+        }
+
         return Object.entries(data).map((entry: any) => {
           entry = {
             key: entry[0],
@@ -94,12 +98,31 @@ export const FormUtility = {
         });
       }
     },
+    section: {
+      data: (children: any) => {
+        let data: any = {},
+          submit: any = {};
+
+        React.Children.map(children, (child: any) => {
+          const keys: string[] = Object.keys(child.props.data);
+
+          data = { ...data, ...child.props.data };
+          submit[keys[0]] = child.props.onSubmit;
+        });
+
+        return {
+          data,
+          submit
+        };
+      }
+    },
     data: {
       to: {
         components: (
           rawData: any,
           mappedData: MappedDataItem[] | undefined,
           options: any,
+          submitHandlers: Function[],
           updateData: Function
         ): (JSX.Element | null)[] | null => {
           if (mappedData === undefined || mappedData === null) {
@@ -108,9 +131,11 @@ export const FormUtility = {
 
           return mappedData.map(
             (item: MappedDataItem): JSX.Element | null => {
-              const itemOptions: any | undefined = Object.entries(options)
-                .map((entry: any) => ({ key: entry[0], value: entry[1] }))
-                .find((o: any) => o.key === item.key);
+              const itemOptions: any | undefined = options
+                ? Object.entries(options)
+                    .map((entry: any) => ({ key: entry[0], value: entry[1] }))
+                    .find((o: any) => o.key === item.key)
+                : undefined;
 
               if (item.rlfComponentType) {
                 return FormUtility.handle.rlfComponent(
@@ -123,6 +148,7 @@ export const FormUtility = {
                   item,
                   rawData,
                   options,
+                  submitHandlers,
                   updateData
                 );
               } else if (
@@ -134,6 +160,7 @@ export const FormUtility = {
                   rawData,
                   options,
                   itemOptions,
+                  submitHandlers,
                   updateData
                 );
               } else if (
@@ -152,6 +179,7 @@ export const FormUtility = {
                   item,
                   rawData,
                   options,
+                  submitHandlers,
                   updateData
                 );
               } else {
@@ -168,6 +196,7 @@ export const FormUtility = {
       item: MappedDataItem,
       rawData: any,
       options: any,
+      submitHandlers: Function[],
       updateData: Function
     ) => {
       const title: string | undefined = isNaN(parseInt(item.key))
@@ -175,11 +204,17 @@ export const FormUtility = {
         : undefined;
 
       return (
-        <Section key={item.key} title={title}>
+        <Section
+          key={item.key}
+          title={title}
+          data={item.value}
+          onSubmit={_.get(submitHandlers, item.key)}
+        >
           {FormUtility.map.data.to.components(
             rawData,
             item.children,
             options,
+            submitHandlers,
             updateData
           )}
         </Section>
@@ -190,6 +225,7 @@ export const FormUtility = {
       rawData: any,
       options: any,
       itemOptions: any | undefined,
+      submitHandlers: Function[],
       updateData: Function
     ) => {
       if (
@@ -214,11 +250,14 @@ export const FormUtility = {
           <Section
             key={item.key}
             title={StringUtility.camelCaseToNormal(item.key)}
+            data={item.value}
+            onSubmit={_.get(submitHandlers, item.key)}
           >
             {FormUtility.map.data.to.components(
               rawData,
               item.children,
               options,
+              submitHandlers,
               updateData
             )}
           </Section>
@@ -229,6 +268,7 @@ export const FormUtility = {
       item: any[],
       rawData: any,
       options: any,
+      submitHandlers: Function[],
       updateData: Function
     ) => {
       const arrayKey: number = parseInt(item[0].flatKey.replace(/^\D+/g, ""));
@@ -238,6 +278,7 @@ export const FormUtility = {
             rawData,
             item,
             options,
+            submitHandlers,
             updateData
           )}
         </Section>

@@ -17,27 +17,56 @@ export enum RLFComponentType {
 
 export interface FormProps {
   id?: string;
+  title?: string;
   data?: any;
+  children?: any;
   options?: any;
   onSubmit: Function;
 }
 
 export const Form: React.SFC<FormProps> = (props: FormProps) => {
   const [rawData, setRawData] = useState<any>(null),
-    [mappedData, setMappedData] = useState<MappedDataItem[]>(new Array());
+    [mappedData, setMappedData] = useState<MappedDataItem[]>(new Array()),
+    [submitHandlers, setSubmitHandlers] = useState<Function[]>(new Array());
 
   useEffect(() => {
-    setRawData(props.data);
-    setMappedData(FormUtility.map.raw.data(props.data));
+    if (props.data) {
+      setRawData(props.data);
+      setMappedData(FormUtility.map.raw.data(props.data));
+    } else if (props.children) {
+      const section: any = FormUtility.map.section.data(props.children);
+
+      setRawData(section.data);
+      setSubmitHandlers(section.submit);
+      setMappedData(FormUtility.map.raw.data(section.data));
+    }
   }, [props.data]);
 
   const handleOnSubmit = (): any => {
     props.onSubmit(rawData);
   };
 
+  const getTitle = (): JSX.Element | null => {
+    if (props.title) {
+      return (
+        <div className="title">
+          <h1>{props.title}</h1>
+        </div>
+      );
+    }
+
+    return null;
+  };
+
   const getSubmitButton = (): JSX.Element | null => {
     if (props.onSubmit) {
-      return <Button className="submit" handleOnClick={handleOnSubmit} />;
+      return (
+        <Button
+          className="submit"
+          label="Submit Form"
+          handleOnClick={handleOnSubmit}
+        />
+      );
     }
 
     return null;
@@ -49,11 +78,13 @@ export const Form: React.SFC<FormProps> = (props: FormProps) => {
     rawData,
     mappedData,
     props.options,
+    submitHandlers,
     setRawData
   );
 
   return (
     <div id={props.id || undefined} className="form">
+      {getTitle()}
       {components}
       {getSubmitButton()}
     </div>

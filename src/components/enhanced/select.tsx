@@ -14,13 +14,19 @@ export interface SelectProps {
 }
 
 export const Select: React.SFC<SelectProps> = (props: SelectProps) => {
-  const options: JSX.Element[] = props.options.map((value: string) => {
-    return (
-      <option key={value} value={value}>
-        {value}
-      </option>
-    );
-  });
+  const getOptions = (): JSX.Element[] => {
+    if (props.options && Array.isArray(props.options)) {
+      return props.options.map((value: string) => {
+        return (
+          <option key={value} value={value}>
+            {value}
+          </option>
+        );
+      });
+    }
+
+    return [];
+  };
 
   const label: string =
     props.label || StringUtility.camelCaseToNormal(props.name);
@@ -39,7 +45,7 @@ export const Select: React.SFC<SelectProps> = (props: SelectProps) => {
         onChange={(e: any) => updateData(e.target.value)}
       >
         <option value="">Select {label}</option>
-        {options}
+        {getOptions()}
       </select>
     </div>
   );
