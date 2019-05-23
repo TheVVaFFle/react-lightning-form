@@ -27,7 +27,8 @@
   }
 
   .text,
-  .select {
+  .select,
+  .checkbox {
     display: inline-block;
     vertical-align: top;
 
@@ -78,6 +79,68 @@
       &:focus {
         box-shadow: $shadow1;
         cursor: pointer;
+      }
+    }
+  }
+
+  .checkbox {
+    height: 59px;
+    position: relative;
+    input {
+      cursor: pointer;
+      height: 42px;
+      left: 0px;
+      margin: 0px;
+      opacity: 0;
+      position: absolute;
+      top: 17px;
+      width: 72px;
+
+      &:hover,
+      &:focus {
+        ~ .checkbox-toggle-track {
+          .checkbox-toggle {
+            box-shadow: $shadow2;
+          }
+        }
+      }
+
+      &:focus {
+        ~ .checkbox-toggle-track {
+          border-color: $blue;
+        }
+      }
+
+      &:checked {
+        ~ .checkbox-toggle-track {
+          background-color: rgba($blue, 0.25);
+          .checkbox-toggle {
+            left: 100%;
+            transform: translateX(-100%);
+          }
+        }
+      }
+    }
+
+    .checkbox-toggle-track {
+      border: 1px solid gray(200);
+      border-radius: 100px;
+      display: inline-block;
+      height: 40px;
+      left: 0px;
+      pointer-events: none;
+      position: absolute;
+      width: 70px;
+
+      .checkbox-toggle {
+        background-color: $blue;
+        border-radius: 100px;
+        height: 40px;
+        left: 0px;
+        position: absolute;
+        top: 0px;
+        transition: all 0.25s;
+        width: 40px;
       }
     }
   }

@@ -33,7 +33,8 @@ export const Test = {
     location: {
       city: "Columbia",
       state: "Mo",
-      zip: "65201"
+      zip: "65201",
+      permanent: true
     }
   },
   options: {

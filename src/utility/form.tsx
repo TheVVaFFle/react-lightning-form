@@ -4,6 +4,7 @@ import * as _ from "lodash";
 import { Section } from "../components/section/section";
 import { Text } from "../components/enhanced/text";
 import { Select } from "../components/enhanced/select";
+import { Checkbox } from "../components/enhanced/checkbox";
 
 import { StringUtility } from ".";
 
@@ -12,6 +13,7 @@ export enum ObjectType {
   Undefined = "undefined",
   String = "string",
   Number = "number",
+  Boolean = "boolean",
   Array = "array",
   Object = "object"
 }
@@ -156,6 +158,19 @@ export const FormUtility = {
                   item.flatKey || Math.random().toString();
                 return (
                   <Text
+                    key={item.key}
+                    flatKey={flatKey}
+                    name={item.key}
+                    value={item.value}
+                    rawData={rawData}
+                    updateData={updateData}
+                  />
+                );
+              } else if (item.type === ObjectType.Boolean) {
+                const flatKey: string =
+                  item.flatKey || Math.random().toString();
+                return (
+                  <Checkbox
                     key={item.key}
                     flatKey={flatKey}
                     name={item.key}
