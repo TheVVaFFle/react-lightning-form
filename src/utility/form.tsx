@@ -120,6 +120,7 @@ export const FormUtility = {
           mappedData: MappedDataItem[] | undefined,
           options: any,
           types: any,
+          errors: any,
           submitHandlers: Function[],
           updateData: Function
         ): (JSX.Element | null)[] | null => {
@@ -153,6 +154,7 @@ export const FormUtility = {
                   rawData,
                   options,
                   types,
+                  errors,
                   submitHandlers,
                   updateData
                 );
@@ -166,6 +168,7 @@ export const FormUtility = {
                   options,
                   types,
                   itemOptions,
+                  errors,
                   submitHandlers,
                   updateData
                 );
@@ -186,6 +189,7 @@ export const FormUtility = {
                   rawData,
                   options,
                   types,
+                  errors,
                   submitHandlers,
                   updateData
                 );
@@ -204,6 +208,7 @@ export const FormUtility = {
       rawData: any,
       options: any,
       types: any,
+      errors: any,
       submitHandlers: Function[],
       updateData: Function
     ) => {
@@ -223,6 +228,7 @@ export const FormUtility = {
             item.children,
             options,
             types,
+            errors,
             submitHandlers,
             updateData
           )}
@@ -235,6 +241,7 @@ export const FormUtility = {
       options: any,
       types: any,
       itemOptions: any | undefined,
+      errors: any,
       submitHandlers: Function[],
       updateData: Function
     ) => {
@@ -244,6 +251,7 @@ export const FormUtility = {
         (item.type === ObjectType.String && itemOptions !== undefined)
       ) {
         const flatKey: string = item.flatKey || Math.random().toString();
+
         return (
           <Select
             key={item.key}
@@ -268,6 +276,7 @@ export const FormUtility = {
               item.children,
               options,
               types,
+              errors,
               submitHandlers,
               updateData
             )}
@@ -280,6 +289,7 @@ export const FormUtility = {
       rawData: any,
       options: any,
       types: any,
+      errors: any,
       submitHandlers: Function[],
       updateData: Function
     ) => {
@@ -291,6 +301,7 @@ export const FormUtility = {
             item,
             options,
             types,
+            errors,
             submitHandlers,
             updateData
           )}
@@ -356,8 +367,9 @@ export const FormUtility = {
       rawData: any,
       mappedData: MappedDataItem[],
       validation: any,
+      errors: any,
       updateErrors: Function
-    ): boolean => {
+    ): any => {
       if (validation === undefined || validation === null) {
         return true;
       }
@@ -370,23 +382,29 @@ export const FormUtility = {
             rawData,
             item.children,
             validation,
+            errors,
             updateErrors
           );
+
           if (!validated) {
             invalidCount++;
           }
         } else {
-          const validationFn: Function = validation[item.flatKey || ""];
+          const validationFn: Function = _.get(validation, item.flatKey || "");
 
           if (validationFn !== undefined) {
             const validated: boolean = FormUtility.run.validation(
               validationFn,
               _.get(rawData, item.flatKey || "")
             );
-            console.log(item.flatKey, validated);
+
             if (!validated) {
               invalidCount++;
             }
+
+            _.set(errors, item.flatKey || "", !validated);
+
+            updateErrors(errors);
           }
         }
       });

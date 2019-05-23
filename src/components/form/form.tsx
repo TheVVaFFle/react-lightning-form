@@ -33,7 +33,8 @@ export interface FormProps {
 export const Form: React.SFC<FormProps> = (props: FormProps) => {
   const [rawData, setRawData] = useState<any>(null),
     [mappedData, setMappedData] = useState<MappedDataItem[]>(new Array()),
-    [errors, setErrors] = useState<any>(null),
+    [submitCount, setSubmitCount] = useState(0),
+    [errors, setErrors] = useState<any>({}),
     [submitHandlers, setSubmitHandlers] = useState<Function[]>(new Array());
 
   useEffect(() => {
@@ -47,14 +48,17 @@ export const Form: React.SFC<FormProps> = (props: FormProps) => {
       setSubmitHandlers(section.submit);
       setMappedData(FormUtility.map.raw.data(section.data));
     }
-  }, [props.data]);
+  }, [props.data, errors]);
 
   const handleOnSubmit = (): any => {
+    setSubmitCount(submitCount + 1);
+
     if (
       FormUtility.validate.data(
         rawData,
         mappedData,
         props.validation,
+        errors,
         setErrors
       )
     ) {
@@ -95,6 +99,7 @@ export const Form: React.SFC<FormProps> = (props: FormProps) => {
     mappedData,
     props.options,
     props.types,
+    errors,
     submitHandlers,
     setRawData
   );

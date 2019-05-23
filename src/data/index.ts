@@ -46,6 +46,9 @@ export const Test = {
     sex: sexOptions
   },
   validation: {
+    family: {
+      heritage: RLFValidationType.Required
+    },
     comments: RLFValidationType.Required
   },
   types: {
