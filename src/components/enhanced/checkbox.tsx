@@ -37,6 +37,7 @@ export const Checkbox = (props: CheckboxProps) => {
   return (
     <div className={classes}>
       <input
+        id={props.flatKey}
         type="checkbox"
         defaultChecked={props.value}
         onChange={(e: any) => updateData(e.target.checked)}

@@ -1,0 +1,83 @@
+.error-box {
+  animation: bounceInUp 1s;
+  background-color: $red;
+  border-radius: 100px;
+  bottom: 20px;
+  box-shadow: $shadow1;
+  left: 50%;
+  padding: 20px;
+  position: fixed;
+  transform: translateX(-50%);
+
+  .label {
+    h1 {
+      color: white;
+      font-size: 0.8em;
+      font-weight: 400;
+      margin: 0px;
+
+      .underline {
+        cursor: pointer;
+        text-decoration: underline;
+      }
+    }
+  }
+}
+
+.error-track {
+  background-color: rgba(gray(240), 0.75);
+  height: 100%;
+  position: fixed;
+  right: 0px;
+  top: 0px;
+  transform: translateX(100%);
+  transition: all 0.25s;
+  width: 180px;
+
+  &.toggled {
+    transform: translateX(0%);
+  }
+
+  .error {
+    background-color: $red;
+    border-radius: 4px;
+    left: 50%;
+    margin: auto;
+    padding: 2px 0px;
+    position: absolute;
+    top: 0px;
+    transform: translateX(-50%);
+    width: 80%;
+
+    &:hover {
+      cursor: pointer;
+      box-shadow: $shadow1;
+    }
+
+    h1 {
+      color: white;
+      font-size: 0.8em;
+      font-weight: 400;
+      margin: 0px;
+      text-align: center;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+  }
+
+  .track-toggle {
+    background-color: gray(220);
+    border-radius: 100px;
+    height: 50px;
+    left: -8px;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 4px;
+
+    &:hover {
+      background-color: $themeColor;
+      cursor: pointer;
+    }
+  }
+}

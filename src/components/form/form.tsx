@@ -41,13 +41,13 @@ export const Form: React.SFC<FormProps> = (props: FormProps) => {
   useEffect(() => {
     if (props.data) {
       setRawData(props.data);
-      setMappedData(FormUtility.map.raw.data(props.data));
+      setMappedData(FormUtility.map.raw.data(props.data) || []);
     } else if (props.children) {
       const section: any = FormUtility.map.section.data(props.children);
 
       setRawData(section.data);
       setSubmitHandlers(section.submit);
-      setMappedData(FormUtility.map.raw.data(section.data));
+      setMappedData(FormUtility.map.raw.data(section.data) || []);
     }
   }, [props.data, errors]);
 

@@ -49,7 +49,8 @@ export const Test = {
     family: {
       heritage: RLFValidationType.Required,
       members: {
-        firstName: RLFValidationType.Required
+        firstName: RLFValidationType.Required,
+        lastName: RLFValidationType.Required
       }
     },
     location: {

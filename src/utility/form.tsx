@@ -76,7 +76,7 @@ export const FormUtility = {
   },
   map: {
     raw: {
-      data: (data: any, parent: string = ""): any => {
+      data: (data: any, parent: string = ""): MappedDataItem[] | null => {
         if (data === undefined || data === null) {
           return null;
         }

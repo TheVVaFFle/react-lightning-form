@@ -71,6 +71,14 @@
       select,
       textarea {
         border-color: $red;
+
+        &.flash-error {
+          animation: flashError 3s ease-in-out;
+
+          ~ .checkbox-toggle-track {
+            animation: flashError 3s ease-in-out;
+          }
+        }
       }
     }
 
