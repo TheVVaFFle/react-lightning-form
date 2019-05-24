@@ -12,7 +12,7 @@ export interface ErrorsProps {
 }
 
 export const Errors: React.SFC<ErrorsProps> = (props: ErrorsProps) => {
-  const [trackToggled, toggleTrack] = useState(false);
+  const [trackToggled, toggleTrack] = useState(true);
 
   const getErrors = (): any[] => {
     const mappedTree: MappedDataItem[] | null = FormUtility.map.raw.data(
