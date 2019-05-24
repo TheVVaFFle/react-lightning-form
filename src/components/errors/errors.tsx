@@ -13,44 +13,62 @@ export interface ErrorsProps {
 export const Errors: React.SFC<ErrorsProps> = (props: ErrorsProps) => {
   const [trackToggled, toggleTrack] = useState(true);
 
-  const errors: any[] = FormUtility.get.errors(props.tree);
+  let errors: any[] = FormUtility.get.errors(props.tree);
+
+  errors = FormUtility.get.error.positions(errors);
 
   const getErrorTrack = (): JSX.Element | null => {
     if (errors.length > 0) {
-      const items: JSX.Element[] = errors.map((error: any) => {
-        const element: any = document.getElementById(error.flatKey),
-          style: React.CSSProperties = {};
+      const items: JSX.Element[] = Object.entries(_.groupBy(errors, "position"))
+        .map((entry: any) => ({ position: entry[0], errors: entry[1] }))
+        .map((item: any) => {
+          let handleOnClick: any = null,
+            style: React.CSSProperties = {},
+            label: string = "",
+            elements: any[] = new Array();
 
-        let handleOnClick: any = null;
+          item.errors.forEach((error: any) => {
+            const element: any = document.getElementById(error.flatKey);
 
-        if (element !== null) {
-          const rect: any = element.getBoundingClientRect(),
-            top: number = rect.top + window.pageYOffset,
-            height: number = document.body.offsetHeight,
-            position: number = (top / height) * 100;
-          style.top = `${position}%`;
+            style.top = `${error.position}%`;
+
+            elements.push({
+              node: element,
+              position: error.position,
+              top: error.top
+            });
+
+            label =
+              item.errors.length === 1
+                ? StringUtility.camelCaseToNormal(error.key)
+                : "Multiple Errors";
+          });
 
           handleOnClick = () => {
-            window.scrollTo(0, top - 30);
-            if (!element.classList.contains("flash-error")) {
-              element.classList.add("flash-error");
-              setTimeout(() => {
-                element.classList.remove("flash-error");
-              }, 3100);
+            if (elements.length > 0) {
+              window.scrollTo(0, elements[0].top - 30);
+              elements.forEach((element: any) => {
+                if (!element.node.classList.contains("flash-error")) {
+                  element.node.classList.add("flash-error");
+                  setTimeout(() => {
+                    element.node.classList.remove("flash-error");
+                  }, 3100);
+                }
+              });
             }
           };
-        }
-        return (
-          <div
-            key={error.flatKey}
-            className="error"
-            style={style}
-            onClick={handleOnClick}
-          >
-            <h1>{StringUtility.camelCaseToNormal(error.key)}</h1>
-          </div>
-        );
-      });
+
+          return (
+            <div
+              key={Math.random()}
+              className="error"
+              style={style}
+              onClick={handleOnClick}
+            >
+              <h1>{label}</h1>
+            </div>
+          );
+        });
 
       return (
         <div className={classNames("error-track", { toggled: trackToggled })}>

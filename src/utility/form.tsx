@@ -63,6 +63,23 @@ export const FormUtility = {
         }
 
         return "Error!";
+      },
+      positions: (errors: any): any[] => {
+        return errors.map((error: any) => {
+          const element: any = document.getElementById(error.flatKey);
+
+          if (element) {
+            const rect: any = element.getBoundingClientRect(),
+              top: number = rect.top + window.pageYOffset,
+              height: number = document.body.offsetHeight,
+              position: number = (top / height) * 100;
+
+            error.position = position;
+            error.top = top;
+          }
+
+          return error;
+        });
       }
     },
     errors: (tree: any) => {
