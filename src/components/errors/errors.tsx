@@ -5,7 +5,6 @@ import classNames from "classnames";
 import * as _ from "lodash";
 
 import { FormUtility, StringUtility } from "../../utility";
-import { MappedDataItem, ObjectType } from "../../utility/form";
 
 export interface ErrorsProps {
   tree: any;
@@ -14,43 +13,7 @@ export interface ErrorsProps {
 export const Errors: React.SFC<ErrorsProps> = (props: ErrorsProps) => {
   const [trackToggled, toggleTrack] = useState(true);
 
-  const getErrors = (): any[] => {
-    const mappedTree: MappedDataItem[] | null = FormUtility.map.raw.data(
-      props.tree
-    );
-
-    let errors: any[] = new Array();
-
-    const check = (item: MappedDataItem): void => {
-      if (item.type === ObjectType.Boolean && item.value === true) {
-        errors.push({ key: item.key, flatKey: item.flatKey });
-      } else {
-        flatten(item.children || []);
-      }
-    };
-
-    const flatten = (tree: MappedDataItem | MappedDataItem[] | null): void => {
-      if (tree !== null) {
-        if (Array.isArray(tree)) {
-          tree.forEach((item: MappedDataItem | MappedDataItem[]) => {
-            if (!Array.isArray(item)) {
-              check(item);
-            } else {
-              item.forEach((i: MappedDataItem) => flatten(i));
-            }
-          });
-        } else {
-          check(tree);
-        }
-      }
-    };
-
-    flatten(mappedTree);
-
-    return errors;
-  };
-
-  const errors: any[] = getErrors();
+  const errors: any[] = FormUtility.get.errors(props.tree);
 
   const getErrorTrack = (): JSX.Element | null => {
     if (errors.length > 0) {

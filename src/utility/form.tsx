@@ -65,6 +65,43 @@ export const FormUtility = {
         return "Error!";
       }
     },
+    errors: (tree: any) => {
+      const mappedTree: MappedDataItem[] | null = FormUtility.map.raw.data(
+        tree
+      );
+
+      let errors: any[] = new Array();
+
+      const check = (item: MappedDataItem): void => {
+        if (item.type === ObjectType.Boolean && item.value === true) {
+          errors.push({ key: item.key, flatKey: item.flatKey });
+        } else {
+          flatten(item.children || []);
+        }
+      };
+
+      const flatten = (
+        tree: MappedDataItem | MappedDataItem[] | null
+      ): void => {
+        if (tree !== null) {
+          if (Array.isArray(tree)) {
+            tree.forEach((item: MappedDataItem | MappedDataItem[]) => {
+              if (!Array.isArray(item)) {
+                check(item);
+              } else {
+                item.forEach((i: MappedDataItem) => flatten(i));
+              }
+            });
+          } else {
+            check(tree);
+          }
+        }
+      };
+
+      flatten(mappedTree);
+
+      return errors;
+    },
     rlfComponentType: (
       item: MappedDataItem,
       types: any

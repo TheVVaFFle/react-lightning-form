@@ -36,6 +36,7 @@ export const Form: React.SFC<FormProps> = (props: FormProps) => {
     [mappedData, setMappedData] = useState<MappedDataItem[]>(new Array()),
     [editCount, setEditCount] = useState(0),
     [submitCount, setSubmitCount] = useState(0),
+    [errorCount, setErrorCount] = useState(0),
     [errors, setErrors] = useState<any>({}),
     [submitHandlers, setSubmitHandlers] = useState<Function[]>(new Array());
 
@@ -53,12 +54,15 @@ export const Form: React.SFC<FormProps> = (props: FormProps) => {
   }, [props.data, errors]);
 
   useEffect(() => {
-    validate();
+    if (errorCount > 0) {
+      validate();
+    }
   }, [editCount]);
 
   const validate = (): boolean => {
     const updateErrors = (errors: any): void => {
-      setEditCount(editCount + 1);
+      const flatErrors: any[] = FormUtility.get.errors(errors);
+      setErrorCount(flatErrors.length);
       setErrors(errors);
     };
 
