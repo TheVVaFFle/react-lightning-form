@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 
 import { Button } from "../enhanced/button";
 import { Loading } from "../loading/loading";
+import { Errors } from "../errors/errors";
 
 import { FormUtility } from "../../utility";
 import { MappedDataItem } from "../../utility/form";
@@ -99,6 +100,7 @@ export const Form: React.SFC<FormProps> = (props: FormProps) => {
     mappedData,
     props.options,
     props.types,
+    props.validation,
     errors,
     submitHandlers,
     setRawData
@@ -109,6 +111,7 @@ export const Form: React.SFC<FormProps> = (props: FormProps) => {
       {getTitle()}
       {components}
       {getSubmitButton()}
+      <Errors tree={errors} />
     </div>
   );
 };

@@ -45,6 +45,26 @@ export const FormUtility = {
         }
       }
     },
+    error: {
+      message: (item: MappedDataItem, validation: any): string => {
+        const flatKey: string = FormUtility.format.flatKey.for.validation(
+            item.flatKey
+          ),
+          validationType: RLFValidationType | Function | null =
+            _.get(validation, flatKey) || null;
+
+        if (validationType === RLFValidationType.Required) {
+          const field: string = StringUtility.camelCaseToNormal(item.key);
+          if (item.type === ObjectType.Boolean) {
+            return `${field} must be selected.`;
+          }
+
+          return `${field} is a required field.`;
+        }
+
+        return "Error!";
+      }
+    },
     rlfComponentType: (
       item: MappedDataItem,
       types: any
@@ -120,6 +140,7 @@ export const FormUtility = {
           mappedData: MappedDataItem[] | undefined,
           options: any,
           types: any,
+          validation: any,
           errors: any,
           submitHandlers: Function[],
           updateData: Function
@@ -141,11 +162,19 @@ export const FormUtility = {
                 types
               );
 
+              const error: boolean = _.get(errors, item.flatKey || "") || false,
+                errorMessage: string = FormUtility.get.error.message(
+                  item,
+                  validation
+                );
+
               if (rlfComponentType) {
                 return FormUtility.handle.rlfComponent(
                   item,
                   rlfComponentType,
                   rawData,
+                  error,
+                  errorMessage,
                   updateData
                 );
               } else if (item.type === ObjectType.Object) {
@@ -154,6 +183,7 @@ export const FormUtility = {
                   rawData,
                   options,
                   types,
+                  validation,
                   errors,
                   submitHandlers,
                   updateData
@@ -168,6 +198,7 @@ export const FormUtility = {
                   options,
                   types,
                   itemOptions,
+                  validation,
                   errors,
                   submitHandlers,
                   updateData
@@ -179,16 +210,25 @@ export const FormUtility = {
                 return FormUtility.handle.alphaNumeric(
                   item,
                   rawData,
+                  error,
+                  errorMessage,
                   updateData
                 );
               } else if (item.type === ObjectType.Boolean) {
-                return FormUtility.handle.boolean(item, rawData, updateData);
+                return FormUtility.handle.boolean(
+                  item,
+                  rawData,
+                  error,
+                  errorMessage,
+                  updateData
+                );
               } else if (Array.isArray(item)) {
                 return FormUtility.handle.mappedArray(
                   item,
                   rawData,
                   options,
                   types,
+                  validation,
                   errors,
                   submitHandlers,
                   updateData
@@ -208,6 +248,7 @@ export const FormUtility = {
       rawData: any,
       options: any,
       types: any,
+      validation: any,
       errors: any,
       submitHandlers: Function[],
       updateData: Function
@@ -228,6 +269,7 @@ export const FormUtility = {
             item.children,
             options,
             types,
+            validation,
             errors,
             submitHandlers,
             updateData
@@ -241,6 +283,7 @@ export const FormUtility = {
       options: any,
       types: any,
       itemOptions: any | undefined,
+      validation: any,
       errors: any,
       submitHandlers: Function[],
       updateData: Function
@@ -252,6 +295,12 @@ export const FormUtility = {
       ) {
         const flatKey: string = item.flatKey || Math.random().toString();
 
+        const error: boolean = _.get(errors, item.flatKey || "") || false,
+          errorMessage: string = FormUtility.get.error.message(
+            item,
+            validation
+          );
+
         return (
           <Select
             key={item.key}
@@ -260,6 +309,8 @@ export const FormUtility = {
             value={item.value}
             options={itemOptions.value || item.value}
             rawData={rawData}
+            error={error}
+            errorMessage={errorMessage}
             updateData={updateData}
           />
         );
@@ -276,6 +327,7 @@ export const FormUtility = {
               item.children,
               options,
               types,
+              validation,
               errors,
               submitHandlers,
               updateData
@@ -289,6 +341,7 @@ export const FormUtility = {
       rawData: any,
       options: any,
       types: any,
+      validation: any,
       errors: any,
       submitHandlers: Function[],
       updateData: Function
@@ -301,6 +354,7 @@ export const FormUtility = {
             item,
             options,
             types,
+            validation,
             errors,
             submitHandlers,
             updateData
@@ -311,6 +365,8 @@ export const FormUtility = {
     alphaNumeric: (
       item: MappedDataItem,
       rawData: any,
+      error: boolean,
+      errorMessage: string,
       updateData: Function
     ) => {
       const flatKey: string = item.flatKey || Math.random().toString();
@@ -321,11 +377,19 @@ export const FormUtility = {
           name={item.key}
           value={item.value}
           rawData={rawData}
+          error={error}
+          errorMessage={errorMessage}
           updateData={updateData}
         />
       );
     },
-    boolean: (item: MappedDataItem, rawData: any, updateData: Function) => {
+    boolean: (
+      item: MappedDataItem,
+      rawData: any,
+      error: boolean,
+      errorMessage: string,
+      updateData: Function
+    ) => {
       const flatKey: string = item.flatKey || Math.random().toString();
       return (
         <Checkbox
@@ -334,6 +398,8 @@ export const FormUtility = {
           name={item.key}
           value={item.value}
           rawData={rawData}
+          error={error}
+          errorMessage={errorMessage}
           updateData={updateData}
         />
       );
@@ -342,6 +408,8 @@ export const FormUtility = {
       item: MappedDataItem,
       rlfComponentType: RLFComponentType,
       rawData: any,
+      error: boolean,
+      errorMessage: string,
       updateData: Function
     ): JSX.Element | null => {
       const flatKey: string = item.flatKey || Math.random().toString();
@@ -354,6 +422,8 @@ export const FormUtility = {
             name={item.key}
             value={item.value}
             rawData={rawData}
+            error={error}
+            errorMessage={errorMessage}
             updateData={updateData}
           />
         );
@@ -376,11 +446,17 @@ export const FormUtility = {
 
       let invalidCount: number = 0;
 
-      mappedData.forEach((item: MappedDataItem) => {
-        if (item.children) {
+      mappedData.forEach((item: MappedDataItem | MappedDataItem[]) => {
+        let items: MappedDataItem[] = Array.isArray(item) ? item : [],
+          children: MappedDataItem[] = !Array.isArray(item)
+            ? item.children || []
+            : [];
+
+        if (items.length > 0 || children.length > 0) {
+          items = items.length > 0 ? items : children;
           const validated: boolean = FormUtility.validate.data(
             rawData,
-            item.children,
+            items,
             validation,
             errors,
             updateErrors
@@ -389,8 +465,11 @@ export const FormUtility = {
           if (!validated) {
             invalidCount++;
           }
-        } else {
-          const validationFn: Function = _.get(validation, item.flatKey || "");
+        } else if (!Array.isArray(item)) {
+          const flatKey: string = FormUtility.format.flatKey.for.validation(
+              item.flatKey
+            ),
+            validationFn: Function = _.get(validation, flatKey);
 
           if (validationFn !== undefined) {
             const validated: boolean = FormUtility.run.validation(
@@ -412,10 +491,28 @@ export const FormUtility = {
       return invalidCount === 0;
     }
   },
+  format: {
+    flatKey: {
+      for: {
+        validation: (key: string | undefined): string => {
+          return key
+            ? key
+                .split(".")
+                .filter((k: string) => isNaN(parseInt(k)))
+                .join(".")
+            : "";
+        }
+      }
+    }
+  },
   run: {
     validation: (fn: Function | RLFValidationType, value: any): boolean => {
       if (typeof fn === ObjectType.String) {
         if (fn === RLFValidationType.Required) {
+          if (typeof value === ObjectType.Boolean) {
+            return value === true;
+          }
+
           return value !== undefined && value !== null && value.trim() !== "";
         } else {
           return true;

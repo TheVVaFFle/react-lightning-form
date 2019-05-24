@@ -36,7 +36,7 @@ export const Test = {
       city: "Columbia",
       state: "Mo",
       zip: "65201",
-      permanent: true
+      permanent: false
     },
     comments: "This is a comment!"
   },
@@ -47,7 +47,13 @@ export const Test = {
   },
   validation: {
     family: {
-      heritage: RLFValidationType.Required
+      heritage: RLFValidationType.Required,
+      members: {
+        firstName: RLFValidationType.Required
+      }
+    },
+    location: {
+      permanent: RLFValidationType.Required
     },
     comments: RLFValidationType.Required
   },
