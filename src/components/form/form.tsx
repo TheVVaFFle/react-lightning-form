@@ -34,6 +34,7 @@ export interface FormProps {
 export const Form: React.SFC<FormProps> = (props: FormProps) => {
   const [rawData, setRawData] = useState<any>(null),
     [mappedData, setMappedData] = useState<MappedDataItem[]>(new Array()),
+    [editCount, setEditCount] = useState(0),
     [submitCount, setSubmitCount] = useState(0),
     [errors, setErrors] = useState<any>({}),
     [submitHandlers, setSubmitHandlers] = useState<Function[]>(new Array());
@@ -51,18 +52,34 @@ export const Form: React.SFC<FormProps> = (props: FormProps) => {
     }
   }, [props.data, errors]);
 
+  useEffect(() => {
+    validate();
+  }, [editCount]);
+
+  const validate = (): boolean => {
+    const updateErrors = (errors: any): void => {
+      setEditCount(editCount + 1);
+      setErrors(errors);
+    };
+
+    return FormUtility.validate.data(
+      rawData,
+      mappedData,
+      props.validation,
+      errors,
+      updateErrors
+    );
+  };
+
+  const updateData = (data: any) => {
+    setRawData(data);
+    setEditCount(editCount + 1);
+  };
+
   const handleOnSubmit = (): any => {
     setSubmitCount(submitCount + 1);
 
-    if (
-      FormUtility.validate.data(
-        rawData,
-        mappedData,
-        props.validation,
-        errors,
-        setErrors
-      )
-    ) {
+    if (validate()) {
       props.onSubmit(rawData);
     }
   };
@@ -103,7 +120,7 @@ export const Form: React.SFC<FormProps> = (props: FormProps) => {
     props.validation,
     errors,
     submitHandlers,
-    setRawData
+    updateData
   );
 
   return (

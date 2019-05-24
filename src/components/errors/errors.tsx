@@ -70,7 +70,6 @@ export const Errors: React.SFC<ErrorsProps> = (props: ErrorsProps) => {
           handleOnClick = () => {
             window.scrollTo(0, top - 30);
             if (!element.classList.contains("flash-error")) {
-              console.log("flash");
               element.classList.add("flash-error");
               setTimeout(() => {
                 element.classList.remove("flash-error");
