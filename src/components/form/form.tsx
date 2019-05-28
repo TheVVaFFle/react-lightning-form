@@ -1,5 +1,6 @@
 import React from "react";
 import { useState, useEffect } from "react";
+import * as _ from "lodash";
 
 import { Button } from "../enhanced/button";
 import { Loading } from "../loading/loading";
@@ -20,6 +21,10 @@ export enum RLFValidationType {
   Required = "required"
 }
 
+export enum RLFValidateOn {
+  Form = "form"
+}
+
 export interface FormProps {
   id?: string;
   title?: string;
@@ -38,6 +43,7 @@ export const Form: React.SFC<FormProps> = (props: FormProps) => {
     [submitCount, setSubmitCount] = useState(0),
     [errorCount, setErrorCount] = useState(0),
     [errors, setErrors] = useState<any>({}),
+    [validateOn, setValidateOn] = useState<string>(""),
     [submitHandlers, setSubmitHandlers] = useState<Function[]>(new Array());
 
   useEffect(() => {
@@ -54,10 +60,16 @@ export const Form: React.SFC<FormProps> = (props: FormProps) => {
   }, [props.data, errors]);
 
   useEffect(() => {
-    if (errorCount > 0) {
+    if (errorCount > 0 || validateOn !== "") {
       validate();
     }
-  }, [editCount]);
+  }, [editCount, validateOn]);
+
+  useEffect(() => {
+    if (errorCount === 0) {
+      setValidateOn("");
+    }
+  }, [errorCount]);
 
   const validate = (): boolean => {
     const updateErrors = (errors: any): void => {
@@ -66,10 +78,20 @@ export const Form: React.SFC<FormProps> = (props: FormProps) => {
       setErrors(errors);
     };
 
+    let validation: any = {},
+      errors: any = {};
+
+    if (validateOn === RLFValidateOn.Form) {
+      validation = props.validation;
+    } else {
+      _.set(validation, validateOn, _.get(props.validation, validateOn));
+      errors = {};
+    }
+
     return FormUtility.validate.data(
       rawData,
       mappedData,
-      props.validation,
+      validation,
       errors,
       updateErrors
     );
@@ -82,6 +104,7 @@ export const Form: React.SFC<FormProps> = (props: FormProps) => {
 
   const handleOnSubmit = (): any => {
     setSubmitCount(submitCount + 1);
+    setValidateOn(RLFValidateOn.Form);
 
     if (validate()) {
       props.onSubmit(rawData);
@@ -124,6 +147,7 @@ export const Form: React.SFC<FormProps> = (props: FormProps) => {
     props.validation,
     errors,
     submitHandlers,
+    setValidateOn,
     updateData
   );
 
