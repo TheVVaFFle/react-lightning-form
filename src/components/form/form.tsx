@@ -62,7 +62,7 @@ export const Form: React.SFC<FormProps> = (props: FormProps) => {
       validate();
     }
 
-    if (errorCount === 0 && validateOn !== "") {
+    if (validateOn !== "") {
       const data: any =
         validateOn === RLFValidateOn.Form
           ? rawData
