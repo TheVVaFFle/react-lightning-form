@@ -12,7 +12,7 @@ export declare enum RLFValidationType {
 export declare enum RLFValidateOn {
   Form = "form"
 }
-export interface FormProps {
+export interface RLFProps {
   id?: string;
   title?: string;
   data?: any;
@@ -23,4 +23,4 @@ export interface FormProps {
   messages?: any;
   submit?: any;
 }
-export declare const Form: React.SFC<FormProps>;
+export declare const RLF: React.SFC<RLFProps>;

@@ -18,7 +18,7 @@ export interface MappedDataItem {
   value: any;
   children?: MappedDataItem[];
 }
-export declare const FormUtility: {
+export declare const RLFUtility: {
   get: {
     obj: {
       type: (obj: any) => string;

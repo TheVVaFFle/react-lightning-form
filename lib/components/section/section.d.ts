@@ -1,5 +1,5 @@
 import React from "react";
-export interface SectionProps {
+export interface RLFSectionProps {
   id?: string;
   title?: string;
   sectionKey?: string;
@@ -8,4 +8,4 @@ export interface SectionProps {
   submit?: any;
   onSubmit?: Function | null;
 }
-export declare const Section: React.SFC<SectionProps>;
+export declare const RLFSection: React.SFC<RLFSectionProps>;
