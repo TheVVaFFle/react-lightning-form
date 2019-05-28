@@ -10,7 +10,6 @@ export interface SectionProps {
   sectionKey?: string;
   data?: any;
   children?: any;
-  validateOn?: Function;
   onSubmit?: Function;
 }
 
@@ -34,12 +33,7 @@ export const Section: React.SFC<SectionProps> = (props: SectionProps) => {
           ? props.onSubmit
           : (e: any) => {};
 
-        const validateOn: Function = props.validateOn
-          ? props.validateOn
-          : (e: any) => {};
-
-        validateOn(props.sectionKey);
-        onSubmit(props.data);
+        onSubmit(props.sectionKey);
       };
 
       const label: string = props.title ? `Submit ${props.title}` : "Submit";

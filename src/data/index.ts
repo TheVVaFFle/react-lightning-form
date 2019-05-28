@@ -11,6 +11,26 @@ const suffixOptions: string[] = ["Sr.", "Jr.", "I", "II", "III"],
   ],
   sexOptions: string[] = ["Male", "Female", "Cheetah", "Other"];
 
+const handleSubmitForm = (data: any) => {
+  console.log(data);
+};
+
+const handleSubmitName = (data: any) => {
+  console.log(data);
+};
+
+const handleSubmitAbout = (data: any) => {
+  console.log(data);
+};
+
+const handleSubmitFamily = (data: any) => {
+  console.log(data);
+};
+
+const handleSubmitLocation = (data: any) => {
+  console.log(data);
+};
+
 export const Test = {
   data: {
     name: {
@@ -49,6 +69,11 @@ export const Test = {
     name: {
       suffix: RLFValidationType.Required
     },
+    about: {
+      age: (age: number) => {
+        return !isNaN(age);
+      }
+    },
     family: {
       heritage: RLFValidationType.Required,
       members: {
@@ -60,6 +85,13 @@ export const Test = {
       permanent: RLFValidationType.Required
     },
     comments: RLFValidationType.Required
+  },
+  submit: {
+    form: handleSubmitForm,
+    name: handleSubmitName,
+    about: handleSubmitAbout,
+    family: handleSubmitFamily,
+    location: handleSubmitLocation
   },
   types: {
     comments: RLFComponentType.Textarea

@@ -33,7 +33,7 @@ export interface FormProps {
   options?: any;
   types?: any;
   validation?: any;
-  onSubmit: Function;
+  submit?: any;
 }
 
 export const Form: React.SFC<FormProps> = (props: FormProps) => {
@@ -43,8 +43,7 @@ export const Form: React.SFC<FormProps> = (props: FormProps) => {
     [submitCount, setSubmitCount] = useState(0),
     [errorCount, setErrorCount] = useState(0),
     [errors, setErrors] = useState<any>({}),
-    [validateOn, setValidateOn] = useState<string>(""),
-    [submitHandlers, setSubmitHandlers] = useState<Function[]>(new Array());
+    [validateOn, setValidateOn] = useState<string>("");
 
   useEffect(() => {
     if (props.data) {
@@ -54,7 +53,6 @@ export const Form: React.SFC<FormProps> = (props: FormProps) => {
       const section: any = FormUtility.map.section.data(props.children);
 
       setRawData(section.data);
-      setSubmitHandlers(section.submit);
       setMappedData(FormUtility.map.raw.data(section.data) || []);
     }
   }, [props.data, errors]);
@@ -62,6 +60,18 @@ export const Form: React.SFC<FormProps> = (props: FormProps) => {
   useEffect(() => {
     if (errorCount > 0 || validateOn !== "") {
       validate();
+    }
+
+    if (errorCount === 0 && validateOn !== "") {
+      const data: any =
+        validateOn === RLFValidateOn.Form
+          ? rawData
+          : _.get(rawData, validateOn);
+
+      if (validate()) {
+        props.submit[validateOn](data);
+        setValidateOn("");
+      }
     }
   }, [editCount, validateOn]);
 
@@ -102,13 +112,9 @@ export const Form: React.SFC<FormProps> = (props: FormProps) => {
     setEditCount(editCount + 1);
   };
 
-  const handleOnSubmit = (): any => {
+  const handleOnSubmit = (key: any): any => {
     setSubmitCount(submitCount + 1);
-    setValidateOn(RLFValidateOn.Form);
-
-    if (validate()) {
-      props.onSubmit(rawData);
-    }
+    setValidateOn(key);
   };
 
   const getTitle = (): JSX.Element | null => {
@@ -124,12 +130,12 @@ export const Form: React.SFC<FormProps> = (props: FormProps) => {
   };
 
   const getSubmitButton = (): JSX.Element | null => {
-    if (props.onSubmit) {
+    if (props.submit && props.submit.form) {
       return (
         <Button
           className="submit"
           label="Submit Form"
-          handleOnClick={handleOnSubmit}
+          handleOnClick={() => handleOnSubmit(RLFValidateOn.Form)}
         />
       );
     }
@@ -145,10 +151,10 @@ export const Form: React.SFC<FormProps> = (props: FormProps) => {
     props.options,
     props.types,
     props.validation,
+    props.submit,
     errors,
-    submitHandlers,
-    setValidateOn,
-    updateData
+    updateData,
+    handleOnSubmit
   );
 
   return (

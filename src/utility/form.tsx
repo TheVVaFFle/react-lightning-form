@@ -195,10 +195,10 @@ export const FormUtility = {
           options: any,
           types: any,
           validation: any,
+          submit: any,
           errors: any,
-          submitHandlers: Function[],
-          validateOn: Function,
-          updateData: Function
+          updateData: Function,
+          onSubmit: Function
         ): (JSX.Element | null)[] | null => {
           if (mappedData === undefined || mappedData === null) {
             return null;
@@ -239,10 +239,10 @@ export const FormUtility = {
                   options,
                   types,
                   validation,
+                  submit,
                   errors,
-                  submitHandlers,
-                  validateOn,
-                  updateData
+                  updateData,
+                  onSubmit
                 );
               } else if (
                 item.type === ObjectType.Array ||
@@ -255,10 +255,10 @@ export const FormUtility = {
                   types,
                   itemOptions,
                   validation,
+                  submit,
                   errors,
-                  submitHandlers,
-                  validateOn,
-                  updateData
+                  updateData,
+                  onSubmit
                 );
               } else if (
                 item.type === ObjectType.String ||
@@ -286,10 +286,10 @@ export const FormUtility = {
                   options,
                   types,
                   validation,
+                  submit,
                   errors,
-                  submitHandlers,
-                  validateOn,
-                  updateData
+                  updateData,
+                  onSubmit
                 );
               } else {
                 return <div key={item.key} />;
@@ -307,10 +307,10 @@ export const FormUtility = {
       options: any,
       types: any,
       validation: any,
+      submit: any,
       errors: any,
-      submitHandlers: Function[],
-      validateOn: Function,
-      updateData: Function
+      updateData: Function,
+      onSubmit: Function
     ) => {
       const title: string | undefined = isNaN(parseInt(item.key))
         ? StringUtility.camelCaseToNormal(item.key)
@@ -322,8 +322,7 @@ export const FormUtility = {
           sectionKey={item.key}
           title={title}
           data={item.value}
-          validateOn={validateOn}
-          onSubmit={_.get(submitHandlers, item.key)}
+          onSubmit={onSubmit}
         >
           {FormUtility.map.data.to.components(
             rawData,
@@ -331,10 +330,10 @@ export const FormUtility = {
             options,
             types,
             validation,
+            submit,
             errors,
-            submitHandlers,
-            validateOn,
-            updateData
+            updateData,
+            onSubmit
           )}
         </Section>
       );
@@ -346,10 +345,10 @@ export const FormUtility = {
       types: any,
       itemOptions: any | undefined,
       validation: any,
+      submit: any,
       errors: any,
-      submitHandlers: Function[],
-      validateOn: Function,
-      updateData: Function
+      updateData: Function,
+      onSubmit: Function
     ) => {
       if (
         item.arrayType === ObjectType.String ||
@@ -384,8 +383,7 @@ export const FormUtility = {
             sectionKey={item.key}
             title={StringUtility.camelCaseToNormal(item.key)}
             data={item.value}
-            validateOn={validateOn}
-            onSubmit={_.get(submitHandlers, item.key)}
+            onSubmit={onSubmit}
           >
             {FormUtility.map.data.to.components(
               rawData,
@@ -393,10 +391,10 @@ export const FormUtility = {
               options,
               types,
               validation,
+              submit,
               errors,
-              submitHandlers,
-              validateOn,
-              updateData
+              updateData,
+              onSubmit
             )}
           </Section>
         );
@@ -408,10 +406,10 @@ export const FormUtility = {
       options: any,
       types: any,
       validation: any,
+      submit: any,
       errors: any,
-      submitHandlers: Function[],
-      validateOn: Function,
-      updateData: Function
+      updateData: Function,
+      onSubmit: Function
     ) => {
       const arrayKey: number = parseInt(item[0].flatKey.replace(/^\D+/g, ""));
       return (
@@ -422,10 +420,10 @@ export const FormUtility = {
             options,
             types,
             validation,
+            submit,
             errors,
-            submitHandlers,
-            validateOn,
-            updateData
+            updateData,
+            onSubmit
           )}
         </Section>
       );
