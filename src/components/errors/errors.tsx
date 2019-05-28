@@ -4,7 +4,7 @@ import ReactDOM from "react-dom";
 import classNames from "classnames";
 import * as _ from "lodash";
 
-import { FormUtility, StringUtility } from "../../utility";
+import { RLFUtility, StringUtility } from "../../utility";
 
 export interface ErrorsProps {
   tree: any;
@@ -13,9 +13,9 @@ export interface ErrorsProps {
 export const Errors: React.SFC<ErrorsProps> = (props: ErrorsProps) => {
   const [trackToggled, toggleTrack] = useState(true);
 
-  let errors: any[] = FormUtility.get.errors(props.tree);
+  let errors: any[] = RLFUtility.get.errors(props.tree);
 
-  errors = FormUtility.get.error.positions(errors);
+  errors = RLFUtility.get.error.positions(errors);
 
   const getErrorTrack = (): JSX.Element | null => {
     if (errors.length > 0) {

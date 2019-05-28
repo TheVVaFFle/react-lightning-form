@@ -1,7 +1,7 @@
 import React from "react";
 import * as _ from "lodash";
 
-import { Section } from "../components/section/section";
+import { RLFSection } from "../components/section/section";
 import { Text } from "../components/enhanced/text";
 import { Select } from "../components/enhanced/select";
 import { Checkbox } from "../components/enhanced/checkbox";
@@ -31,7 +31,7 @@ export interface MappedDataItem {
   children?: MappedDataItem[];
 }
 
-export const FormUtility = {
+export const RLFUtility = {
   get: {
     obj: {
       type: (obj: any): ObjectType | string => {
@@ -52,7 +52,7 @@ export const FormUtility = {
         validation: any,
         messages: any
       ): string => {
-        const flatKey: string = FormUtility.format.flatKey.for.validation(
+        const flatKey: string = RLFUtility.format.flatKey.for.validation(
             item.flatKey
           ),
           validationType: RLFValidationType | Function | null =
@@ -93,9 +93,7 @@ export const FormUtility = {
       }
     },
     errors: (tree: any) => {
-      const mappedTree: MappedDataItem[] | null = FormUtility.map.raw.data(
-        tree
-      );
+      const mappedTree: MappedDataItem[] | null = RLFUtility.map.raw.data(tree);
 
       let errors: any[] = new Array();
 
@@ -149,7 +147,7 @@ export const FormUtility = {
           entry = {
             key: entry[0],
             value: entry[1],
-            type: FormUtility.get.obj.type(entry[1]),
+            type: RLFUtility.get.obj.type(entry[1]),
             flatKey: entry[0]
           };
 
@@ -160,18 +158,18 @@ export const FormUtility = {
           if (entry.type === ObjectType.Object) {
             entry = {
               ...entry,
-              children: FormUtility.map.raw.data(entry.value, entry.key)
+              children: RLFUtility.map.raw.data(entry.value, entry.key)
             };
           } else if (entry.type === ObjectType.Array) {
             const children: any = entry.value.map(
               (v: MappedDataItem, i: number) =>
-                FormUtility.map.raw.data(v, `${entry.flatKey}.${i}`)
+                RLFUtility.map.raw.data(v, `${entry.flatKey}.${i}`)
             );
 
             entry = {
               ...entry,
               children,
-              arrayType: FormUtility.get.obj.type(entry.value[0])
+              arrayType: RLFUtility.get.obj.type(entry.value[0])
             };
           }
 
@@ -223,20 +221,20 @@ export const FormUtility = {
                     .find((o: any) => o.key === item.key)
                 : undefined;
 
-              const rlfComponentType: RLFComponentType | null = FormUtility.get.rlfComponentType(
+              const rlfComponentType: RLFComponentType | null = RLFUtility.get.rlfComponentType(
                 item,
                 types
               );
 
               const error: boolean = _.get(errors, item.flatKey || "") || false,
-                errorMessage: string = FormUtility.get.error.message(
+                errorMessage: string = RLFUtility.get.error.message(
                   item,
                   validation,
                   messages
                 );
 
               if (rlfComponentType) {
-                return FormUtility.handle.rlfComponent(
+                return RLFUtility.handle.rlfComponent(
                   item,
                   rlfComponentType,
                   rawData,
@@ -245,7 +243,7 @@ export const FormUtility = {
                   updateData
                 );
               } else if (item.type === ObjectType.Object) {
-                return FormUtility.handle.object(
+                return RLFUtility.handle.object(
                   item,
                   rawData,
                   options,
@@ -261,7 +259,7 @@ export const FormUtility = {
                 item.type === ObjectType.Array ||
                 itemOptions !== undefined
               ) {
-                return FormUtility.handle.array(
+                return RLFUtility.handle.array(
                   item,
                   rawData,
                   options,
@@ -278,7 +276,7 @@ export const FormUtility = {
                 item.type === ObjectType.String ||
                 item.type === ObjectType.Number
               ) {
-                return FormUtility.handle.alphaNumeric(
+                return RLFUtility.handle.alphaNumeric(
                   item,
                   rawData,
                   error,
@@ -286,7 +284,7 @@ export const FormUtility = {
                   updateData
                 );
               } else if (item.type === ObjectType.Boolean) {
-                return FormUtility.handle.boolean(
+                return RLFUtility.handle.boolean(
                   item,
                   rawData,
                   error,
@@ -294,7 +292,7 @@ export const FormUtility = {
                   updateData
                 );
               } else if (Array.isArray(item)) {
-                return FormUtility.handle.mappedArray(
+                return RLFUtility.handle.mappedArray(
                   item,
                   rawData,
                   options,
@@ -333,7 +331,7 @@ export const FormUtility = {
         : undefined;
 
       return (
-        <Section
+        <RLFSection
           key={item.key}
           sectionKey={item.key}
           title={title}
@@ -341,7 +339,7 @@ export const FormUtility = {
           submit={submit}
           onSubmit={onSubmit}
         >
-          {FormUtility.map.data.to.components(
+          {RLFUtility.map.data.to.components(
             rawData,
             item.children,
             options,
@@ -353,7 +351,7 @@ export const FormUtility = {
             updateData,
             onSubmit
           )}
-        </Section>
+        </RLFSection>
       );
     },
     array: (
@@ -377,7 +375,7 @@ export const FormUtility = {
         const flatKey: string = item.flatKey || Math.random().toString();
 
         const error: boolean = _.get(errors, item.flatKey || "") || false,
-          errorMessage: string = FormUtility.get.error.message(
+          errorMessage: string = RLFUtility.get.error.message(
             item,
             validation,
             messages
@@ -398,7 +396,7 @@ export const FormUtility = {
         );
       } else {
         return (
-          <Section
+          <RLFSection
             key={item.key}
             sectionKey={item.key}
             title={StringUtility.camelCaseToNormal(item.key)}
@@ -406,7 +404,7 @@ export const FormUtility = {
             submit={submit}
             onSubmit={onSubmit}
           >
-            {FormUtility.map.data.to.components(
+            {RLFUtility.map.data.to.components(
               rawData,
               item.children,
               options,
@@ -418,7 +416,7 @@ export const FormUtility = {
               updateData,
               onSubmit
             )}
-          </Section>
+          </RLFSection>
         );
       }
     },
@@ -436,8 +434,8 @@ export const FormUtility = {
     ) => {
       const arrayKey: number = parseInt(item[0].flatKey.replace(/^\D+/g, ""));
       return (
-        <Section key={arrayKey} sectionKey={arrayKey.toString()}>
-          {FormUtility.map.data.to.components(
+        <RLFSection key={arrayKey} sectionKey={arrayKey.toString()}>
+          {RLFUtility.map.data.to.components(
             rawData,
             item,
             options,
@@ -449,7 +447,7 @@ export const FormUtility = {
             updateData,
             onSubmit
           )}
-        </Section>
+        </RLFSection>
       );
     },
     alphaNumeric: (
@@ -544,7 +542,7 @@ export const FormUtility = {
 
         if (items.length > 0 || children.length > 0) {
           items = items.length > 0 ? items : children;
-          const validated: boolean = FormUtility.validate.data(
+          const validated: boolean = RLFUtility.validate.data(
             rawData,
             items,
             validation,
@@ -556,13 +554,13 @@ export const FormUtility = {
             invalidCount++;
           }
         } else if (!Array.isArray(item)) {
-          const flatKey: string = FormUtility.format.flatKey.for.validation(
+          const flatKey: string = RLFUtility.format.flatKey.for.validation(
               item.flatKey
             ),
             validationFn: Function = _.get(validation, flatKey);
 
           if (validationFn !== undefined) {
-            const validated: boolean = FormUtility.run.validation(
+            const validated: boolean = RLFUtility.run.validation(
               validationFn,
               _.get(rawData, item.flatKey || "")
             );

@@ -6,7 +6,7 @@ import { Button } from "../enhanced/button";
 import { Loading } from "../loading/loading";
 import { Errors } from "../errors/errors";
 
-import { FormUtility } from "../../utility";
+import { RLFUtility } from "../../utility";
 import { MappedDataItem } from "../../utility/form";
 
 export enum RLFComponentType {
@@ -25,7 +25,7 @@ export enum RLFValidateOn {
   Form = "form"
 }
 
-export interface FormProps {
+export interface RLFProps {
   id?: string;
   title?: string;
   data?: any;
@@ -37,7 +37,7 @@ export interface FormProps {
   submit?: any;
 }
 
-export const Form: React.SFC<FormProps> = (props: FormProps) => {
+export const RLF: React.SFC<RLFProps> = (props: RLFProps) => {
   const [rawData, setRawData] = useState<any>(null),
     [mappedData, setMappedData] = useState<MappedDataItem[]>(new Array()),
     [editCount, setEditCount] = useState(0),
@@ -49,12 +49,12 @@ export const Form: React.SFC<FormProps> = (props: FormProps) => {
   useEffect(() => {
     if (props.data) {
       setRawData(props.data);
-      setMappedData(FormUtility.map.raw.data(props.data) || []);
+      setMappedData(RLFUtility.map.raw.data(props.data) || []);
     } else if (props.children) {
-      const section: any = FormUtility.map.section.data(props.children);
+      const section: any = RLFUtility.map.section.data(props.children);
 
       setRawData(section.data);
-      setMappedData(FormUtility.map.raw.data(section.data) || []);
+      setMappedData(RLFUtility.map.raw.data(section.data) || []);
     }
   }, [props.data, errors]);
 
@@ -84,7 +84,7 @@ export const Form: React.SFC<FormProps> = (props: FormProps) => {
 
   const validate = (): boolean => {
     const updateErrors = (errors: any): void => {
-      const flatErrors: any[] = FormUtility.get.errors(errors);
+      const flatErrors: any[] = RLFUtility.get.errors(errors);
       setErrorCount(flatErrors.length);
       setErrors(errors);
     };
@@ -99,7 +99,7 @@ export const Form: React.SFC<FormProps> = (props: FormProps) => {
       errors = {};
     }
 
-    return FormUtility.validate.data(
+    return RLFUtility.validate.data(
       rawData,
       mappedData,
       validation,
@@ -146,7 +146,7 @@ export const Form: React.SFC<FormProps> = (props: FormProps) => {
 
   const components:
     | (JSX.Element | null)[]
-    | null = FormUtility.map.data.to.components(
+    | null = RLFUtility.map.data.to.components(
     rawData,
     mappedData,
     props.options,

@@ -4,7 +4,7 @@ import classNames from "classnames";
 import { Loading } from "../loading/loading";
 import { Button } from "../enhanced/button";
 
-export interface SectionProps {
+export interface RLFSectionProps {
   id?: string;
   title?: string;
   sectionKey?: string;
@@ -14,7 +14,9 @@ export interface SectionProps {
   onSubmit?: Function | null;
 }
 
-export const Section: React.SFC<SectionProps> = (props: SectionProps) => {
+export const RLFSection: React.SFC<RLFSectionProps> = (
+  props: RLFSectionProps
+) => {
   const getTitle = (): JSX.Element | null => {
     if (props.title) {
       return (
