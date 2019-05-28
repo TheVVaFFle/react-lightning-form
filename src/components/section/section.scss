@@ -1,9 +1,11 @@
-.section {
+.rlf-section {
   border: 1px solid gray(200);
   border-left: 2px solid gray(120);
   border-radius: 10px;
   margin-top: 20px;
+  overflow: hidden;
   padding: 20px;
+  position: relative;
 
   &.no-title {
     border: none;

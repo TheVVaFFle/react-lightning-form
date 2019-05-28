@@ -180,18 +180,19 @@ export const RLFUtility = {
     section: {
       data: (children: any) => {
         let data: any = {},
-          submit: any = {};
+          loading: any = {};
 
         React.Children.map(children, (child: any) => {
-          const keys: string[] = Object.keys(child.props.data);
+          const key: string = Object.keys(child.props.data)[0];
 
           data = { ...data, ...child.props.data };
-          submit[keys[0]] = child.props.onSubmit;
+
+          _.set(loading, key, child.props.loading || false);
         });
 
         return {
           data,
-          submit
+          loading
         };
       }
     },
@@ -204,6 +205,7 @@ export const RLFUtility = {
           types: any,
           validation: any,
           submit: any,
+          loading: any,
           errors: any,
           messages: any,
           updateData: Function,
@@ -250,6 +252,7 @@ export const RLFUtility = {
                   types,
                   validation,
                   submit,
+                  loading,
                   errors,
                   messages,
                   updateData,
@@ -267,6 +270,7 @@ export const RLFUtility = {
                   itemOptions,
                   validation,
                   submit,
+                  loading,
                   errors,
                   messages,
                   updateData,
@@ -299,6 +303,7 @@ export const RLFUtility = {
                   types,
                   validation,
                   submit,
+                  loading,
                   errors,
                   messages,
                   updateData,
@@ -321,6 +326,7 @@ export const RLFUtility = {
       types: any,
       validation: any,
       submit: any,
+      loading: any,
       errors: any,
       messages: any,
       updateData: Function,
@@ -330,12 +336,16 @@ export const RLFUtility = {
         ? StringUtility.camelCaseToNormal(item.key)
         : undefined;
 
+      const sectionLoading: boolean =
+        _.get(loading, item.flatKey || "") || false;
+
       return (
         <RLFSection
           key={item.key}
           sectionKey={item.key}
           title={title}
           data={item.value}
+          loading={sectionLoading}
           submit={submit}
           onSubmit={onSubmit}
         >
@@ -346,6 +356,7 @@ export const RLFUtility = {
             types,
             validation,
             submit,
+            loading,
             errors,
             messages,
             updateData,
@@ -362,6 +373,7 @@ export const RLFUtility = {
       itemOptions: any | undefined,
       validation: any,
       submit: any,
+      loading: any,
       errors: any,
       messages: any,
       updateData: Function,
@@ -395,12 +407,15 @@ export const RLFUtility = {
           />
         );
       } else {
+        const sectionLoading: boolean =
+          _.get(loading, item.flatKey || "") || false;
         return (
           <RLFSection
             key={item.key}
             sectionKey={item.key}
             title={StringUtility.camelCaseToNormal(item.key)}
             data={item.value}
+            loading={sectionLoading}
             submit={submit}
             onSubmit={onSubmit}
           >
@@ -411,6 +426,7 @@ export const RLFUtility = {
               types,
               validation,
               submit,
+              loading,
               errors,
               messages,
               updateData,
@@ -427,6 +443,7 @@ export const RLFUtility = {
       types: any,
       validation: any,
       submit: any,
+      loading: any,
       errors: any,
       messages: any,
       updateData: Function,
@@ -442,6 +459,7 @@ export const RLFUtility = {
             types,
             validation,
             submit,
+            loading,
             errors,
             messages,
             updateData,

@@ -11,6 +11,7 @@ export interface RLFSectionProps {
   data?: any;
   children?: any;
   submit?: any;
+  loading?: boolean;
   onSubmit?: Function | null;
 }
 
@@ -36,7 +37,9 @@ export const RLFSection: React.SFC<RLFSectionProps> = (
           ? props.onSubmit
           : (e: any) => {};
 
-        onSubmit(props.sectionKey);
+        if (!props.loading) {
+          onSubmit(props.sectionKey);
+        }
       };
 
       const label: string = props.title ? `Submit ${props.title}` : "Submit";
@@ -53,13 +56,18 @@ export const RLFSection: React.SFC<RLFSectionProps> = (
     return null;
   };
 
-  const classes: string = classNames("section", { "no-title": !props.title });
+  const classes: string = classNames(
+    "rlf-section",
+    { "no-title": !props.title },
+    { loading: props.loading }
+  );
 
   return (
     <div id={props.id} className={classes}>
       {getTitle()}
       <div className="children">{props.children}</div>
       {getSubmitButton()}
+      <Loading loading={props.loading} fullScreen={false} />
     </div>
   );
 };

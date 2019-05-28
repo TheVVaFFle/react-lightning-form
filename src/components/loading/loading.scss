@@ -1,11 +1,35 @@
-.loading-indicator {
-  left: 50%;
+.rlf-loading-indicator {
+  background-color: rgba(white, 0.75);
+  border-radius: 10px;
+  height: 100%;
+  left: 0px;
+  opacity: 0;
   position: absolute;
-  top: 50%;
-  transform: translate(-50%, 0%);
+  top: 0px;
+  transition: all 0.5s;
+  width: 100%;
+  z-index: 1000;
+
+  &.showing {
+    opacity: 1;
+
+    .rlf-loading-spinner {
+      transform: translate(-50%, -50%) scale(1);
+    }
+  }
 
   &.full-screen {
+    border-radius: 0px;
     position: fixed;
-    top: 50vh;
+  }
+
+  .rlf-loading-spinner {
+    height: 100px;
+    left: 50%;
+    position: absolute;
+    top: 50%;
+    transform: translate(-50%, -50%) scale(0);
+    transition: all 0.5s;
+    width: 100px;
   }
 }

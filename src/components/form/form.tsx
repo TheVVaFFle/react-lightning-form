@@ -1,6 +1,7 @@
 import React from "react";
 import { useState, useEffect } from "react";
 import * as _ from "lodash";
+import classNames from "classnames";
 
 import { Button } from "../enhanced/button";
 import { Loading } from "../loading/loading";
@@ -34,29 +35,31 @@ export interface RLFProps {
   types?: any;
   validation?: any;
   messages?: any;
+  loading?: boolean;
   submit?: any;
 }
 
 export const RLF: React.SFC<RLFProps> = (props: RLFProps) => {
-  const [rawData, setRawData] = useState<any>(null),
-    [mappedData, setMappedData] = useState<MappedDataItem[]>(new Array()),
-    [editCount, setEditCount] = useState(0),
+  const [editCount, setEditCount] = useState(0),
     [submitCount, setSubmitCount] = useState(0),
     [errorCount, setErrorCount] = useState(0),
     [errors, setErrors] = useState<any>({}),
+    [submitting, setSubmitting] = useState(false),
     [validateOn, setValidateOn] = useState<string>("");
 
-  useEffect(() => {
-    if (props.data) {
-      setRawData(props.data);
-      setMappedData(RLFUtility.map.raw.data(props.data) || []);
-    } else if (props.children) {
-      const section: any = RLFUtility.map.section.data(props.children);
+  let rawData: any = {},
+    mappedData: MappedDataItem[] = new Array(),
+    loading: any = {};
 
-      setRawData(section.data);
-      setMappedData(RLFUtility.map.raw.data(section.data) || []);
-    }
-  }, [props.data, errors]);
+  if (props.data) {
+    rawData = props.data;
+    mappedData = RLFUtility.map.raw.data(props.data) || [];
+  } else if (props.children) {
+    const section: any = RLFUtility.map.section.data(props.children);
+    rawData = section.data;
+    mappedData = RLFUtility.map.raw.data(section.data) || [];
+    loading = section.loading;
+  }
 
   useEffect(() => {
     if (errorCount > 0 || validateOn !== "") {
@@ -69,7 +72,7 @@ export const RLF: React.SFC<RLFProps> = (props: RLFProps) => {
           ? rawData
           : _.get(rawData, validateOn);
 
-      if (validate() && props.submit[validateOn]) {
+      if (validate() && props.submit[validateOn] && submitting) {
         props.submit[validateOn](data);
         setValidateOn("");
       }
@@ -77,10 +80,12 @@ export const RLF: React.SFC<RLFProps> = (props: RLFProps) => {
   }, [editCount, validateOn]);
 
   useEffect(() => {
-    if (errorCount === 0) {
-      setValidateOn("");
-    }
+    if (errorCount === 0) setValidateOn("");
   }, [errorCount]);
+
+  useEffect(() => {
+    if (submitting === true) setSubmitting(false);
+  }, [submitting]);
 
   const validate = (): boolean => {
     const updateErrors = (errors: any): void => {
@@ -109,13 +114,15 @@ export const RLF: React.SFC<RLFProps> = (props: RLFProps) => {
   };
 
   const updateData = (data: any) => {
-    setRawData(data);
     setEditCount(editCount + 1);
   };
 
   const handleOnSubmit = (key: any): any => {
-    setSubmitCount(submitCount + 1);
-    setValidateOn(key);
+    if (!props.loading) {
+      setSubmitCount(submitCount + 1);
+      setValidateOn(key);
+      setSubmitting(true);
+    }
   };
 
   const getTitle = (): JSX.Element | null => {
@@ -144,6 +151,10 @@ export const RLF: React.SFC<RLFProps> = (props: RLFProps) => {
     return null;
   };
 
+  const classes: string = classNames("rlf-form", {
+    "rlf-loading": props.loading
+  });
+
   const components:
     | (JSX.Element | null)[]
     | null = RLFUtility.map.data.to.components(
@@ -153,6 +164,7 @@ export const RLF: React.SFC<RLFProps> = (props: RLFProps) => {
     props.types,
     props.validation,
     props.submit,
+    loading,
     errors,
     props.messages,
     updateData,
@@ -160,10 +172,11 @@ export const RLF: React.SFC<RLFProps> = (props: RLFProps) => {
   );
 
   return (
-    <div id={props.id || undefined} className="form">
+    <div id={props.id || undefined} className={classes}>
       {getTitle()}
       {components}
       {getSubmitButton()}
+      <Loading loading={props.loading} />
       <Errors tree={errors} />
     </div>
   );
