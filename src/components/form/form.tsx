@@ -68,7 +68,7 @@ export const Form: React.SFC<FormProps> = (props: FormProps) => {
           ? rawData
           : _.get(rawData, validateOn);
 
-      if (validate()) {
+      if (validate() && props.submit[validateOn]) {
         props.submit[validateOn](data);
         setValidateOn("");
       }

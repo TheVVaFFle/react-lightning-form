@@ -322,6 +322,7 @@ export const FormUtility = {
           sectionKey={item.key}
           title={title}
           data={item.value}
+          submit={submit}
           onSubmit={onSubmit}
         >
           {FormUtility.map.data.to.components(
@@ -383,6 +384,7 @@ export const FormUtility = {
             sectionKey={item.key}
             title={StringUtility.camelCaseToNormal(item.key)}
             data={item.value}
+            submit={submit}
             onSubmit={onSubmit}
           >
             {FormUtility.map.data.to.components(

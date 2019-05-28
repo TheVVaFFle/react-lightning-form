@@ -10,7 +10,8 @@ export interface SectionProps {
   sectionKey?: string;
   data?: any;
   children?: any;
-  onSubmit?: Function;
+  submit?: any;
+  onSubmit?: Function | null;
 }
 
 export const Section: React.SFC<SectionProps> = (props: SectionProps) => {
@@ -27,7 +28,7 @@ export const Section: React.SFC<SectionProps> = (props: SectionProps) => {
   };
 
   const getSubmitButton = (): JSX.Element | null => {
-    if (props.onSubmit) {
+    if (props.sectionKey && props.submit && props.submit[props.sectionKey]) {
       const handleOnSubmit = (): any => {
         const onSubmit: Function = props.onSubmit
           ? props.onSubmit
