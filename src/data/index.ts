@@ -94,7 +94,9 @@ export const Test = {
     location: handleSubmitLocation
   },
   messages: {
-    about: {}
+    about: {
+      age: "Age must be numeric."
+    }
   },
   types: {
     comments: RLFComponentType.Textarea
