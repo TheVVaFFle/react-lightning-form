@@ -1,0 +1,336 @@
+.form {
+  border-radius: 10px;
+  box-shadow: rgba(0, 0, 0, 0.12) 0px 1px 6px, rgba(0, 0, 0, 0.12) 0px 1px 4px;
+  margin: 100px auto;
+  padding: 20px;
+}
+.form .title h1 {
+  color: #3c3c3c;
+  font-size: 2em;
+  font-weight: 300;
+  margin: 0px;
+}
+.form input,
+.form select,
+.form textarea {
+  border: 1px solid #c8c8c8;
+  border-radius: 100px;
+  outline: none;
+  padding: 10px 15px;
+}
+.form input:focus,
+.form select:focus,
+.form textarea:focus {
+  border-color: #03a9f4;
+}
+.form .text,
+.form .select,
+.form .checkbox,
+.form .textarea {
+  display: inline-block;
+  vertical-align: top;
+}
+.form .text .label,
+.form .select .label,
+.form .checkbox .label,
+.form .textarea .label {
+  color: #3c3c3c;
+  font-size: 0.8em;
+  font-weight: 400;
+  margin: 0px;
+  margin-bottom: 2px;
+  margin-left: 15px;
+}
+.form .text input,
+.form .text select,
+.form .select input,
+.form .select select,
+.form .checkbox input,
+.form .checkbox select,
+.form .textarea input,
+.form .textarea select {
+  color: #3c3c3c;
+  line-height: 20px;
+}
+.form .text input,
+.form .select input,
+.form .checkbox input,
+.form .textarea input {
+  height: 20px;
+  width: calc(100% - 30px);
+}
+.form .text select,
+.form .select select,
+.form .checkbox select,
+.form .textarea select {
+  height: 42px;
+  padding-left: 10px;
+  width: 100%;
+}
+.form .text,
+.form .select,
+.form .checkbox,
+.form .textarea {
+  position: relative;
+}
+.form .text.error input,
+.form .text.error .checkbox-toggle-track,
+.form .text.error select,
+.form .text.error textarea,
+.form .select.error input,
+.form .select.error .checkbox-toggle-track,
+.form .select.error select,
+.form .select.error textarea,
+.form .checkbox.error input,
+.form .checkbox.error .checkbox-toggle-track,
+.form .checkbox.error select,
+.form .checkbox.error textarea,
+.form .textarea.error input,
+.form .textarea.error .checkbox-toggle-track,
+.form .textarea.error select,
+.form .textarea.error textarea {
+  border-color: #d32f2f;
+}
+.form .text.error input.flash-error,
+.form .text.error .checkbox-toggle-track.flash-error,
+.form .text.error select.flash-error,
+.form .text.error textarea.flash-error,
+.form .select.error input.flash-error,
+.form .select.error .checkbox-toggle-track.flash-error,
+.form .select.error select.flash-error,
+.form .select.error textarea.flash-error,
+.form .checkbox.error input.flash-error,
+.form .checkbox.error .checkbox-toggle-track.flash-error,
+.form .checkbox.error select.flash-error,
+.form .checkbox.error textarea.flash-error,
+.form .textarea.error input.flash-error,
+.form .textarea.error .checkbox-toggle-track.flash-error,
+.form .textarea.error select.flash-error,
+.form .textarea.error textarea.flash-error {
+  animation: flashError 3s ease-in-out;
+}
+.form .text.error input.flash-error ~ .checkbox-toggle-track,
+.form .text.error .checkbox-toggle-track.flash-error ~ .checkbox-toggle-track,
+.form .text.error select.flash-error ~ .checkbox-toggle-track,
+.form .text.error textarea.flash-error ~ .checkbox-toggle-track,
+.form .select.error input.flash-error ~ .checkbox-toggle-track,
+.form .select.error .checkbox-toggle-track.flash-error ~ .checkbox-toggle-track,
+.form .select.error select.flash-error ~ .checkbox-toggle-track,
+.form .select.error textarea.flash-error ~ .checkbox-toggle-track,
+.form .checkbox.error input.flash-error ~ .checkbox-toggle-track,
+.form
+  .checkbox.error
+  .checkbox-toggle-track.flash-error
+  ~ .checkbox-toggle-track,
+.form .checkbox.error select.flash-error ~ .checkbox-toggle-track,
+.form .checkbox.error textarea.flash-error ~ .checkbox-toggle-track,
+.form .textarea.error input.flash-error ~ .checkbox-toggle-track,
+.form
+  .textarea.error
+  .checkbox-toggle-track.flash-error
+  ~ .checkbox-toggle-track,
+.form .textarea.error select.flash-error ~ .checkbox-toggle-track,
+.form .textarea.error textarea.flash-error ~ .checkbox-toggle-track {
+  animation: flashError 3s ease-in-out;
+}
+.form .text .error-message,
+.form .select .error-message,
+.form .checkbox .error-message,
+.form .textarea .error-message {
+  bottom: -17px;
+  color: #d32f2f;
+  font-size: 0.8em;
+  font-weight: 400;
+  left: 0px;
+  margin: 0px;
+  margin-left: 15px;
+  margin-top: 2px;
+  position: absolute;
+}
+.form .text,
+.form .select,
+.form .checkbox {
+  margin: 10px;
+  width: calc(33.33% - 20px);
+}
+.form .button.submit {
+  margin-top: 20px;
+}
+.form .button button {
+  background-color: #03a9f4;
+  border: none;
+  border-radius: 100px;
+  color: white;
+  display: block;
+  margin: auto;
+  outline: none;
+  padding: 10px;
+  width: 400px;
+}
+.form .button button:hover,
+.form .button button:focus {
+  box-shadow: rgba(0, 0, 0, 0.12) 0px 1px 6px, rgba(0, 0, 0, 0.12) 0px 1px 4px;
+  cursor: pointer;
+}
+.form .checkbox {
+  height: 59px;
+  position: relative;
+}
+.form .checkbox input {
+  cursor: pointer;
+  height: 42px;
+  left: 0px;
+  margin: 0px;
+  opacity: 0;
+  position: absolute;
+  top: 17px;
+  width: 72px;
+}
+.form .checkbox input:hover ~ .checkbox-toggle-track .checkbox-toggle,
+.form .checkbox input:focus ~ .checkbox-toggle-track .checkbox-toggle {
+  box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 10px, rgba(0, 0, 0, 0.23) 0px 3px 10px;
+}
+.form .checkbox input:focus ~ .checkbox-toggle-track {
+  border-color: #4475fe;
+}
+.form .checkbox input:checked ~ .checkbox-toggle-track {
+  background-color: rgba(68, 117, 254, 0.25);
+}
+.form .checkbox input:checked ~ .checkbox-toggle-track .checkbox-toggle {
+  left: 100%;
+  transform: translateX(-100%);
+}
+.form .checkbox .checkbox-toggle-track {
+  border: 1px solid #c8c8c8;
+  border-radius: 100px;
+  display: inline-block;
+  height: 40px;
+  left: 0px;
+  pointer-events: none;
+  position: absolute;
+  width: 70px;
+}
+.form .checkbox .checkbox-toggle-track .checkbox-toggle {
+  background-color: #4475fe;
+  border-radius: 100px;
+  height: 40px;
+  left: 0px;
+  position: absolute;
+  top: 0px;
+  transition: all 0.25s;
+  width: 40px;
+}
+.form .textarea {
+  display: block;
+  margin: 10px 0px;
+}
+.form .textarea textarea {
+  border-radius: 10px;
+  max-width: calc(100% - 32px);
+  min-height: 100px;
+  min-width: calc(100% - 32px);
+}
+.form .textarea .error-message {
+  bottom: -15px;
+}
+
+.section {
+  border: 1px solid #c8c8c8;
+  border-left: 2px solid #787878;
+  border-radius: 10px;
+  margin-top: 20px;
+  padding: 20px;
+}
+.section.no-title {
+  border: none;
+  border-radius: 0px;
+  padding: 0px;
+}
+.section .children {
+  margin-top: 10px;
+}
+
+.loading-indicator {
+  left: 50%;
+  position: absolute;
+  top: 50%;
+  transform: translate(-50%, 0%);
+}
+.loading-indicator.full-screen {
+  position: fixed;
+  top: 50vh;
+}
+
+.error-box {
+  animation: bounceInUp 1s;
+  background-color: #d32f2f;
+  border-radius: 100px;
+  bottom: 20px;
+  box-shadow: rgba(0, 0, 0, 0.12) 0px 1px 6px, rgba(0, 0, 0, 0.12) 0px 1px 4px;
+  left: 50%;
+  padding: 20px;
+  position: fixed;
+  transform: translateX(-50%);
+}
+.error-box .label h1 {
+  color: white;
+  font-size: 0.8em;
+  font-weight: 400;
+  margin: 0px;
+}
+.error-box .label h1 .underline {
+  cursor: pointer;
+  text-decoration: underline;
+}
+
+.error-track {
+  background-color: rgba(240, 240, 240, 0.75);
+  height: 100%;
+  position: fixed;
+  right: 0px;
+  top: 0px;
+  transform: translateX(100%);
+  transition: all 0.25s;
+  width: 180px;
+}
+.error-track.toggled {
+  transform: translateX(0%);
+}
+.error-track .error {
+  background-color: #d32f2f;
+  border-radius: 4px;
+  left: 50%;
+  margin: auto;
+  padding: 2px 0px;
+  position: absolute;
+  top: 0px;
+  transform: translateX(-50%);
+  width: 80%;
+}
+.error-track .error:hover {
+  cursor: pointer;
+  box-shadow: rgba(0, 0, 0, 0.12) 0px 1px 6px, rgba(0, 0, 0, 0.12) 0px 1px 4px;
+}
+.error-track .error h1 {
+  color: white;
+  font-size: 0.8em;
+  font-weight: 400;
+  margin: 0px;
+  text-align: center;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.error-track .track-toggle {
+  background-color: gainsboro;
+  border-radius: 100px;
+  height: 50px;
+  left: -8px;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 4px;
+}
+.error-track .track-toggle:hover {
+  background-color: #03a9f4;
+  cursor: pointer;
+}
