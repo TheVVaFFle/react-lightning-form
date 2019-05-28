@@ -22,6 +22,7 @@ export const App: React.SFC<AppProps> = (props: AppProps) => {
         options={Test.options}
         types={Test.types}
         validation={Test.validation}
+        messages={Test.messages}
         submit={Test.submit}
       >
         <Section data={{ name: Test.data.name }} />

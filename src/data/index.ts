@@ -93,6 +93,9 @@ export const Test = {
     family: handleSubmitFamily,
     location: handleSubmitLocation
   },
+  messages: {
+    about: {}
+  },
   types: {
     comments: RLFComponentType.Textarea
   }

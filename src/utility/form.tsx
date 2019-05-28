@@ -18,7 +18,8 @@ export enum ObjectType {
   Number = "number",
   Boolean = "boolean",
   Array = "array",
-  Object = "object"
+  Object = "object",
+  Function = "function"
 }
 
 export interface MappedDataItem {
@@ -46,7 +47,11 @@ export const FormUtility = {
       }
     },
     error: {
-      message: (item: MappedDataItem, validation: any): string => {
+      message: (
+        item: MappedDataItem,
+        validation: any,
+        messages: any
+      ): string => {
         const flatKey: string = FormUtility.format.flatKey.for.validation(
             item.flatKey
           ),
@@ -60,9 +65,14 @@ export const FormUtility = {
           }
 
           return `${field} is a required field.`;
+        } else if (typeof validationType === ObjectType.Function) {
+          const message: string = _.get(messages, item.flatKey || "");
+          if (message) {
+            return message;
+          }
         }
 
-        return "Error!";
+        return "Error. Please enter a valid value.";
       },
       positions: (errors: any): any[] => {
         return errors.map((error: any) => {
@@ -197,6 +207,7 @@ export const FormUtility = {
           validation: any,
           submit: any,
           errors: any,
+          messages: any,
           updateData: Function,
           onSubmit: Function
         ): (JSX.Element | null)[] | null => {
@@ -220,7 +231,8 @@ export const FormUtility = {
               const error: boolean = _.get(errors, item.flatKey || "") || false,
                 errorMessage: string = FormUtility.get.error.message(
                   item,
-                  validation
+                  validation,
+                  messages
                 );
 
               if (rlfComponentType) {
@@ -241,6 +253,7 @@ export const FormUtility = {
                   validation,
                   submit,
                   errors,
+                  messages,
                   updateData,
                   onSubmit
                 );
@@ -257,6 +270,7 @@ export const FormUtility = {
                   validation,
                   submit,
                   errors,
+                  messages,
                   updateData,
                   onSubmit
                 );
@@ -288,6 +302,7 @@ export const FormUtility = {
                   validation,
                   submit,
                   errors,
+                  messages,
                   updateData,
                   onSubmit
                 );
@@ -309,6 +324,7 @@ export const FormUtility = {
       validation: any,
       submit: any,
       errors: any,
+      messages: any,
       updateData: Function,
       onSubmit: Function
     ) => {
@@ -333,6 +349,7 @@ export const FormUtility = {
             validation,
             submit,
             errors,
+            messages,
             updateData,
             onSubmit
           )}
@@ -348,6 +365,7 @@ export const FormUtility = {
       validation: any,
       submit: any,
       errors: any,
+      messages: any,
       updateData: Function,
       onSubmit: Function
     ) => {
@@ -361,7 +379,8 @@ export const FormUtility = {
         const error: boolean = _.get(errors, item.flatKey || "") || false,
           errorMessage: string = FormUtility.get.error.message(
             item,
-            validation
+            validation,
+            messages
           );
 
         return (
@@ -395,6 +414,7 @@ export const FormUtility = {
               validation,
               submit,
               errors,
+              messages,
               updateData,
               onSubmit
             )}
@@ -410,6 +430,7 @@ export const FormUtility = {
       validation: any,
       submit: any,
       errors: any,
+      messages: any,
       updateData: Function,
       onSubmit: Function
     ) => {
@@ -424,6 +445,7 @@ export const FormUtility = {
             validation,
             submit,
             errors,
+            messages,
             updateData,
             onSubmit
           )}

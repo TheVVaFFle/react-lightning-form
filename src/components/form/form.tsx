@@ -33,6 +33,7 @@ export interface FormProps {
   options?: any;
   types?: any;
   validation?: any;
+  messages?: any;
   submit?: any;
 }
 
@@ -153,6 +154,7 @@ export const Form: React.SFC<FormProps> = (props: FormProps) => {
     props.validation,
     props.submit,
     errors,
+    props.messages,
     updateData,
     handleOnSubmit
   );
