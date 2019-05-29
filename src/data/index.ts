@@ -40,6 +40,12 @@ export const Test = {
     },
     comments: "This is a comment!"
   },
+  results: {
+    nicknames: [
+      { name: "VVaffle", selected: false },
+      { name: "VVaffleman", selected: false }
+    ]
+  },
   options: {
     suffix: suffixOptions,
     relation: relationOptions,

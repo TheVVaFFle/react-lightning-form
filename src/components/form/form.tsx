@@ -40,26 +40,26 @@ export interface RLFProps {
 }
 
 export const RLF: React.SFC<RLFProps> = (props: RLFProps) => {
-  const [editCount, setEditCount] = useState(0),
+  const [originalData, setOriginalData] = useState<any>(null),
+    [mappedData, setMappedData] = useState<MappedDataItem[]>(new Array()),
+    [editCount, setEditCount] = useState(0),
     [submitCount, setSubmitCount] = useState(0),
     [errorCount, setErrorCount] = useState(0),
     [errors, setErrors] = useState<any>({}),
     [submitting, setSubmitting] = useState(false),
     [validateOn, setValidateOn] = useState<string>("");
 
-  let rawData: any = {},
-    mappedData: MappedDataItem[] = new Array(),
-    loading: any = {};
-
-  if (props.data) {
-    rawData = props.data;
-    mappedData = RLFUtility.map.raw.data(props.data) || [];
-  } else if (props.children) {
-    const section: any = RLFUtility.map.section.data(props.children);
-    rawData = section.data;
-    mappedData = RLFUtility.map.raw.data(section.data) || [];
-    loading = section.loading;
-  }
+  useEffect(() => {
+    if (props.data) {
+      setOriginalData(props.data);
+      setMappedData(RLFUtility.map.raw.data(props.data) || []);
+    } else if (props.children) {
+      const section: any = RLFUtility.map.section.data(props.children),
+        merged: any = _.merge({ ...section.data }, { ...originalData });
+      setOriginalData(merged);
+      setMappedData(RLFUtility.map.raw.data(merged) || []);
+    }
+  }, [props.data, props.children, props.options, errors]);
 
   useEffect(() => {
     if (errorCount > 0 || validateOn !== "") {
@@ -69,8 +69,8 @@ export const RLF: React.SFC<RLFProps> = (props: RLFProps) => {
     if (validateOn !== "") {
       const data: any =
         validateOn === RLFValidateOn.Form
-          ? rawData
-          : _.get(rawData, validateOn);
+          ? originalData
+          : _.get(originalData, validateOn);
 
       if (validate() && props.submit[validateOn] && submitting) {
         props.submit[validateOn](data);
@@ -105,7 +105,7 @@ export const RLF: React.SFC<RLFProps> = (props: RLFProps) => {
     }
 
     return RLFUtility.validate.data(
-      rawData,
+      originalData,
       mappedData,
       validation,
       errors,
@@ -114,6 +114,7 @@ export const RLF: React.SFC<RLFProps> = (props: RLFProps) => {
   };
 
   const updateData = (data: any) => {
+    setOriginalData(data);
     setEditCount(editCount + 1);
   };
 
@@ -155,16 +156,18 @@ export const RLF: React.SFC<RLFProps> = (props: RLFProps) => {
     "rlf-loading": props.loading
   });
 
+  const section: any = RLFUtility.map.section.data(props.children);
+
   const components:
     | (JSX.Element | null)[]
     | null = RLFUtility.map.data.to.components(
-    rawData,
+    originalData,
     mappedData,
     props.options,
     props.types,
     props.validation,
     props.submit,
-    loading,
+    section.loading,
     errors,
     props.messages,
     updateData,

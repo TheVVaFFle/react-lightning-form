@@ -161,14 +161,17 @@ export const RLFUtility = {
               children: RLFUtility.map.raw.data(entry.value, entry.key)
             };
           } else if (entry.type === ObjectType.Array) {
-            const children: any = entry.value.map(
-              (v: MappedDataItem, i: number) =>
-                RLFUtility.map.raw.data(v, `${entry.flatKey}.${i}`)
-            );
+            if (typeof entry.value[0] === ObjectType.Object) {
+              const children: MappedDataItem[] = entry.value.map(
+                (v: MappedDataItem, i: number) =>
+                  RLFUtility.map.raw.data(v, `${entry.flatKey}.${i}`)
+              );
+
+              entry.children = children;
+            }
 
             entry = {
               ...entry,
-              children,
               arrayType: RLFUtility.get.obj.type(entry.value[0])
             };
           }
@@ -384,14 +387,15 @@ export const RLFUtility = {
         item.arrayType === ObjectType.Number ||
         (item.type === ObjectType.String && itemOptions !== undefined)
       ) {
-        const flatKey: string = item.flatKey || Math.random().toString();
-
-        const error: boolean = _.get(errors, item.flatKey || "") || false,
+        const flatKey: string = item.flatKey || Math.random().toString(),
+          error: boolean = _.get(errors, item.flatKey || "") || false,
           errorMessage: string = RLFUtility.get.error.message(
             item,
             validation,
             messages
           );
+
+        itemOptions = itemOptions ? itemOptions.value : item.value;
 
         return (
           <Select
@@ -399,7 +403,7 @@ export const RLFUtility = {
             flatKey={flatKey}
             name={item.key}
             value={item.value}
-            options={itemOptions.value || item.value}
+            options={itemOptions}
             rawData={rawData}
             error={error}
             errorMessage={errorMessage}
