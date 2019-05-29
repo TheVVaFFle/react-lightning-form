@@ -1,39 +1,39 @@
-.form {
+.rlf-form {
   border-radius: 10px;
   box-shadow: rgba(0, 0, 0, 0.12) 0px 1px 6px, rgba(0, 0, 0, 0.12) 0px 1px 4px;
   margin: 100px auto;
   padding: 20px;
 }
-.form .title h1 {
+.rlf-form .title h1 {
   color: #3c3c3c;
   font-size: 2em;
   font-weight: 300;
   margin: 0px;
 }
-.form input,
-.form select,
-.form textarea {
+.rlf-form input,
+.rlf-form select,
+.rlf-form textarea {
   border: 1px solid #c8c8c8;
   border-radius: 100px;
   outline: none;
   padding: 10px 15px;
 }
-.form input:focus,
-.form select:focus,
-.form textarea:focus {
+.rlf-form input:focus,
+.rlf-form select:focus,
+.rlf-form textarea:focus {
   border-color: #03a9f4;
 }
-.form .text,
-.form .select,
-.form .checkbox,
-.form .textarea {
+.rlf-form .text,
+.rlf-form .select,
+.rlf-form .checkbox,
+.rlf-form .textarea {
   display: inline-block;
   vertical-align: top;
 }
-.form .text .label,
-.form .select .label,
-.form .checkbox .label,
-.form .textarea .label {
+.rlf-form .text .label,
+.rlf-form .select .label,
+.rlf-form .checkbox .label,
+.rlf-form .textarea .label {
   color: #3c3c3c;
   font-size: 0.8em;
   font-weight: 400;
@@ -41,102 +41,108 @@
   margin-bottom: 2px;
   margin-left: 15px;
 }
-.form .text input,
-.form .text select,
-.form .select input,
-.form .select select,
-.form .checkbox input,
-.form .checkbox select,
-.form .textarea input,
-.form .textarea select {
+.rlf-form .text input,
+.rlf-form .text select,
+.rlf-form .select input,
+.rlf-form .select select,
+.rlf-form .checkbox input,
+.rlf-form .checkbox select,
+.rlf-form .textarea input,
+.rlf-form .textarea select {
   color: #3c3c3c;
   line-height: 20px;
 }
-.form .text input,
-.form .select input,
-.form .checkbox input,
-.form .textarea input {
+.rlf-form .text input,
+.rlf-form .select input,
+.rlf-form .checkbox input,
+.rlf-form .textarea input {
   height: 20px;
   width: calc(100% - 30px);
 }
-.form .text select,
-.form .select select,
-.form .checkbox select,
-.form .textarea select {
+.rlf-form .text select,
+.rlf-form .select select,
+.rlf-form .checkbox select,
+.rlf-form .textarea select {
   height: 42px;
   padding-left: 10px;
   width: 100%;
 }
-.form .text,
-.form .select,
-.form .checkbox,
-.form .textarea {
+.rlf-form .text,
+.rlf-form .select,
+.rlf-form .checkbox,
+.rlf-form .textarea {
   position: relative;
 }
-.form .text.error input,
-.form .text.error .checkbox-toggle-track,
-.form .text.error select,
-.form .text.error textarea,
-.form .select.error input,
-.form .select.error .checkbox-toggle-track,
-.form .select.error select,
-.form .select.error textarea,
-.form .checkbox.error input,
-.form .checkbox.error .checkbox-toggle-track,
-.form .checkbox.error select,
-.form .checkbox.error textarea,
-.form .textarea.error input,
-.form .textarea.error .checkbox-toggle-track,
-.form .textarea.error select,
-.form .textarea.error textarea {
+.rlf-form .text.error input,
+.rlf-form .text.error .checkbox-toggle-track,
+.rlf-form .text.error select,
+.rlf-form .text.error textarea,
+.rlf-form .select.error input,
+.rlf-form .select.error .checkbox-toggle-track,
+.rlf-form .select.error select,
+.rlf-form .select.error textarea,
+.rlf-form .checkbox.error input,
+.rlf-form .checkbox.error .checkbox-toggle-track,
+.rlf-form .checkbox.error select,
+.rlf-form .checkbox.error textarea,
+.rlf-form .textarea.error input,
+.rlf-form .textarea.error .checkbox-toggle-track,
+.rlf-form .textarea.error select,
+.rlf-form .textarea.error textarea {
   border-color: #d32f2f;
 }
-.form .text.error input.flash-error,
-.form .text.error .checkbox-toggle-track.flash-error,
-.form .text.error select.flash-error,
-.form .text.error textarea.flash-error,
-.form .select.error input.flash-error,
-.form .select.error .checkbox-toggle-track.flash-error,
-.form .select.error select.flash-error,
-.form .select.error textarea.flash-error,
-.form .checkbox.error input.flash-error,
-.form .checkbox.error .checkbox-toggle-track.flash-error,
-.form .checkbox.error select.flash-error,
-.form .checkbox.error textarea.flash-error,
-.form .textarea.error input.flash-error,
-.form .textarea.error .checkbox-toggle-track.flash-error,
-.form .textarea.error select.flash-error,
-.form .textarea.error textarea.flash-error {
+.rlf-form .text.error input.flash-error,
+.rlf-form .text.error .checkbox-toggle-track.flash-error,
+.rlf-form .text.error select.flash-error,
+.rlf-form .text.error textarea.flash-error,
+.rlf-form .select.error input.flash-error,
+.rlf-form .select.error .checkbox-toggle-track.flash-error,
+.rlf-form .select.error select.flash-error,
+.rlf-form .select.error textarea.flash-error,
+.rlf-form .checkbox.error input.flash-error,
+.rlf-form .checkbox.error .checkbox-toggle-track.flash-error,
+.rlf-form .checkbox.error select.flash-error,
+.rlf-form .checkbox.error textarea.flash-error,
+.rlf-form .textarea.error input.flash-error,
+.rlf-form .textarea.error .checkbox-toggle-track.flash-error,
+.rlf-form .textarea.error select.flash-error,
+.rlf-form .textarea.error textarea.flash-error {
   animation: flashError 3s ease-in-out;
 }
-.form .text.error input.flash-error ~ .checkbox-toggle-track,
-.form .text.error .checkbox-toggle-track.flash-error ~ .checkbox-toggle-track,
-.form .text.error select.flash-error ~ .checkbox-toggle-track,
-.form .text.error textarea.flash-error ~ .checkbox-toggle-track,
-.form .select.error input.flash-error ~ .checkbox-toggle-track,
-.form .select.error .checkbox-toggle-track.flash-error ~ .checkbox-toggle-track,
-.form .select.error select.flash-error ~ .checkbox-toggle-track,
-.form .select.error textarea.flash-error ~ .checkbox-toggle-track,
-.form .checkbox.error input.flash-error ~ .checkbox-toggle-track,
-.form
+.rlf-form .text.error input.flash-error ~ .checkbox-toggle-track,
+.rlf-form
+  .text.error
+  .checkbox-toggle-track.flash-error
+  ~ .checkbox-toggle-track,
+.rlf-form .text.error select.flash-error ~ .checkbox-toggle-track,
+.rlf-form .text.error textarea.flash-error ~ .checkbox-toggle-track,
+.rlf-form .select.error input.flash-error ~ .checkbox-toggle-track,
+.rlf-form
+  .select.error
+  .checkbox-toggle-track.flash-error
+  ~ .checkbox-toggle-track,
+.rlf-form .select.error select.flash-error ~ .checkbox-toggle-track,
+.rlf-form .select.error textarea.flash-error ~ .checkbox-toggle-track,
+.rlf-form .checkbox.error input.flash-error ~ .checkbox-toggle-track,
+.rlf-form
   .checkbox.error
   .checkbox-toggle-track.flash-error
   ~ .checkbox-toggle-track,
-.form .checkbox.error select.flash-error ~ .checkbox-toggle-track,
-.form .checkbox.error textarea.flash-error ~ .checkbox-toggle-track,
-.form .textarea.error input.flash-error ~ .checkbox-toggle-track,
-.form
+.rlf-form .checkbox.error select.flash-error ~ .checkbox-toggle-track,
+.rlf-form .checkbox.error textarea.flash-error ~ .checkbox-toggle-track,
+.rlf-form .textarea.error input.flash-error ~ .checkbox-toggle-track,
+.rlf-form
   .textarea.error
   .checkbox-toggle-track.flash-error
   ~ .checkbox-toggle-track,
-.form .textarea.error select.flash-error ~ .checkbox-toggle-track,
-.form .textarea.error textarea.flash-error ~ .checkbox-toggle-track {
+.rlf-form .textarea.error select.flash-error ~ .checkbox-toggle-track,
+.rlf-form .textarea.error textarea.flash-error ~ .checkbox-toggle-track {
   animation: flashError 3s ease-in-out;
 }
-.form .text .error-message,
-.form .select .error-message,
-.form .checkbox .error-message,
-.form .textarea .error-message {
+.rlf-form .text .error-message,
+.rlf-form .select .error-message,
+.rlf-form .checkbox .error-message,
+.rlf-form .textarea .error-message {
   bottom: -17px;
   color: #d32f2f;
   font-size: 0.8em;
@@ -147,16 +153,16 @@
   margin-top: 2px;
   position: absolute;
 }
-.form .text,
-.form .select,
-.form .checkbox {
+.rlf-form .text,
+.rlf-form .select,
+.rlf-form .checkbox {
   margin: 10px;
   width: calc(33.33% - 20px);
 }
-.form .button.submit {
+.rlf-form .button.submit {
   margin-top: 20px;
 }
-.form .button button {
+.rlf-form .button button {
   background-color: #03a9f4;
   border: none;
   border-radius: 100px;
@@ -167,16 +173,16 @@
   padding: 10px;
   width: 400px;
 }
-.form .button button:hover,
-.form .button button:focus {
+.rlf-form .button button:hover,
+.rlf-form .button button:focus {
   box-shadow: rgba(0, 0, 0, 0.12) 0px 1px 6px, rgba(0, 0, 0, 0.12) 0px 1px 4px;
   cursor: pointer;
 }
-.form .checkbox {
+.rlf-form .checkbox {
   height: 59px;
   position: relative;
 }
-.form .checkbox input {
+.rlf-form .checkbox input {
   cursor: pointer;
   height: 42px;
   left: 0px;
@@ -186,21 +192,21 @@
   top: 17px;
   width: 72px;
 }
-.form .checkbox input:hover ~ .checkbox-toggle-track .checkbox-toggle,
-.form .checkbox input:focus ~ .checkbox-toggle-track .checkbox-toggle {
+.rlf-form .checkbox input:hover ~ .checkbox-toggle-track .checkbox-toggle,
+.rlf-form .checkbox input:focus ~ .checkbox-toggle-track .checkbox-toggle {
   box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 10px, rgba(0, 0, 0, 0.23) 0px 3px 10px;
 }
-.form .checkbox input:focus ~ .checkbox-toggle-track {
+.rlf-form .checkbox input:focus ~ .checkbox-toggle-track {
   border-color: #4475fe;
 }
-.form .checkbox input:checked ~ .checkbox-toggle-track {
+.rlf-form .checkbox input:checked ~ .checkbox-toggle-track {
   background-color: rgba(68, 117, 254, 0.25);
 }
-.form .checkbox input:checked ~ .checkbox-toggle-track .checkbox-toggle {
+.rlf-form .checkbox input:checked ~ .checkbox-toggle-track .checkbox-toggle {
   left: 100%;
   transform: translateX(-100%);
 }
-.form .checkbox .checkbox-toggle-track {
+.rlf-form .checkbox .checkbox-toggle-track {
   border: 1px solid #c8c8c8;
   border-radius: 100px;
   display: inline-block;
@@ -210,7 +216,7 @@
   position: absolute;
   width: 70px;
 }
-.form .checkbox .checkbox-toggle-track .checkbox-toggle {
+.rlf-form .checkbox .checkbox-toggle-track .checkbox-toggle {
   background-color: #4475fe;
   border-radius: 100px;
   height: 40px;
@@ -220,45 +226,68 @@
   transition: all 0.25s;
   width: 40px;
 }
-.form .textarea {
+.rlf-form .textarea {
   display: block;
   margin: 10px 0px;
 }
-.form .textarea textarea {
+.rlf-form .textarea textarea {
   border-radius: 10px;
   max-width: calc(100% - 32px);
   min-height: 100px;
   min-width: calc(100% - 32px);
 }
-.form .textarea .error-message {
+.rlf-form .textarea .error-message {
   bottom: -15px;
 }
 
-.section {
+.rlf-section {
   border: 1px solid #c8c8c8;
   border-left: 2px solid #787878;
   border-radius: 10px;
   margin-top: 20px;
+  overflow: hidden;
   padding: 20px;
+  position: relative;
 }
-.section.no-title {
+.rlf-section.no-title {
   border: none;
   border-radius: 0px;
   padding: 0px;
 }
-.section .children {
+.rlf-section .children {
   margin-top: 10px;
 }
 
-.loading-indicator {
+.rlf-loading-indicator {
+  background-color: rgba(255, 255, 255, 0.75);
+  border-radius: 10px;
+  height: 100%;
+  left: 0px;
+  opacity: 0;
+  position: absolute;
+  top: 0px;
+  transition: all 0.5s;
+  width: 100%;
+  z-index: 1000;
+}
+.rlf-loading-indicator.showing {
+  opacity: 1;
+}
+.rlf-loading-indicator.showing .rlf-loading-spinner {
+  transform: translate(-50%, -50%) scale(1);
+}
+.rlf-loading-indicator.full-screen {
+  border-radius: 0px;
+  position: fixed;
+}
+.rlf-loading-indicator .rlf-loading-spinner {
+  height: 100px;
   left: 50%;
   position: absolute;
   top: 50%;
-  transform: translate(-50%, 0%);
-}
-.loading-indicator.full-screen {
-  position: fixed;
-  top: 50vh;
+  transform: translate(-50%, -50%) scale(0);
+  transition: all 0.5s;
+  width: 100px;
 }
 
 .error-box {

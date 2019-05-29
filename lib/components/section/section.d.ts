@@ -6,6 +6,7 @@ export interface RLFSectionProps {
   data?: any;
   children?: any;
   submit?: any;
+  loading?: boolean;
   onSubmit?: Function | null;
 }
 export declare const RLFSection: React.SFC<RLFSectionProps>;

@@ -42,7 +42,7 @@ export declare const RLFUtility: {
         children: any
       ) => {
         data: any;
-        submit: any;
+        loading: any;
       };
     };
     data: {
@@ -54,6 +54,7 @@ export declare const RLFUtility: {
           types: any,
           validation: any,
           submit: any,
+          loading: any,
           errors: any,
           messages: any,
           updateData: Function,
@@ -70,6 +71,7 @@ export declare const RLFUtility: {
       types: any,
       validation: any,
       submit: any,
+      loading: any,
       errors: any,
       messages: any,
       updateData: Function,
@@ -83,6 +85,7 @@ export declare const RLFUtility: {
       itemOptions: any,
       validation: any,
       submit: any,
+      loading: any,
       errors: any,
       messages: any,
       updateData: Function,
@@ -95,6 +98,7 @@ export declare const RLFUtility: {
       types: any,
       validation: any,
       submit: any,
+      loading: any,
       errors: any,
       messages: any,
       updateData: Function,

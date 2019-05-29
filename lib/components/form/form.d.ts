@@ -21,6 +21,7 @@ export interface RLFProps {
   types?: any;
   validation?: any;
   messages?: any;
+  loading?: boolean;
   submit?: any;
 }
 export declare const RLF: React.SFC<RLFProps>;
