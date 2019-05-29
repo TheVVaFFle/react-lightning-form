@@ -14,9 +14,11 @@ export declare enum RLFValidateOn {
 }
 export interface RLFProps {
   id?: string;
+  className?: string;
   title?: string;
   data?: any;
   children?: any;
+  labels?: any;
   options?: any;
   types?: any;
   validation?: any;

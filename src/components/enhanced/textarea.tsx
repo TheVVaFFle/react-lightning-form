@@ -19,7 +19,9 @@ export const TextArea: React.SFC<TextAreaProps> = (props: TextAreaProps) => {
   const label: string =
     props.label || StringUtility.camelCaseToNormal(props.name);
 
-  const classes: string = classNames("textarea", { error: props.error });
+  const classes: string = classNames("rlf-textarea rlf-input", {
+    error: props.error
+  });
 
   const updateData = (value: string): void => {
     _.set(props.rawData, props.flatKey, value);

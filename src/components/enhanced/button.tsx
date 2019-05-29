@@ -9,12 +9,10 @@ export interface ButtonProps {
 
 export const Button: React.SFC<ButtonProps> = (props: ButtonProps) => {
   const label: string = props.label || "Submit",
-    classes: string = classNames(props.className, "button");
+    classes: string = classNames(props.className, "rlf-button");
   return (
     <div className={classes}>
-      <button className="submit-button" onClick={props.handleOnClick}>
-        {label}
-      </button>
+      <button onClick={props.handleOnClick}>{label}</button>
     </div>
   );
 };

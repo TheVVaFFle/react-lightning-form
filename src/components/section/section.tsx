@@ -6,6 +6,7 @@ import { Button } from "../enhanced/button";
 
 export interface RLFSectionProps {
   id?: string;
+  className?: string;
   title?: string;
   sectionKey?: string;
   data?: any;
@@ -58,6 +59,7 @@ export const RLFSection: React.SFC<RLFSectionProps> = (
 
   const classes: string = classNames(
     "rlf-section",
+    props.className,
     { "no-title": !props.title },
     { loading: props.loading }
   );

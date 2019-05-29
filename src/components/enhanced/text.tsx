@@ -21,7 +21,9 @@ export const Text: React.SFC<TextProps> = (props: TextProps) => {
   const label: string =
     props.label || StringUtility.camelCaseToNormal(props.name);
 
-  const classes: string = classNames("text", { error: props.error });
+  const classes: string = classNames("rlf-text rlf-input", {
+    error: props.error
+  });
 
   const updateData = (value: string): void => {
     _.set(props.rawData, props.flatKey, value);

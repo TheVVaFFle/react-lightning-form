@@ -28,6 +28,7 @@ export enum RLFValidateOn {
 
 export interface RLFProps {
   id?: string;
+  className?: string;
   title?: string;
   data?: any;
   children?: any;
@@ -153,7 +154,7 @@ export const RLF: React.SFC<RLFProps> = (props: RLFProps) => {
     return null;
   };
 
-  const classes: string = classNames("rlf-form", {
+  const classes: string = classNames("rlf-form", props.className, {
     "rlf-loading": props.loading
   });
 
@@ -169,6 +170,8 @@ export const RLF: React.SFC<RLFProps> = (props: RLFProps) => {
     props.types,
     props.validation,
     props.submit,
+    section.id,
+    section.className,
     section.loading,
     errors,
     props.messages,

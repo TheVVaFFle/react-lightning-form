@@ -19,7 +19,9 @@ export const Checkbox = (props: CheckboxProps) => {
   const label: string =
     props.label || StringUtility.camelCaseToNormal(props.name);
 
-  const classes: string = classNames("checkbox", { error: props.error });
+  const classes: string = classNames("rlf-checkbox rlf-input", {
+    error: props.error
+  });
 
   const updateData = (value: string): void => {
     _.set(props.rawData, props.flatKey, value);

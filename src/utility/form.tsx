@@ -194,7 +194,9 @@ export const RLFUtility = {
     section: {
       data: (children: any) => {
         let data: any = {},
-          loading: any = {};
+          loading: any = {},
+          id: any = {},
+          className: any = {};
 
         React.Children.map(children, (child: any) => {
           const key: string = Object.keys(child.props.data)[0];
@@ -202,11 +204,15 @@ export const RLFUtility = {
           data = { ...data, ...child.props.data };
 
           _.set(loading, key, child.props.loading || false);
+          _.set(id, key, child.props.id);
+          _.set(className, key, child.props.className);
         });
 
         return {
           data,
-          loading
+          loading,
+          id,
+          className
         };
       }
     },
@@ -220,6 +226,8 @@ export const RLFUtility = {
           types: any,
           validation: any,
           submit: any,
+          id: any,
+          className: any,
           loading: any,
           errors: any,
           messages: any,
@@ -267,6 +275,8 @@ export const RLFUtility = {
                   types,
                   validation,
                   submit,
+                  id,
+                  className,
                   loading,
                   errors,
                   messages,
@@ -286,6 +296,8 @@ export const RLFUtility = {
                   itemOptions,
                   validation,
                   submit,
+                  id,
+                  className,
                   loading,
                   errors,
                   messages,
@@ -322,6 +334,8 @@ export const RLFUtility = {
                   types,
                   validation,
                   submit,
+                  id,
+                  className,
                   loading,
                   errors,
                   messages,
@@ -346,6 +360,8 @@ export const RLFUtility = {
       types: any,
       validation: any,
       submit: any,
+      id: any,
+      className: any,
       loading: any,
       errors: any,
       messages: any,
@@ -365,10 +381,15 @@ export const RLFUtility = {
         ),
         sectionLoading: boolean = _.get(loading, formattedFlatKey) || false;
 
+      id = _.get(id, formattedFlatKey);
+      className = _.get(className, formattedFlatKey);
+
       return (
         <RLFSection
           key={item.key}
           sectionKey={item.key}
+          id={id}
+          className={className}
           title={title}
           data={item.value}
           loading={sectionLoading}
@@ -383,6 +404,8 @@ export const RLFUtility = {
             types,
             validation,
             submit,
+            id,
+            className,
             loading,
             errors,
             messages,
@@ -401,6 +424,8 @@ export const RLFUtility = {
       itemOptions: any | undefined,
       validation: any,
       submit: any,
+      id: any,
+      className: any,
       loading: any,
       errors: any,
       messages: any,
@@ -453,10 +478,15 @@ export const RLFUtility = {
           ),
           sectionLoading: boolean = _.get(loading, formattedFlatKey) || false;
 
+        id = _.get(id, formattedFlatKey);
+        className = _.get(className, formattedFlatKey);
+
         return (
           <RLFSection
             key={item.key}
             sectionKey={item.key}
+            id={id}
+            className={className}
             title={title}
             data={item.value}
             loading={sectionLoading}
@@ -471,6 +501,8 @@ export const RLFUtility = {
               types,
               validation,
               submit,
+              id,
+              className,
               loading,
               errors,
               messages,
@@ -489,6 +521,8 @@ export const RLFUtility = {
       types: any,
       validation: any,
       submit: any,
+      id: any,
+      className: any,
       loading: any,
       errors: any,
       messages: any,
@@ -506,6 +540,8 @@ export const RLFUtility = {
             types,
             validation,
             submit,
+            id,
+            className,
             loading,
             errors,
             messages,

@@ -34,7 +34,9 @@ export const Select: React.SFC<SelectProps> = (props: SelectProps) => {
   const label: string =
     props.label || StringUtility.camelCaseToNormal(props.name);
 
-  const classes: string = classNames("select", { error: props.error });
+  const classes: string = classNames("rlf-select rlf-input", {
+    error: props.error
+  });
 
   const updateData = (value: string): void => {
     _.set(props.rawData, props.flatKey, value);

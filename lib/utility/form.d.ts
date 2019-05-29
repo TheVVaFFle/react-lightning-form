@@ -23,6 +23,11 @@ export declare const RLFUtility: {
     obj: {
       type: (obj: any) => string;
     };
+    title: (
+      key: string | undefined,
+      formattedKey: string,
+      labels: any
+    ) => string | undefined;
     error: {
       message: (item: MappedDataItem, validation: any, messages: any) => string;
       positions: (errors: any) => any[];
@@ -43,6 +48,8 @@ export declare const RLFUtility: {
       ) => {
         data: any;
         loading: any;
+        id: any;
+        className: any;
       };
     };
     data: {
@@ -50,10 +57,13 @@ export declare const RLFUtility: {
         components: (
           rawData: any,
           mappedData: MappedDataItem[] | undefined,
+          labels: any,
           options: any,
           types: any,
           validation: any,
           submit: any,
+          id: any,
+          className: any,
           loading: any,
           errors: any,
           messages: any,
@@ -67,10 +77,13 @@ export declare const RLFUtility: {
     object: (
       item: MappedDataItem,
       rawData: any,
+      labels: any,
       options: any,
       types: any,
       validation: any,
       submit: any,
+      id: any,
+      className: any,
       loading: any,
       errors: any,
       messages: any,
@@ -80,11 +93,14 @@ export declare const RLFUtility: {
     array: (
       item: MappedDataItem,
       rawData: any,
+      labels: any,
       options: any,
       types: any,
       itemOptions: any,
       validation: any,
       submit: any,
+      id: any,
+      className: any,
       loading: any,
       errors: any,
       messages: any,
@@ -94,10 +110,13 @@ export declare const RLFUtility: {
     mappedArray: (
       item: any[],
       rawData: any,
+      labels: any,
       options: any,
       types: any,
       validation: any,
       submit: any,
+      id: any,
+      className: any,
       loading: any,
       errors: any,
       messages: any,
@@ -107,6 +126,7 @@ export declare const RLFUtility: {
     alphaNumeric: (
       item: MappedDataItem,
       rawData: any,
+      labels: any,
       error: boolean,
       errorMessage: string,
       updateData: Function
@@ -114,6 +134,7 @@ export declare const RLFUtility: {
     boolean: (
       item: MappedDataItem,
       rawData: any,
+      labels: any,
       error: boolean,
       errorMessage: string,
       updateData: Function
@@ -122,6 +143,7 @@ export declare const RLFUtility: {
       item: MappedDataItem,
       rlfComponentType: RLFComponentType,
       rawData: any,
+      labels: any,
       error: boolean,
       errorMessage: string,
       updateData: Function
@@ -137,11 +159,7 @@ export declare const RLFUtility: {
     ) => any;
   };
   format: {
-    flatKey: {
-      for: {
-        validation: (key: string | undefined) => string;
-      };
-    };
+    flatKey: (key: string | undefined) => string;
   };
   run: {
     validation: (fn: Function | RLFValidationType, value: any) => boolean;

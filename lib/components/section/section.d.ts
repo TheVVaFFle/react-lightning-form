@@ -1,6 +1,7 @@
 import React from "react";
 export interface RLFSectionProps {
   id?: string;
+  className?: string;
   title?: string;
   sectionKey?: string;
   data?: any;

@@ -9,10 +9,10 @@
     "push": "git pull && git push",
     "start": "webpack-dev-server --mode development --open --hot",
     "share": "webpack-dev-server --mode development --open --hot --host 10.8.20.29",
-    "build": "cross-env NODE_ENV=production webpack --mode production",
-    "clean:lib": "rm -rf lib",
-    "webpack:lib": "cross-env NODE_ENV=production webpack --config webpack.config.lib.js --mode production",
-    "build:lib": "yarn clean:lib && tsc && yarn webpack:lib",
+    "build:app": "cross-env NODE_ENV=production webpack --mode production",
+    "clean": "rm -rf lib",
+    "webpack": "cross-env NODE_ENV=production webpack --config webpack.config.lib.js --mode production",
+    "build": "yarn clean && tsc && yarn webpack",
     "kill": "taskkill /f /im node*"
   },
   "husky": {

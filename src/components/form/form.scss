@@ -26,10 +26,10 @@
     }
   }
 
-  .text,
-  .select,
-  .checkbox,
-  .textarea {
+  .rlf-text,
+  .rlf-select,
+  .rlf-checkbox,
+  .rlf-textarea {
     display: inline-block;
     vertical-align: top;
 
@@ -60,10 +60,10 @@
     }
   }
 
-  .text,
-  .select,
-  .checkbox,
-  .textarea {
+  .rlf-text,
+  .rlf-select,
+  .rlf-checkbox,
+  .rlf-textarea {
     position: relative;
     &.error {
       input,
@@ -95,14 +95,14 @@
     }
   }
 
-  .text,
-  .select,
-  .checkbox {
+  .rlf-text,
+  .rlf-select,
+  .rlf-checkbox {
     margin: 10px;
     width: calc(33.33% - 20px);
   }
 
-  .button {
+  .rlf-button {
     &.submit {
       margin-top: 20px;
     }
@@ -126,7 +126,7 @@
     }
   }
 
-  .checkbox {
+  .rlf-checkbox {
     height: 59px;
     position: relative;
 
@@ -189,7 +189,7 @@
     }
   }
 
-  .textarea {
+  .rlf-textarea {
     display: block;
     margin: 10px 0px;
     textarea {
