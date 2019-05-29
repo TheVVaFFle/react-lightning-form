@@ -251,7 +251,7 @@ export const RLFUtility = {
                 item,
                 types
               );
-              console.log(item.flatKey, item.type, rlfComponentType);
+
               const error: boolean = _.get(errors, item.flatKey || "") || false,
                 errorMessage: string = RLFUtility.get.error.message(
                   item,
