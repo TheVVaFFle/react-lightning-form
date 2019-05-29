@@ -43,6 +43,7 @@ export const Test = {
   labels: {
     family: {
       members: {
+        this: "",
         relation: "Family Relation"
       }
     },
@@ -75,9 +76,7 @@ export const Test = {
       suffix: RLFValidationType.Required
     },
     about: {
-      age: (age: number) => {
-        return !isNaN(age);
-      }
+      age: (age: number) => !isNaN(age)
     },
     family: {
       heritage: RLFValidationType.Required,
@@ -97,6 +96,11 @@ export const Test = {
     }
   },
   types: {
+    family: {
+      members: {
+        firstName: RLFComponentType.Textarea
+      }
+    },
     comments: RLFComponentType.Textarea
   }
 };

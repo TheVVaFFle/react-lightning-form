@@ -142,7 +142,10 @@ export const RLFUtility = {
       item: MappedDataItem,
       types: any
     ): RLFComponentType | null => {
-      const type: RLFComponentType = _.get(types, item.flatKey || "");
+      const type: RLFComponentType = _.get(
+        types,
+        RLFUtility.format.flatKey(item.flatKey) || ""
+      );
 
       return type || null;
     }
@@ -248,7 +251,7 @@ export const RLFUtility = {
                 item,
                 types
               );
-
+              console.log(item.flatKey, item.type, rlfComponentType);
               const error: boolean = _.get(errors, item.flatKey || "") || false,
                 errorMessage: string = RLFUtility.get.error.message(
                   item,
@@ -256,7 +259,10 @@ export const RLFUtility = {
                   messages
                 );
 
-              if (rlfComponentType) {
+              if (
+                rlfComponentType &&
+                typeof rlfComponentType === ObjectType.String
+              ) {
                 return RLFUtility.handle.rlfComponent(
                   item,
                   rlfComponentType,
