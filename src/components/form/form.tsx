@@ -31,6 +31,7 @@ export interface RLFProps {
   title?: string;
   data?: any;
   children?: any;
+  labels?: any;
   options?: any;
   types?: any;
   validation?: any;
@@ -163,6 +164,7 @@ export const RLF: React.SFC<RLFProps> = (props: RLFProps) => {
     | null = RLFUtility.map.data.to.components(
     originalData,
     mappedData,
+    props.labels,
     props.options,
     props.types,
     props.validation,
@@ -180,7 +182,7 @@ export const RLF: React.SFC<RLFProps> = (props: RLFProps) => {
       {components}
       {getSubmitButton()}
       <Loading loading={props.loading} />
-      <Errors tree={errors} />
+      <Errors tree={errors} labels={props.labels} />
     </div>
   );
 };

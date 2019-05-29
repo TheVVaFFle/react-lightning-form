@@ -8,6 +8,7 @@ import { RLFUtility, StringUtility } from "../../utility";
 
 export interface ErrorsProps {
   tree: any;
+  labels: any;
 }
 
 export const Errors: React.SFC<ErrorsProps> = (props: ErrorsProps) => {
@@ -28,7 +29,10 @@ export const Errors: React.SFC<ErrorsProps> = (props: ErrorsProps) => {
             elements: any[] = new Array();
 
           item.errors.forEach((error: any) => {
-            const element: any = document.getElementById(error.flatKey);
+            const element: any = document.getElementById(error.flatKey),
+              errorKey: string = StringUtility.camelCaseToNormal(error.key),
+              formattedKey: string =
+                _.get(props.labels, error.flatKey) || errorKey;
 
             style.top = `${error.position}%`;
 
@@ -38,10 +42,7 @@ export const Errors: React.SFC<ErrorsProps> = (props: ErrorsProps) => {
               top: error.top
             });
 
-            label =
-              item.errors.length === 1
-                ? StringUtility.camelCaseToNormal(error.key)
-                : "Multiple Errors";
+            label = item.errors.length === 1 ? formattedKey : "Multiple Errors";
           });
 
           handleOnClick = () => {

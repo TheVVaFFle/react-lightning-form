@@ -64,7 +64,8 @@ export const App: React.SFC<AppProps> = (props: AppProps) => {
   return (
     <div id="app">
       <RLF
-        title="User Profile by Section"
+        title="User Profile"
+        labels={Test.labels}
         options={options}
         types={Test.types}
         validation={Test.validation}

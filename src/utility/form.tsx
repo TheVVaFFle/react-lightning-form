@@ -46,15 +46,26 @@ export const RLFUtility = {
         }
       }
     },
+    title: (
+      key: string | undefined,
+      formattedKey: string,
+      labels: any
+    ): string | undefined => {
+      const potential: any = _.get(labels, formattedKey);
+
+      if (potential && potential.this !== undefined) {
+        return potential.this;
+      }
+
+      return key;
+    },
     error: {
       message: (
         item: MappedDataItem,
         validation: any,
         messages: any
       ): string => {
-        const flatKey: string = RLFUtility.format.flatKey.for.validation(
-            item.flatKey
-          ),
+        const flatKey: string = RLFUtility.format.flatKey(item.flatKey),
           validationType: RLFValidationType | Function | null =
             _.get(validation, flatKey) || null;
 
@@ -204,6 +215,7 @@ export const RLFUtility = {
         components: (
           rawData: any,
           mappedData: MappedDataItem[] | undefined,
+          labels: any,
           options: any,
           types: any,
           validation: any,
@@ -221,9 +233,7 @@ export const RLFUtility = {
           return mappedData.map(
             (item: MappedDataItem): JSX.Element | null => {
               const itemOptions: any | undefined = options
-                ? Object.entries(options)
-                    .map((entry: any) => ({ key: entry[0], value: entry[1] }))
-                    .find((o: any) => o.key === item.key)
+                ? _.get(options, RLFUtility.format.flatKey(item.flatKey) || "")
                 : undefined;
 
               const rlfComponentType: RLFComponentType | null = RLFUtility.get.rlfComponentType(
@@ -243,6 +253,7 @@ export const RLFUtility = {
                   item,
                   rlfComponentType,
                   rawData,
+                  labels,
                   error,
                   errorMessage,
                   updateData
@@ -251,6 +262,7 @@ export const RLFUtility = {
                 return RLFUtility.handle.object(
                   item,
                   rawData,
+                  labels,
                   options,
                   types,
                   validation,
@@ -268,6 +280,7 @@ export const RLFUtility = {
                 return RLFUtility.handle.array(
                   item,
                   rawData,
+                  labels,
                   options,
                   types,
                   itemOptions,
@@ -286,6 +299,7 @@ export const RLFUtility = {
                 return RLFUtility.handle.alphaNumeric(
                   item,
                   rawData,
+                  labels,
                   error,
                   errorMessage,
                   updateData
@@ -294,6 +308,7 @@ export const RLFUtility = {
                 return RLFUtility.handle.boolean(
                   item,
                   rawData,
+                  labels,
                   error,
                   errorMessage,
                   updateData
@@ -302,6 +317,7 @@ export const RLFUtility = {
                 return RLFUtility.handle.mappedArray(
                   item,
                   rawData,
+                  labels,
                   options,
                   types,
                   validation,
@@ -325,6 +341,7 @@ export const RLFUtility = {
     object: (
       item: MappedDataItem,
       rawData: any,
+      labels: any,
       options: any,
       types: any,
       validation: any,
@@ -335,12 +352,18 @@ export const RLFUtility = {
       updateData: Function,
       onSubmit: Function
     ) => {
-      const title: string | undefined = isNaN(parseInt(item.key))
+      const key: string | undefined = isNaN(parseInt(item.key))
         ? StringUtility.camelCaseToNormal(item.key)
         : undefined;
 
-      const sectionLoading: boolean =
-        _.get(loading, item.flatKey || "") || false;
+      const formattedFlatKey: string =
+          RLFUtility.format.flatKey(item.flatKey) || "",
+        title: string | undefined = RLFUtility.get.title(
+          key,
+          formattedFlatKey,
+          labels
+        ),
+        sectionLoading: boolean = _.get(loading, formattedFlatKey) || false;
 
       return (
         <RLFSection
@@ -355,6 +378,7 @@ export const RLFUtility = {
           {RLFUtility.map.data.to.components(
             rawData,
             item.children,
+            labels,
             options,
             types,
             validation,
@@ -371,6 +395,7 @@ export const RLFUtility = {
     array: (
       item: MappedDataItem,
       rawData: any,
+      labels: any,
       options: any,
       types: any,
       itemOptions: any | undefined,
@@ -388,20 +413,24 @@ export const RLFUtility = {
         (item.type === ObjectType.String && itemOptions !== undefined)
       ) {
         const flatKey: string = item.flatKey || Math.random().toString(),
-          error: boolean = _.get(errors, item.flatKey || "") || false,
+          formattedFlatKey: string =
+            RLFUtility.format.flatKey(item.flatKey) || "",
+          label: string = _.get(labels, formattedFlatKey) || null,
+          error: boolean = _.get(errors, formattedFlatKey) || false,
           errorMessage: string = RLFUtility.get.error.message(
             item,
             validation,
             messages
           );
 
-        itemOptions = itemOptions ? itemOptions.value : item.value;
+        itemOptions = itemOptions || item.value;
 
         return (
           <Select
             key={item.key}
             flatKey={flatKey}
             name={item.key}
+            label={label}
             value={item.value}
             options={itemOptions}
             rawData={rawData}
@@ -411,13 +440,24 @@ export const RLFUtility = {
           />
         );
       } else {
-        const sectionLoading: boolean =
-          _.get(loading, item.flatKey || "") || false;
+        const key: string | undefined = isNaN(parseInt(item.key))
+          ? StringUtility.camelCaseToNormal(item.key)
+          : undefined;
+
+        const formattedFlatKey: string =
+            RLFUtility.format.flatKey(item.flatKey) || "",
+          title: string | undefined = RLFUtility.get.title(
+            key,
+            formattedFlatKey,
+            labels
+          ),
+          sectionLoading: boolean = _.get(loading, formattedFlatKey) || false;
+
         return (
           <RLFSection
             key={item.key}
             sectionKey={item.key}
-            title={StringUtility.camelCaseToNormal(item.key)}
+            title={title}
             data={item.value}
             loading={sectionLoading}
             submit={submit}
@@ -426,6 +466,7 @@ export const RLFUtility = {
             {RLFUtility.map.data.to.components(
               rawData,
               item.children,
+              labels,
               options,
               types,
               validation,
@@ -443,6 +484,7 @@ export const RLFUtility = {
     mappedArray: (
       item: any[],
       rawData: any,
+      labels: any,
       options: any,
       types: any,
       validation: any,
@@ -459,6 +501,7 @@ export const RLFUtility = {
           {RLFUtility.map.data.to.components(
             rawData,
             item,
+            labels,
             options,
             types,
             validation,
@@ -475,16 +518,21 @@ export const RLFUtility = {
     alphaNumeric: (
       item: MappedDataItem,
       rawData: any,
+      labels: any,
       error: boolean,
       errorMessage: string,
       updateData: Function
     ) => {
-      const flatKey: string = item.flatKey || Math.random().toString();
+      const flatKey: string = item.flatKey || Math.random().toString(),
+        formattedFlatKey: string =
+          RLFUtility.format.flatKey(item.flatKey) || "",
+        label: string = _.get(labels, formattedFlatKey) || null;
       return (
         <Text
           key={item.key}
           flatKey={flatKey}
           name={item.key}
+          label={label}
           value={item.value}
           rawData={rawData}
           error={error}
@@ -496,16 +544,22 @@ export const RLFUtility = {
     boolean: (
       item: MappedDataItem,
       rawData: any,
+      labels: any,
       error: boolean,
       errorMessage: string,
       updateData: Function
     ) => {
-      const flatKey: string = item.flatKey || Math.random().toString();
+      const flatKey: string = item.flatKey || Math.random().toString(),
+        formattedFlatKey: string =
+          RLFUtility.format.flatKey(item.flatKey) || "",
+        label: string = _.get(labels, formattedFlatKey) || null;
+
       return (
         <Checkbox
           key={item.key}
           flatKey={flatKey}
           name={item.key}
+          label={label}
           value={item.value}
           rawData={rawData}
           error={error}
@@ -518,11 +572,15 @@ export const RLFUtility = {
       item: MappedDataItem,
       rlfComponentType: RLFComponentType,
       rawData: any,
+      labels: any,
       error: boolean,
       errorMessage: string,
       updateData: Function
     ): JSX.Element | null => {
-      const flatKey: string = item.flatKey || Math.random().toString();
+      const flatKey: string = item.flatKey || Math.random().toString(),
+        formattedFlatKey: string =
+          RLFUtility.format.flatKey(item.flatKey) || "",
+        label: string = _.get(labels, formattedFlatKey) || null;
 
       if (rlfComponentType === RLFComponentType.Textarea) {
         return (
@@ -530,6 +588,7 @@ export const RLFUtility = {
             key={item.key}
             flatKey={flatKey}
             name={item.key}
+            label={label}
             value={item.value}
             rawData={rawData}
             error={error}
@@ -576,9 +635,7 @@ export const RLFUtility = {
             invalidCount++;
           }
         } else if (!Array.isArray(item)) {
-          const flatKey: string = RLFUtility.format.flatKey.for.validation(
-              item.flatKey
-            ),
+          const flatKey: string = RLFUtility.format.flatKey(item.flatKey),
             validationFn: Function = _.get(validation, flatKey);
 
           if (validationFn !== undefined) {
@@ -602,17 +659,13 @@ export const RLFUtility = {
     }
   },
   format: {
-    flatKey: {
-      for: {
-        validation: (key: string | undefined): string => {
-          return key
-            ? key
-                .split(".")
-                .filter((k: string) => isNaN(parseInt(k)))
-                .join(".")
-            : "";
-        }
-      }
+    flatKey: (key: string | undefined): string => {
+      return key
+        ? key
+            .split(".")
+            .filter((k: string) => isNaN(parseInt(k)))
+            .join(".")
+        : "";
     }
   },
   run: {

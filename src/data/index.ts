@@ -40,6 +40,17 @@ export const Test = {
     },
     comments: "This is a comment!"
   },
+  labels: {
+    family: {
+      members: {
+        relation: "Family Relation"
+      }
+    },
+    location: {
+      this: "Location Info",
+      permanent: "Permanent residence?"
+    }
+  },
   results: {
     nicknames: [
       { name: "VVaffle", selected: false },
@@ -47,9 +58,17 @@ export const Test = {
     ]
   },
   options: {
-    suffix: suffixOptions,
-    relation: relationOptions,
-    sex: sexOptions
+    name: {
+      suffix: suffixOptions
+    },
+    about: {
+      sex: sexOptions
+    },
+    family: {
+      members: {
+        relation: relationOptions
+      }
+    }
   },
   validation: {
     name: {
