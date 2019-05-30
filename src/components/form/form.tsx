@@ -19,11 +19,13 @@ export enum RLFComponentType {
 }
 
 export enum RLFValidationType {
-  Required = "required"
+  Required = "required",
+  RequiredForSection = "required for section"
 }
 
 export enum RLFValidateOn {
-  Form = "form"
+  Form = "form",
+  Empty = ""
 }
 
 export interface RLFProps {
@@ -50,7 +52,7 @@ export const RLF: React.SFC<RLFProps> = (props: RLFProps) => {
     [errorCount, setErrorCount] = useState(0),
     [errors, setErrors] = useState<any>({}),
     [submitting, setSubmitting] = useState(false),
-    [validateOn, setValidateOn] = useState<string>("");
+    [validateOn, setValidateOn] = useState<RLFValidateOn>(RLFValidateOn.Form);
 
   useEffect(() => {
     if (props.data) {
@@ -68,11 +70,11 @@ export const RLF: React.SFC<RLFProps> = (props: RLFProps) => {
   }, [props.data, props.children, props.options, errors]);
 
   useEffect(() => {
-    if (errorCount > 0 || validateOn !== "") {
+    if (errorCount > 0 || validateOn !== RLFValidateOn.Empty) {
       validate();
     }
 
-    if (validateOn !== "") {
+    if (validateOn !== RLFValidateOn.Empty) {
       const data: any =
         validateOn === RLFValidateOn.Form
           ? rawData
@@ -80,13 +82,13 @@ export const RLF: React.SFC<RLFProps> = (props: RLFProps) => {
 
       if (validate() && props.submit[validateOn] && submitting) {
         props.submit[validateOn](data);
-        setValidateOn("");
+        setValidateOn(RLFValidateOn.Empty);
       }
     }
   }, [editCount, validateOn]);
 
   useEffect(() => {
-    if (errorCount === 0) setValidateOn("");
+    if (errorCount === 0) setValidateOn(RLFValidateOn.Empty);
   }, [errorCount]);
 
   useEffect(() => {
@@ -114,6 +116,7 @@ export const RLF: React.SFC<RLFProps> = (props: RLFProps) => {
       rawData,
       mappedData,
       validation,
+      validateOn,
       errors,
       updateErrors
     );

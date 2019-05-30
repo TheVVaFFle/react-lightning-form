@@ -73,7 +73,7 @@ export const Test = {
   },
   validation: {
     name: {
-      suffix: RLFValidationType.Required
+      suffix: RLFValidationType.RequiredForSection
     },
     about: {
       age: (age: number) => !isNaN(age)

@@ -9,7 +9,11 @@ import { TextArea } from "../components/enhanced/textarea";
 
 import { StringUtility } from ".";
 
-import { RLFComponentType, RLFValidationType } from "../components/form/form";
+import {
+  RLFComponentType,
+  RLFValidationType,
+  RLFValidateOn
+} from "../components/form/form";
 
 export enum ObjectType {
   Null = "null",
@@ -69,7 +73,10 @@ export const RLFUtility = {
           validationType: RLFValidationType | Function | null =
             _.get(validation, flatKey) || null;
 
-        if (validationType === RLFValidationType.Required) {
+        if (
+          validationType === RLFValidationType.Required ||
+          validationType === RLFValidationType.RequiredForSection
+        ) {
           const field: string = StringUtility.camelCaseToNormal(item.key);
           if (item.type === ObjectType.Boolean) {
             return `${field} must be selected.`;
@@ -691,6 +698,7 @@ export const RLFUtility = {
       rawData: any,
       mappedData: MappedDataItem[],
       validation: any,
+      validateOn: RLFValidateOn,
       errors: any,
       updateErrors: Function
     ): any => {
@@ -712,6 +720,7 @@ export const RLFUtility = {
             rawData,
             items,
             validation,
+            validateOn,
             errors,
             updateErrors
           );
@@ -726,6 +735,7 @@ export const RLFUtility = {
           if (validationFn !== undefined) {
             const validated: boolean = RLFUtility.run.validation(
               validationFn,
+              validateOn,
               _.get(rawData, item.flatKey || "")
             );
 
@@ -754,9 +764,17 @@ export const RLFUtility = {
     }
   },
   run: {
-    validation: (fn: Function | RLFValidationType, value: any): boolean => {
+    validation: (
+      fn: Function | RLFValidationType,
+      validateOn: RLFValidateOn,
+      value: any
+    ): boolean => {
       if (typeof fn === ObjectType.String) {
-        if (fn === RLFValidationType.Required) {
+        if (
+          fn === RLFValidationType.Required ||
+          (fn === RLFValidationType.RequiredForSection &&
+            validateOn !== RLFValidateOn.Form)
+        ) {
           if (typeof value === ObjectType.Boolean) {
             return value === true;
           }
