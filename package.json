@@ -1,6 +1,6 @@
 {
   "name": "react-lightning-form",
-  "version": "2.1.3",
+  "version": "2.1.4",
   "main": "lib/components/index.js",
   "types": "lib/components/index.d.ts",
   "license": "MIT",
