@@ -37,12 +37,13 @@ export interface RLFProps {
   types?: any;
   validation?: any;
   messages?: any;
+  onChange?: any;
   loading?: boolean;
   submit?: any;
 }
 
 export const RLF: React.SFC<RLFProps> = (props: RLFProps) => {
-  const [originalData, setOriginalData] = useState<any>(null),
+  const [rawData, setRawData] = useState<any>(null),
     [mappedData, setMappedData] = useState<MappedDataItem[]>(new Array()),
     [editCount, setEditCount] = useState(0),
     [submitCount, setSubmitCount] = useState(0),
@@ -53,13 +54,16 @@ export const RLF: React.SFC<RLFProps> = (props: RLFProps) => {
 
   useEffect(() => {
     if (props.data) {
-      setOriginalData(props.data);
+      setRawData(props.data);
       setMappedData(RLFUtility.map.raw.data(props.data) || []);
     } else if (props.children) {
       const section: any = RLFUtility.map.section.data(props.children),
-        merged: any = _.merge({ ...section.data }, { ...originalData });
-      setOriginalData(merged);
-      setMappedData(RLFUtility.map.raw.data(merged) || []);
+        merged: any = _.merge({ ...section.data }, { ...rawData });
+
+      if (merged) {
+        setRawData(merged);
+        setMappedData(RLFUtility.map.raw.data(merged) || []);
+      }
     }
   }, [props.data, props.children, props.options, errors]);
 
@@ -71,8 +75,8 @@ export const RLF: React.SFC<RLFProps> = (props: RLFProps) => {
     if (validateOn !== "") {
       const data: any =
         validateOn === RLFValidateOn.Form
-          ? originalData
-          : _.get(originalData, validateOn);
+          ? rawData
+          : _.get(rawData, validateOn);
 
       if (validate() && props.submit[validateOn] && submitting) {
         props.submit[validateOn](data);
@@ -107,7 +111,7 @@ export const RLF: React.SFC<RLFProps> = (props: RLFProps) => {
     }
 
     return RLFUtility.validate.data(
-      originalData,
+      rawData,
       mappedData,
       validation,
       errors,
@@ -116,7 +120,7 @@ export const RLF: React.SFC<RLFProps> = (props: RLFProps) => {
   };
 
   const updateData = (data: any) => {
-    setOriginalData(data);
+    setRawData(data);
     setEditCount(editCount + 1);
   };
 
@@ -128,64 +132,69 @@ export const RLF: React.SFC<RLFProps> = (props: RLFProps) => {
     }
   };
 
-  const getTitle = (): JSX.Element | null => {
-    if (props.title) {
-      return (
-        <div className="title">
-          <h1>{props.title}</h1>
-        </div>
-      );
-    }
+  if (rawData !== null && mappedData.length > 0) {
+    const getTitle = (): JSX.Element | null => {
+      if (props.title) {
+        return (
+          <div className="title">
+            <h1>{props.title}</h1>
+          </div>
+        );
+      }
 
+      return null;
+    };
+
+    const getSubmitButton = (): JSX.Element | null => {
+      if (props.submit && props.submit.form) {
+        return (
+          <Button
+            className="submit"
+            label="Submit Form"
+            handleOnClick={() => handleOnSubmit(RLFValidateOn.Form)}
+          />
+        );
+      }
+
+      return null;
+    };
+
+    const classes: string = classNames("rlf-form", props.className, {
+      "rlf-loading": props.loading
+    });
+
+    const section: any = RLFUtility.map.section.data(props.children);
+
+    const components:
+      | (JSX.Element | null)[]
+      | null = RLFUtility.map.data.to.components(
+      rawData,
+      mappedData,
+      props.labels,
+      props.options,
+      props.types,
+      props.validation,
+      props.submit,
+      section.id,
+      section.className,
+      section.loading,
+      errors,
+      props.messages,
+      props.onChange,
+      updateData,
+      handleOnSubmit
+    );
+
+    return (
+      <div id={props.id || undefined} className={classes}>
+        {getTitle()}
+        {components}
+        {getSubmitButton()}
+        <Loading loading={props.loading} />
+        <Errors tree={errors} labels={props.labels} />
+      </div>
+    );
+  } else {
     return null;
-  };
-
-  const getSubmitButton = (): JSX.Element | null => {
-    if (props.submit && props.submit.form) {
-      return (
-        <Button
-          className="submit"
-          label="Submit Form"
-          handleOnClick={() => handleOnSubmit(RLFValidateOn.Form)}
-        />
-      );
-    }
-
-    return null;
-  };
-
-  const classes: string = classNames("rlf-form", props.className, {
-    "rlf-loading": props.loading
-  });
-
-  const section: any = RLFUtility.map.section.data(props.children);
-
-  const components:
-    | (JSX.Element | null)[]
-    | null = RLFUtility.map.data.to.components(
-    originalData,
-    mappedData,
-    props.labels,
-    props.options,
-    props.types,
-    props.validation,
-    props.submit,
-    section.id,
-    section.className,
-    section.loading,
-    errors,
-    props.messages,
-    updateData,
-    handleOnSubmit
-  );
-
-  return (
-    <div id={props.id || undefined} className={classes}>
-      {getTitle()}
-      {components}
-      {getSubmitButton()}
-      <Loading loading={props.loading} />
-      <Errors tree={errors} labels={props.labels} />
-    </div>
-  );
+  }
 };

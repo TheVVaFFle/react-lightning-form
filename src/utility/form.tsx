@@ -234,6 +234,7 @@ export const RLFUtility = {
           loading: any,
           errors: any,
           messages: any,
+          onChange: any,
           updateData: Function,
           onSubmit: Function
         ): (JSX.Element | null)[] | null => {
@@ -259,7 +260,9 @@ export const RLFUtility = {
                   messages
                 );
 
-              if (
+              if (item.type === ObjectType.Undefined) {
+                return null;
+              } else if (
                 rlfComponentType &&
                 typeof rlfComponentType === ObjectType.String
               ) {
@@ -270,6 +273,7 @@ export const RLFUtility = {
                   labels,
                   error,
                   errorMessage,
+                  onChange,
                   updateData
                 );
               } else if (item.type === ObjectType.Object) {
@@ -286,6 +290,7 @@ export const RLFUtility = {
                   loading,
                   errors,
                   messages,
+                  onChange,
                   updateData,
                   onSubmit
                 );
@@ -307,6 +312,7 @@ export const RLFUtility = {
                   loading,
                   errors,
                   messages,
+                  onChange,
                   updateData,
                   onSubmit
                 );
@@ -320,6 +326,7 @@ export const RLFUtility = {
                   labels,
                   error,
                   errorMessage,
+                  onChange,
                   updateData
                 );
               } else if (item.type === ObjectType.Boolean) {
@@ -329,6 +336,7 @@ export const RLFUtility = {
                   labels,
                   error,
                   errorMessage,
+                  onChange,
                   updateData
                 );
               } else if (Array.isArray(item)) {
@@ -345,6 +353,7 @@ export const RLFUtility = {
                   loading,
                   errors,
                   messages,
+                  onChange,
                   updateData,
                   onSubmit
                 );
@@ -371,6 +380,7 @@ export const RLFUtility = {
       loading: any,
       errors: any,
       messages: any,
+      onChange: any,
       updateData: Function,
       onSubmit: Function
     ) => {
@@ -415,6 +425,7 @@ export const RLFUtility = {
             loading,
             errors,
             messages,
+            onChange,
             updateData,
             onSubmit
           )}
@@ -435,6 +446,7 @@ export const RLFUtility = {
       loading: any,
       errors: any,
       messages: any,
+      onChange: any,
       updateData: Function,
       onSubmit: Function
     ) => {
@@ -454,6 +466,11 @@ export const RLFUtility = {
             messages
           );
 
+        const handleOnChange: Function | undefined = _.get(
+          onChange,
+          formattedFlatKey
+        );
+
         itemOptions = itemOptions || item.value;
 
         return (
@@ -467,6 +484,7 @@ export const RLFUtility = {
             rawData={rawData}
             error={error}
             errorMessage={errorMessage}
+            onChange={handleOnChange}
             updateData={updateData}
           />
         );
@@ -512,6 +530,7 @@ export const RLFUtility = {
               loading,
               errors,
               messages,
+              onChange,
               updateData,
               onSubmit
             )}
@@ -532,6 +551,7 @@ export const RLFUtility = {
       loading: any,
       errors: any,
       messages: any,
+      onChange: any,
       updateData: Function,
       onSubmit: Function
     ) => {
@@ -551,6 +571,7 @@ export const RLFUtility = {
             loading,
             errors,
             messages,
+            onChange,
             updateData,
             onSubmit
           )}
@@ -563,12 +584,19 @@ export const RLFUtility = {
       labels: any,
       error: boolean,
       errorMessage: string,
+      onChange: any,
       updateData: Function
     ) => {
       const flatKey: string = item.flatKey || Math.random().toString(),
         formattedFlatKey: string =
           RLFUtility.format.flatKey(item.flatKey) || "",
         label: string = _.get(labels, formattedFlatKey) || null;
+
+      const handleOnChange: Function | undefined = _.get(
+        onChange,
+        formattedFlatKey
+      );
+
       return (
         <Text
           key={item.key}
@@ -579,6 +607,7 @@ export const RLFUtility = {
           rawData={rawData}
           error={error}
           errorMessage={errorMessage}
+          onChange={handleOnChange}
           updateData={updateData}
         />
       );
@@ -589,12 +618,18 @@ export const RLFUtility = {
       labels: any,
       error: boolean,
       errorMessage: string,
+      onChange: any,
       updateData: Function
     ) => {
       const flatKey: string = item.flatKey || Math.random().toString(),
         formattedFlatKey: string =
           RLFUtility.format.flatKey(item.flatKey) || "",
         label: string = _.get(labels, formattedFlatKey) || null;
+
+      const handleOnChange: Function | undefined = _.get(
+        onChange,
+        formattedFlatKey
+      );
 
       return (
         <Checkbox
@@ -606,6 +641,7 @@ export const RLFUtility = {
           rawData={rawData}
           error={error}
           errorMessage={errorMessage}
+          onChange={handleOnChange}
           updateData={updateData}
         />
       );
@@ -617,12 +653,18 @@ export const RLFUtility = {
       labels: any,
       error: boolean,
       errorMessage: string,
+      onChange: any,
       updateData: Function
     ): JSX.Element | null => {
       const flatKey: string = item.flatKey || Math.random().toString(),
         formattedFlatKey: string =
           RLFUtility.format.flatKey(item.flatKey) || "",
         label: string = _.get(labels, formattedFlatKey) || null;
+
+      const handleOnChange: Function | undefined = _.get(
+        onChange,
+        formattedFlatKey
+      );
 
       if (rlfComponentType === RLFComponentType.Textarea) {
         return (
@@ -635,6 +677,7 @@ export const RLFUtility = {
             rawData={rawData}
             error={error}
             errorMessage={errorMessage}
+            onChange={handleOnChange}
             updateData={updateData}
           />
         );

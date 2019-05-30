@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import * as _ from "lodash";
 import classNames from "classnames";
 
@@ -12,10 +12,17 @@ export interface CheckboxProps {
   rawData: any;
   error: boolean;
   errorMessage?: string;
+  onChange?: Function;
   updateData: Function;
 }
 
 export const Checkbox = (props: CheckboxProps) => {
+  const [value, setValue] = useState<boolean>(false);
+
+  useEffect(() => {
+    setValue(props.value);
+  }, [props.value]);
+
   const label: string =
     props.label || StringUtility.camelCaseToNormal(props.name);
 
@@ -23,9 +30,14 @@ export const Checkbox = (props: CheckboxProps) => {
     error: props.error
   });
 
-  const updateData = (value: string): void => {
+  const updateData = (value: boolean): void => {
     _.set(props.rawData, props.flatKey, value);
     props.updateData(props.rawData);
+    setValue(value);
+
+    if (props.onChange) {
+      props.onChange(value);
+    }
   };
 
   const getError = (): JSX.Element | null => {
@@ -41,7 +53,7 @@ export const Checkbox = (props: CheckboxProps) => {
       <input
         id={props.flatKey}
         type="checkbox"
-        defaultChecked={props.value}
+        checked={value}
         onChange={(e: any) => updateData(e.target.checked)}
       />
       <h1 className="label">{label}</h1>

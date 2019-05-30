@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import * as _ from "lodash";
 import classNames from "classnames";
 
@@ -13,10 +13,17 @@ export interface SelectProps {
   rawData: any;
   error: boolean;
   errorMessage?: string;
+  onChange?: Function;
   updateData: Function;
 }
 
 export const Select: React.SFC<SelectProps> = (props: SelectProps) => {
+  const [value, setValue] = useState<string>("");
+
+  useEffect(() => {
+    setValue(props.value || "");
+  }, [props.value]);
+
   const getOptions = (): JSX.Element[] => {
     if (props.options && Array.isArray(props.options)) {
       return props.options.map((value: string) => {
@@ -41,6 +48,10 @@ export const Select: React.SFC<SelectProps> = (props: SelectProps) => {
   const updateData = (value: string): void => {
     _.set(props.rawData, props.flatKey, value);
     props.updateData(props.rawData);
+
+    if (props.onChange) {
+      props.onChange(value);
+    }
   };
 
   const getError = (): JSX.Element | null => {
@@ -56,7 +67,7 @@ export const Select: React.SFC<SelectProps> = (props: SelectProps) => {
       <h1 className="label">{label}</h1>
       <select
         id={props.flatKey}
-        defaultValue={props.value || ""}
+        value={value}
         onChange={(e: any) => updateData(e.target.value)}
       >
         <option value="">Select {label}</option>

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import * as _ from "lodash";
 import classNames from "classnames";
 
@@ -12,10 +12,17 @@ export interface TextAreaProps {
   rawData: any;
   error?: boolean;
   errorMessage?: string;
+  onChange?: Function;
   updateData: Function;
 }
 
 export const TextArea: React.SFC<TextAreaProps> = (props: TextAreaProps) => {
+  const [value, setValue] = useState<string>("");
+
+  useEffect(() => {
+    setValue(props.value.toString());
+  }, [props.value]);
+
   const label: string =
     props.label || StringUtility.camelCaseToNormal(props.name);
 
@@ -26,6 +33,11 @@ export const TextArea: React.SFC<TextAreaProps> = (props: TextAreaProps) => {
   const updateData = (value: string): void => {
     _.set(props.rawData, props.flatKey, value);
     props.updateData(props.rawData);
+    setValue(value);
+
+    if (props.onChange) {
+      props.onChange(value);
+    }
   };
 
   const getError = (): JSX.Element | null => {
@@ -42,7 +54,7 @@ export const TextArea: React.SFC<TextAreaProps> = (props: TextAreaProps) => {
       <textarea
         id={props.flatKey}
         placeholder={`Enter ${label}`}
-        defaultValue={props.value.toString()}
+        value={value}
         onChange={(e: any) => updateData(e.target.value)}
       />
       {getError()}

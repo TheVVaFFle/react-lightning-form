@@ -12,13 +12,19 @@ require("./app.scss");
 export interface AppProps {}
 
 export const App: React.SFC<AppProps> = (props: AppProps) => {
-  const [loading, setLoading] = useState(false),
+  const [data, setData] = useState<any>({}),
+    [loading, setLoading] = useState(true),
     [loadingName, setLoadingName] = useState(false),
     [loadingAbout, setLoadingAbout] = useState(false);
 
   const [nicknames, setNicknames] = useState<any[]>(new Array());
 
-  const name: any = { ...Test.data.name },
+  setTimeout(() => {
+    setData(Test.data);
+    setLoading(false);
+  }, 1000);
+
+  const name: any = { ...data.name },
     options: any = { ...Test.options };
 
   if (nicknames && nicknames.length > 0) {
@@ -32,6 +38,7 @@ export const App: React.SFC<AppProps> = (props: AppProps) => {
   };
 
   const handleSubmitName = (data: any) => {
+    console.log(data);
     setLoadingName(true);
     setTimeout(() => {
       setLoadingName(false);
@@ -40,9 +47,9 @@ export const App: React.SFC<AppProps> = (props: AppProps) => {
   };
 
   const handleSubmitAbout = (data: any) => {
+    console.log(data);
     setLoadingAbout(true);
     setTimeout(() => setLoadingAbout(false), 1000);
-    console.log(data);
   };
 
   const handleSubmitFamily = (data: any) => {
@@ -61,6 +68,26 @@ export const App: React.SFC<AppProps> = (props: AppProps) => {
     location: handleSubmitLocation
   };
 
+  const handleFirstName = (value: any) => {
+    console.log(value);
+  };
+
+  const handleSuffix = (value: any) => {
+    console.log(value);
+  };
+
+  const handleComments = (value: any) => {
+    console.log(value);
+  };
+
+  const onChange: any = {
+    name: {
+      firstName: handleFirstName,
+      suffix: handleSuffix
+    },
+    comments: handleComments
+  };
+
   return (
     <div id="app">
       <RLF
@@ -70,14 +97,15 @@ export const App: React.SFC<AppProps> = (props: AppProps) => {
         types={Test.types}
         validation={Test.validation}
         messages={Test.messages}
+        onChange={onChange}
         loading={loading}
         submit={submit}
       >
         <RLFSection data={{ name }} loading={loadingName} />
-        <RLFSection data={{ about: Test.data.about }} loading={loadingAbout} />
-        <RLFSection data={{ family: Test.data.family }} />
-        <RLFSection data={{ location: Test.data.location }} />
-        <RLFSection data={{ comments: Test.data.comments }} />
+        <RLFSection data={{ about: data.about }} loading={loadingAbout} />
+        <RLFSection data={{ family: data.family }} />
+        <RLFSection data={{ location: data.location }} />
+        <RLFSection data={{ comments: data.comments }} />
       </RLF>
     </div>
   );

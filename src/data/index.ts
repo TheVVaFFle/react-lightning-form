@@ -96,11 +96,6 @@ export const Test = {
     }
   },
   types: {
-    family: {
-      members: {
-        firstName: RLFComponentType.Textarea
-      }
-    },
     comments: RLFComponentType.Textarea
   }
 };
