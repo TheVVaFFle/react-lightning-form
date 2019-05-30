@@ -3,6 +3,7 @@
   box-shadow: rgba(0, 0, 0, 0.12) 0px 1px 6px, rgba(0, 0, 0, 0.12) 0px 1px 4px;
   margin: 100px auto;
   padding: 20px;
+  transition: opacity 0.5;
 }
 .rlf-form .title h1 {
   color: #3c3c3c;

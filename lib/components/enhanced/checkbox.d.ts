@@ -7,6 +7,7 @@ export interface CheckboxProps {
   rawData: any;
   error: boolean;
   errorMessage?: string;
+  onChange?: Function;
   updateData: Function;
 }
 export declare const Checkbox: (props: CheckboxProps) => JSX.Element;

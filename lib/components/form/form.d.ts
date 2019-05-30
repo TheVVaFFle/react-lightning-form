@@ -7,10 +7,12 @@ export declare enum RLFComponentType {
   Text = "text"
 }
 export declare enum RLFValidationType {
-  Required = "required"
+  Required = "required",
+  RequiredForSection = "required for section"
 }
 export declare enum RLFValidateOn {
-  Form = "form"
+  Form = "form",
+  Empty = ""
 }
 export interface RLFProps {
   id?: string;
@@ -23,6 +25,7 @@ export interface RLFProps {
   types?: any;
   validation?: any;
   messages?: any;
+  onChange?: any;
   loading?: boolean;
   submit?: any;
 }

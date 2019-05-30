@@ -8,6 +8,7 @@ export interface SelectProps {
   rawData: any;
   error: boolean;
   errorMessage?: string;
+  onChange?: Function;
   updateData: Function;
 }
 export declare const Select: React.SFC<SelectProps>;

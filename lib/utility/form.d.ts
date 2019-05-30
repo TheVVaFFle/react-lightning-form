@@ -1,5 +1,9 @@
 /// <reference types="react" />
-import { RLFComponentType, RLFValidationType } from "../components/form/form";
+import {
+  RLFComponentType,
+  RLFValidationType,
+  RLFValidateOn
+} from "../components/form/form";
 export declare enum ObjectType {
   Null = "null",
   Undefined = "undefined",
@@ -67,6 +71,7 @@ export declare const RLFUtility: {
           loading: any,
           errors: any,
           messages: any,
+          onChange: any,
           updateData: Function,
           onSubmit: Function
         ) => (JSX.Element | null)[] | null;
@@ -87,6 +92,7 @@ export declare const RLFUtility: {
       loading: any,
       errors: any,
       messages: any,
+      onChange: any,
       updateData: Function,
       onSubmit: Function
     ) => JSX.Element;
@@ -104,6 +110,7 @@ export declare const RLFUtility: {
       loading: any,
       errors: any,
       messages: any,
+      onChange: any,
       updateData: Function,
       onSubmit: Function
     ) => JSX.Element;
@@ -120,6 +127,7 @@ export declare const RLFUtility: {
       loading: any,
       errors: any,
       messages: any,
+      onChange: any,
       updateData: Function,
       onSubmit: Function
     ) => JSX.Element;
@@ -129,6 +137,7 @@ export declare const RLFUtility: {
       labels: any,
       error: boolean,
       errorMessage: string,
+      onChange: any,
       updateData: Function
     ) => JSX.Element;
     boolean: (
@@ -137,6 +146,7 @@ export declare const RLFUtility: {
       labels: any,
       error: boolean,
       errorMessage: string,
+      onChange: any,
       updateData: Function
     ) => JSX.Element;
     rlfComponent: (
@@ -146,6 +156,7 @@ export declare const RLFUtility: {
       labels: any,
       error: boolean,
       errorMessage: string,
+      onChange: any,
       updateData: Function
     ) => JSX.Element | null;
   };
@@ -154,6 +165,7 @@ export declare const RLFUtility: {
       rawData: any,
       mappedData: MappedDataItem[],
       validation: any,
+      validateOn: RLFValidateOn,
       errors: any,
       updateErrors: Function
     ) => any;
@@ -162,6 +174,10 @@ export declare const RLFUtility: {
     flatKey: (key: string | undefined) => string;
   };
   run: {
-    validation: (fn: Function | RLFValidationType, value: any) => boolean;
+    validation: (
+      fn: Function | RLFValidationType,
+      validateOn: RLFValidateOn,
+      value: any
+    ) => boolean;
   };
 };
